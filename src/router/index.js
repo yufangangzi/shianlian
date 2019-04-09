@@ -1,7 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import Main from '../views/main.vue'
 Vue.use(VueRouter)
+let loginRouter = {
+  path: '/login',
+  name: 'login',
+  component: () => import('../views/login'),
+  meta: { requireAuth: false }
+}
 let aside = [
   {
     path: '/',
@@ -28,10 +34,20 @@ let aside = [
     meta: { requireAuth: false }
   }
 ]
+const appRouter = [
+  {
+    path: '/',
+    name: 'zhuye',
+    title: 'main',
+    component: Main,
+    children:  [...aside]
+  },
+]
 let router = new VueRouter({
   mode: 'hash',
   routes: [
-    ...aside
+    loginRouter,
+    ...appRouter,
   ]
 })
 
