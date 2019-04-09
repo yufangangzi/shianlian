@@ -1,14 +1,17 @@
 <template>
   <div>
-    <div>概览</div>
-    <div>
-      <h4>信息概览</h4>
-      <h6>基本信息</h6>
-      <el-table
+    <div class="gailan">概览</div>
+    <div class="box2">
+      <p class="xinxigailan">信息概览</p>
+      <h6 class="jibenxinxi">基本信息</h6>
+      <div class="table-box">
+        <el-table
         :data="tableData"
-        stripe
-        style="width: 100%">
-        <el-table-column
+        class="biaoge"
+        :header-cell-style="biaostyle"
+        border
+        >
+        <el-table-column 
           prop="name"
           label="企业名称"
           align="center"
@@ -34,6 +37,9 @@
           prop="keysecret"
           align="center"
           label="Secret Key">
+           <template slot-scope="scope">
+            <el-button type="text" size="small">显示</el-button>
+          </template>
         </el-table-column>
         <el-table-column
           label="食安认证"
@@ -44,31 +50,37 @@
           </template>
         </el-table-column>
       </el-table>
-      <h6>数据概览</h6>
-      <el-table
-        :data="tableData"
-        stripe
-        style="width: 100%">
-        <el-table-column
-          prop="totalsum"
-          label="总调用量"
-          align="center"
-          width="200"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="totalday"
-          label="今日调用"
-          align="center"
-          width="200"
-          >
-        </el-table-column>
-      </el-table>
-      <h6>API列表</h6>
-      <el-table
-        :data="tableData"
-        stripe
-        style="width: 100%">
+      </div>
+      
+      <h6 class='yingyongmiaoshu'>应用描述</h6>
+      <el-card :body-style="{ padding: '0px' }" class="card" >
+        <img src="../../assets/img/zon.png" class="image"> 
+        <div style="padding: 14px ;float:right">
+          <span>总调用量（次）</span>
+          <br>
+          <br>
+          <span>{{totalsum}}</span>
+          </div>
+      </el-card>
+      <el-card :body-style="{ padding: '0px'}" class="card" >
+        <img src="../../assets/img/ri.png" class="image"> 
+        <div style="padding: 14px ;float:right">
+          <span>今日调用量（次）</span>
+          <br>
+          <br>
+          <span>{{totalday}}</span>
+        </div>
+      </el-card>
+    
+
+      <h6 class='api'>API列表</h6>
+      <div class="table-box">
+        <el-table
+        :data="tableData2"
+        border
+        :header-cell-style="biaostyle"
+        class="biaoge"
+        >
         <el-table-column
           prop="api"
           label="API"
@@ -108,6 +120,8 @@
           </template>
         </el-table-column>
       </el-table>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -115,8 +129,140 @@
 export default {
   data() {
     return {
-      tableData: []
+      biaostyle: {
+        backgroundColor: '#F6F7FB',
+        fontSize: '14px',
+        color: '#333',
+        fontWeight: '400'
+      },
+      tableData: [{
+        name:'青岛岸山农业集团',
+        appid:'18519226670',
+        lian:'产地/加工/物流/销售',
+        keyapi:'6FnB8gKicOtHwLbKvt7eQkK',
+        keysecret:'******',
+      }],
+      tableData1:[{
+        totalsum:'187820',
+        totalday:'678',
+
+      }],
+      tableData2:[{
+        api:'数据上传',
+        type:'正常',
+        url:'http://vop.baidu.com/server_api',
+        limit:'无限量',
+        limitnum:'111',
+      },{
+        api:'数据上传',
+        type:'正常',
+        url:'http://vop.baidu.com/server_api',
+        limit:'无限量',
+        limitnum:'111',
+      },{
+        api:'数据上传',
+        type:'正常',
+        url:'http://vop.baidu.com/server_api',
+        limit:'无限量',
+        limitnum:'111',
+      },{
+        api:'数据上传',
+        type:'正常',
+        url:'http://vop.baidu.com/server_api',
+        limit:'无限量',
+        limitnum:'111',
+      }],
+      totalsum:"187820",
+      totalday:"567",
     }
   }
 }
 </script>
+
+<style>
+  .gailan{
+
+    padding-top: 8px;
+    padding-left: 16px;
+    font-size:12px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+    line-height:17px;
+  }
+  .xinxigailan{
+    padding-top: 24px;
+    padding-left: 35px;
+    font-size:16px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+  }
+  .box2{
+    /* margin-top: 41px;
+    margin-left: 24px; */
+    margin: 41px 0 24px 24px;
+    padding-bottom: 60px;
+    height:100%;
+    background:rgba(255,255,255,1);
+    box-shadow:0px 2px 10px 0px rgba(232,236,240,1);
+  }
+  .jibenxinxi{
+    padding-top: 11px;
+    padding-left: 24px;
+    font-size:16px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+  }
+  .biaoge{
+    margin-top: 8px;
+    border:1px solid rgba(229,233,242,1);
+  }
+  .yingyongmiaoshu{
+    padding-top: 32px;
+    padding-left: 24px;
+    font-size:16px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+  }
+  .api{
+    padding-left: 24px;
+    padding-top: 32px;
+    height:22px;
+    font-size:16px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+  }
+  .bottom {
+    width:222px;
+    height:64px;
+    border:1px solid rgba(229,233,242,1);
+  }
+  .image {
+    width: 34px;
+    height: 34px;
+    margin-top:15px ;
+    margin-left:45px ;
+  }
+  .table-box{
+    padding: 0 24px;
+  }
+  .card{
+    display: inline-block;
+    margin-left: 24px;
+    margin-top: 8px;
+    width:222px;
+    height:64px;
+    border:1px solid rgba(229,233,242,1);
+  }
+</style>
+
+
+

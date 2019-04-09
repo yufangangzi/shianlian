@@ -6,4 +6,13 @@ export default {
   backList (params) {
     return post(url.backList, params)
   },
+  backSave (params) {
+    return post(url.backSave, params)
+  },
+  backRemove (params) {
+    return post(url.backRemove, params)
+  },
+  backUpdate (params) {
+    return post(url.backUpdate, params)
+  }
 }
