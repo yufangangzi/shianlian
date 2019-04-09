@@ -30,20 +30,20 @@ export default {
     },
 }
 </script>
- 
+
 <style>
   .el-header, .el-footer {
     background-color: #000;
     color: #333;
     line-height: 60px;
   }
-  
+
   .el-aside {
     background-color: #1F2A47;
     color: #333;
     text-align: center;
   }
-  
+
   .el-main {
     background-color: #E8ECF0;
     color: #333;
@@ -51,6 +51,5 @@ export default {
   }
   .el-container {
     height: 100%;
-  }  
+  }
 </style>
- 
