@@ -103,11 +103,11 @@
       </div>
     </el-dialog>
     <el-dialog title="编辑用户" :visible.sync="editformVisble" width="500px">
-      <el-form :model="editForm">
-        <el-form-item label="用户名" :label-width="formLabelWidth">
+      <el-form :model="editForm" ref="editForm" :rules="addformRules">
+        <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName">
           <el-input v-model="editForm.userName" autocomplete="off" placeholder="6-18位英文字母，数字组合"></el-input>
         </el-form-item>
-        <el-form-item label="用户角色" :label-width="formLabelWidth">
+        <el-form-item label="用户角色" :label-width="formLabelWidth" prop="roleName">
           <el-select v-model="editForm.roleName" placeholder="请选择用户角色">
             <el-option label="管理员" value="管理员"></el-option>
             <el-option label="操作员" value="操作员"></el-option>
@@ -121,11 +121,11 @@
       </div>
     </el-dialog>
     <el-dialog title="重置密码" :visible.sync="passwordreset" width="500px">
-      <el-form :model="resetForm">
-        <el-form-item label="设置新密码" :label-width="formLabelWidth">
+      <el-form :model="resetForm" ref="resetForm" :rules="passwordRules">
+        <el-form-item label="设置新密码" :label-width="formLabelWidth" prop="oldpassword">
           <el-input v-model="resetForm.oldpassword" type="password" autocomplete="off" placeholder="6-18位英文字母，数字组合"></el-input>
         </el-form-item>
-        <el-form-item label="确定新密码" :label-width="formLabelWidth">
+        <el-form-item label="确定新密码" :label-width="formLabelWidth" prop="password">
           <el-input v-model="resetForm.password" type="password" autocomplete="off" placeholder="6-18位英文字母，数字组合"></el-input>
         </el-form-item>
       </el-form>
@@ -142,8 +142,37 @@ import api from '@/feath/api.js'
 export default {
   data() {
     var validateUser = (rule, value, callback) => {
+      const reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/
       if (value === '') {
         callback(new Error('请输入用户名'));
+      } else {
+        if (reg.test(value)) {
+          callback();
+        } else {
+          callback('请输入6-18位英文字母，数字组合');
+        }
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      const reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        if (reg.test(value)) {
+          callback();
+        } else {
+          callback('请输入6-18位英文字母，数字组合');
+        }
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      const reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (!reg.test(value)) {
+        callback('请输入6-18位英文字母，数字组合');
+      }else if (value !== this.resetForm.oldpassword) {
+        callback(new Error('两次输入密码不一致!'));
       } else {
         callback();
       }
@@ -155,10 +184,21 @@ export default {
           {validator: validateUser, trigger: 'blur' }
         ],
         password: [
-          {required: true, message: '请输入密码', trigger: 'blur' }
+          {required: true, message: '请输入密码', trigger: 'blur' },
+          {validator: validatePass, trigger: 'blur' }
         ],
         roleName: [
           {required: true, message: '请选择用户角色', trigger: 'blur' }
+        ]
+      },
+      passwordRules: {
+        oldpassword: [
+          {required: true, message: '请输入密码', trigger: 'blur' },
+          {validator: validatePass, trigger: 'blur' }
+        ],
+        password: [
+          {required: true, message: '请再次输入密码', trigger: 'blur' },
+          {validator: validatePass2, trigger: 'blur' }
         ]
       },
       biaostyle: {
@@ -307,40 +347,46 @@ export default {
     },
     edituserOk () {
       const data = Object.assign({},this.editForm)
-      api.backUpdate(data).then(res => {
-        if (res.code === 0) {
-          this.getList()
-          this.$message({
-            message: '修改用户信息成功',
-            type: 'success'
-          });
-        } else {
-          this.$message({
-            message: '修改用户信息失败',
-            type: 'error'
-          });
+      this.$refs.editForm.validate(valid => {
+        if (valid) {
+          api.backUpdate(data).then(res => {
+            if (res.code === 0) {
+              this.getList()
+              this.$message({
+                message: '修改用户信息成功',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                message: '修改用户信息失败',
+                type: 'error'
+              });
+            }
+            this.editformVisble = false
+          })
         }
-        this.editformVisble = false
       })
-      
     },
     adduserOk () {
-      api.backSave(this.form).then(res => {
-        if (res.code === 0) {
-          this.getList()
-          this.$message({
-            message: '添加用户成功',
-            type: 'success'
-          });
-        } else {
-          this.$message({
-            message: '添加用户失败',
-            type: 'error'
-          });
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          api.backSave(this.form).then(res => {
+            if (res.code === 0) {
+              this.getList()
+              this.$message({
+                message: '添加用户成功',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                message: '添加用户失败',
+                type: 'error'
+              });
+            }
+            this.initAddUser()
+          })
         }
-        this.initAddUser()
       })
-      // 
     },
     deleteuser (val) {
       console.log(val)
