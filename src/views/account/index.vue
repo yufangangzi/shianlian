@@ -1,11 +1,10 @@
 <template>
   <div class="account">
-    <div>
+    <div class="tit">
       账户管理
-      <el-button @click="adduser" type="primary">新建用户</el-button>
     </div>
-    <div>
-      <span>角色名称：</span>
+    <div class="select-box">
+      <span class="sel-lab sel-lab-first">角色名称：</span>
       <el-select v-model="rulevalue" placeholder="请选择角色">
         <el-option
           v-for="item in rules"
@@ -14,7 +13,7 @@
           :value="item.value">
         </el-option>
       </el-select>
-      <span>用户状态：</span>
+      <span class="sel-lab">用户状态：</span>
       <el-select v-model="typevalue" placeholder="请选择状态">
         <el-option
           v-for="item in rules"
@@ -23,12 +22,18 @@
           :value="item.value">
         </el-option>
       </el-select>
-      <el-button type="primary">查询</el-button>
-      <el-button>重置</el-button>
+      <el-button type="primary" class="cha-btn">查询</el-button>
+      <el-button class="reset-btn">重置</el-button>
     </div>
-    <div>
+    <div class="add-btn">
+      <el-button @click="adduser" type="primary" size="medium">新建用户</el-button>
+    </div>
+    <div class="table-box">
       <el-table
         :data="tableData"
+        header-row-class-name="biao-head"
+        :header-cell-style="biaostyle"
+        :cell-style="cellStyle"
         stripe
         style="width: 100%">
         <el-table-column
@@ -66,10 +71,10 @@
         </el-table-column>
       </el-table>
     </div>
-    <div>
+    <div class="pagination">
       <el-pagination
         background
-        layout="prev, pager, next"
+        layout="total,prev, pager, next"
         style="text-align: center"
         :total="1000">
       </el-pagination>
@@ -112,9 +117,21 @@
   
 </template>
 <script>
+import api from '@/feath/api.js'
 export default {
   data() {
     return {
+      biaostyle: {
+        backgroundColor: '#F6F7FB',
+        fontSize: '14px',
+        color: '#333',
+        fontWeight: '400'
+      },
+      cellStyle: {
+        fontSize: '14px',
+        color: '#333',
+        fontWeight: '400'
+      },
       rules: [
 
       ],
@@ -149,7 +166,22 @@ export default {
       }
     }
   },
+  mounted() {
+    
+  },
+  created () {
+    this.getList()
+  },
   methods: {
+    getList () {
+        const data = {
+        pageNum: 1,
+        pageSize: 10
+      }
+      api.backList(data).then(res => {
+
+      })
+    },
     handleSizeChange() {
 
     },

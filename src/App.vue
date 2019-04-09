@@ -33,19 +33,19 @@ export default {
  
 <style>
   .el-header, .el-footer {
-    background-color: #B3C0D1;
+    background-color: #000;
     color: #333;
     line-height: 60px;
   }
   
   .el-aside {
-    background-color: #D3DCE6;
+    background-color: #1F2A47;
     color: #333;
     text-align: center;
   }
   
   .el-main {
-    background-color: #E9EEF3;
+    background-color: #E8ECF0;
     color: #333;
     padding: 0!important;
   }

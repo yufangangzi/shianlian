@@ -1,4 +1,3 @@
 import common from './common'
-import groupStatus from './groupStatus'
-var api = Object.assign({}, common, groupStatus)
+var api = Object.assign({}, common)
 export default api

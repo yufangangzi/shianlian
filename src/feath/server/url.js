@@ -1,5 +1,5 @@
 let domain = ''
 
 export default {
-  fetchToken: domain + '/oauth/token',
+  backList: domain + '/userBack/list',
 }

@@ -9,9 +9,9 @@
       @close="handleClose"
       @select="select"
       text-color="#fff"
-      active-text-color="#ffd04b">
+      active-text-color="#fff">
       <el-menu-item v-for="(item,index) in asideList" :index="item.path" :key="index" >
-        <!-- <i class="el-icon-menu"></i> -->
+        <i class="icon" :class="item.iconclass"></i>
         <span slot="title">{{item.title}}</span>
       </el-menu-item>
     </el-menu>

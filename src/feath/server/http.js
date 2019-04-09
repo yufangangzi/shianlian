@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // const domain = 'http://10.144.132.129:9998' // 测试地址
-const domain = 'http://10.144.132.129:9995' // 测试地址
+const domain = 'http://10.144.132.30:8005' // 测试地址
 // const domain = 'http://10.144.132.123' // 线上地址
 // let domain = process.env.NODE_ENV !== 'production' ? devUrl : proUrl
 

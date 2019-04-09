@@ -7,6 +7,7 @@ let aside = [
     path: '/',
     name: 'Index',
     title: '概览',
+    iconclass: 'icon-0',
     component: () => import('../views/index/index.vue'),
     meta: { requireAuth: false }
   },
@@ -14,6 +15,7 @@ let aside = [
     path: '/statistics',
     name: 'statistics',
     title: '统计报表',
+    iconclass: 'icon-1',
     component: () => import('../views/statistics'),
     meta: { requireAuth: false }
   },
@@ -21,6 +23,7 @@ let aside = [
     path: '/account',
     name: 'account',
     title: '用户管理',
+    iconclass: 'icon-2',
     component: () => import('../views/account'),
     meta: { requireAuth: false }
   }
