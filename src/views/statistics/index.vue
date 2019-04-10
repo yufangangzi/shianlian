@@ -140,7 +140,17 @@
             handleSelect(key,keyPath){
                 // console.log(key, keyPath)
                 this.currentKey = key;
-                this.getAPIData(key-1,this.currentIndex)
+                if(key == 1){
+                    this.timeList = this.totalData.data.timeList;
+                    this.apiData = this.totalData.data.value;
+                }else if(key == 2){
+                    this.timeList = this.updateData.data.timeList;
+                    this.apiData = this.updateData.data.value;
+                }else if(key == 3){
+                    this.timeList = this.queryData.data.timeList;
+                    this.apiData = this.queryData.data.value;
+                }
+                this.drawChart()
             },
             getAPIByDay(dayType){
                 this.currentIndex = dayType;
