@@ -44,10 +44,17 @@
         <el-table-column
           prop="keysecret"
           align="center"
-          label="Secret Key">
-           <template slot-scope="scope">
-            <el-button type="text" size="small">显示</el-button>
+          label="Secret Key"
+          type="password"
+          > 
+          <template slot-scope="scope" >
+            {{pwdType?scope.row.keysecret:"******"}}
+            
+
+            <img :src="openeye" class="eye"  @click="changeType()" style="float:right">
           </template>
+         
+          
         </el-table-column>
         <el-table-column
           label="食安认证"
@@ -129,7 +136,7 @@
         </el-table-column>
       </el-table>
       </div>
-      
+       
     </div>
   </div>
 </template>
@@ -148,7 +155,7 @@ export default {
         appid:'18519226670',
         lian:'产地/加工/物流/销售',
         keyapi:'6FnB8gKicOtHwLbKvt7eQkK',
-        keysecret:'******',
+        keysecret:'12324'
       }],
       tableData1:[{
         totalsum:'187820',
@@ -182,6 +189,9 @@ export default {
       }],
       totalsum:"187820",
       totalday:"567",
+      pwdType: true, // 密码类型
+      openeye: require('../../assets/img/1.png'), //图片地址
+
     }
   },
   methods: {
@@ -196,9 +206,15 @@ export default {
         message: '复制失败',
         type: 'error'
       });
-    }
+    },
+    changeType() {
+        this.pwdType = this.pwdType ? false : true;
+        console.log('pwdtype='+this.pwdType)
+        this.openeye = this.openeye == require("../../assets/img/2.png") ? require("../../assets/img/1.png") : require("../../assets/img/2.png");
+      },
   }
 }
+
 </script>
 
 <style scoped >
