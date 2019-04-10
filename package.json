@@ -1,8 +1,8 @@
 {
   "name": "webpcak4",
   "scripts": {
-    "build": "webpack --config build/webpack.prod.config.js",
-    "dev": "webpack-dev-server --config build/webpack.dev.config.js"
+    "build": "cross-env BRANCH_ENV=development webpack --config build/webpack.prod.config.js",
+    "dev": "cross-env BRANCH_ENV=development webpack-dev-server --config build/webpack.dev.config.js"
   },
   "devDependencies": {
     "art-template": "^4.13.2",
@@ -14,6 +14,7 @@
     "bable-loader": "0.0.1-security",
     "clean-webpack-plugin": "^1.0.1",
     "copy-webpack-plugin": "^4.6.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "ejs-loader": "^0.3.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",

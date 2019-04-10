@@ -35,7 +35,10 @@ module.exports = merge(webpackDevConfig, {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': require('../config/dev.env.js')
+    }),
   ],
   devServer: {
     host: 'localhost',

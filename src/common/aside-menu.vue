@@ -30,7 +30,11 @@
     watch:{
       $route (val) {
         this.pathfull = val.path
+        console.log(val)
       }
+    },
+    mounted() {
+      this.pathfull = this.$route.path
     },
     methods: {
       select (key) {
