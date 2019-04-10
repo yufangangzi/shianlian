@@ -11,8 +11,14 @@
           <span class="username">{{userName}}</span>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人信息</el-dropdown-item>
-          <el-dropdown-item command="loginOut">退出登陆</el-dropdown-item>
+          <el-dropdown-item>
+            <i class="head-menu-info"></i>
+            <span>个人信息</span>
+          </el-dropdown-item>
+          <el-dropdown-item command="loginOut">
+            <i class="head-menu-out"></i>
+            <span>退出登陆</span>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
