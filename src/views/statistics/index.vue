@@ -16,19 +16,19 @@
             <el-menu-item index="1">
               <div slot="title">
                 <div class="tit">总调用量</div>
-                <div> <span class="num">2568</span> <span class="tb">同比</span> <span class="green">+12.7%</span></div>
+                <div> <span class="num">{{totalData.value}}</span> <span class="tb">同比</span> <span :class="totalData.rate > 0 ? 'green':'orange'">{{totalData.rate > 0 ? '+':''}} {{totalData.rate + '%'}}</span></div>
               </div>
             </el-menu-item>
             <el-menu-item index="2">
               <div slot="title">
                 <div class="tit">数据上传</div>
-                <div> <span class="num">2568</span> <span class="tb">同比</span> <span class="green">+12.7%</span></div>
+                <div> <span class="num">{{updateData.value}}</span> <span class="tb">同比</span> <span :class="updateData.rate > 0 ? 'green':'orange'">{{updateData.rate > 0 ? '+':''}} {{updateData.rate + '%'}}</span></div>
               </div>
             </el-menu-item>
             <el-menu-item index="3">
               <div slot="title">
                 <div class="tit">数据查询</div>
-                <div> <span class="num">2568</span> <span class="tb">同比</span> <span class="orange">-12.7%</span></div>
+                <div> <span class="num">{{queryData.value}}</span> <span class="tb">同比</span> <span :class="queryData.rate > 0 ? 'green':'orange'">{{queryData.rate > 0 ? '+':''}} {{queryData.rate + '%'}}</span></div>
               </div>
             </el-menu-item>
           </el-menu>
@@ -37,11 +37,11 @@
           <div class="chart-t">近一周API总调用情况</div>
           <div class="date-btns">
             <ul>
-              <li>今天</li>
-              <li>昨天</li>
-              <li class="active">近一周</li>
-              <li>近一月</li>
-              <li>近一年</li>
+              <li :class="currentIndex == 0 ? 'active':''" @click="getAPIByDay(0)">今天</li>
+              <li :class="currentIndex == 1 ? 'active':''" @click="getAPIByDay(1)">昨天</li>
+              <li :class="currentIndex == 2 ? 'active':''" @click="getAPIByDay(2)">近一周</li>
+              <li :class="currentIndex == 3 ? 'active':''" @click="getAPIByDay(3)">近一月</li>
+              <li :class="currentIndex == 4 ? 'active':''" @click="getAPIByDay(4)">近一年</li>
             </ul>
           </div>
           <div id="myChart"></div>
@@ -52,16 +52,23 @@
 </template>
 <script>
     import echarts from 'echarts';
+    import api from '@/feath/api.js';
     export default{
         data(){
             return {
-                apiData: [295,666,444,858,654,236,645]
+                currentKey: 1,
+                currentIndex: 2,
+                totalData:{},
+                updateData:{},
+                queryData:{},
+                timeList: [],
+                apiData: []
             }
         },
         components:{
         },
         mounted(){
-            this.drawChart();
+            this.getAPIData(0,2);
         },
         methods:{
             drawChart(){
@@ -73,7 +80,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : ['10-23周日','10-24周一','10-25周二','10-26周三','10-27周四','10-28周五','10-29周六'],
+                            data : this.timeList,
                             axisTick: {show: false},
                             axisLine: {color:'rgba(224, 228, 234, 1)'},
                             boundaryGap: false,  //图表从零刻度开始
@@ -131,15 +138,39 @@
                 window.addEventListener('resize',function() {myChart.resize()});
             },
             handleSelect(key,keyPath){
-                console.log(key, keyPath)
-                if(key == 1){
-                    this.apiData = [295,666,444,858,654,236,645]
-                }else if(key == 2){
-                    this.apiData = [645,546,846,225,547,356,56]
-                }else if(key == 3){
-                    this.apiData = [234,123,546,123,783,308,490]
-                }
-                this.drawChart();
+                // console.log(key, keyPath)
+                this.currentKey = key;
+                this.getAPIData(key-1,this.currentIndex)
+            },
+            getAPIByDay(dayType){
+                this.currentIndex = dayType;
+                this.getAPIData(this.currentKey-1,dayType)
+            },
+            getAPIData(apiType,dayType){
+              let param = {
+                  apiType: apiType,
+                  statisticsType: dayType
+              };
+              api.getAPI(param).then((res) => {
+                  // console.log(res)
+                  if(!res.code){
+                      let result = res.result;
+                      this.totalData = result.totalInvokeMap;
+                      this.updateData = result.dataUpdateMap;
+                      this.queryData = result.dataQueryMap;
+                      if(apiType == 0){
+                          this.timeList = this.totalData.data.timeList;
+                          this.apiData = this.totalData.data.value;
+                      }else if(apiType == 1){
+                          this.timeList = this.updateData.data.timeList;
+                          this.apiData = this.updateData.data.value;
+                      }else if(apiType == 2){
+                          this.timeList = this.queryData.data.timeList;
+                          this.apiData = this.queryData.data.value;
+                      }
+                  }
+                  this.drawChart()
+              })
             }
         }
     }
