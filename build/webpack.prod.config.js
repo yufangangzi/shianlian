@@ -3,6 +3,7 @@ const webpackDevConfig = require('./webpack.base.config')
 const CleanWebpackPlaugin = require('clean-webpack-plugin') // 清空dist 文件
 const merge = require('webpack-merge');
 const uglify = require('uglifyjs-webpack-plugin')
+const webpack = require('webpack')
 const extractTextPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
