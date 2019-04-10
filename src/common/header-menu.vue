@@ -8,7 +8,7 @@
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
           <img src="../assets/img/user.png" alt="头像" style="width: 30px; margin-left: 10px; height: 30px; vertical-align: middle;">
-          <span class="username">admin</span>
+          <span class="username">{{userName}}</span>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人信息</el-dropdown-item>
@@ -21,6 +21,11 @@
 <script>
 import Cookies from 'js-cookie'
 export default {
+  data () {
+    return {
+      userName: Cookies.get('food_user') || 'admin'
+    }
+  },
   methods: {
     handleCommand (command) {
       if (command === 'loginOut') {

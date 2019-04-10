@@ -67,6 +67,16 @@
           line-height: 40px;
           text-align: left;
           margin-bottom: 20px;
+          position: relative;
+          .error{
+            position: absolute;
+            width: 100%;
+            right: 0;
+            top: 30px;
+            text-align: right;
+            font-size: 12px;
+            color: #91939A
+          }
           .user-icon{
             display: inline-block;
             width: 20px;
@@ -93,6 +103,9 @@
           .passsaved {
             background-image: url('../img/passsaved.png');
           }
+        }
+        .formItemError{
+          border-bottom: 2px solid #F33A2C;
         }
         .loginBtn{
           display: inline-block;
