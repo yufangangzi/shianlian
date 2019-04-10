@@ -14,5 +14,8 @@ export default {
   },
   backUpdate (params) {
     return post(url.backUpdate, params)
+  },
+  getAPI (params) {
+    return post(url.getAPI, params)
   }
 }
