@@ -32,6 +32,14 @@
           prop="keyapi"
           align="center"
           label="API Key">
+          <template slot-scope="scope">
+            <span>{{scope.row.keyapi}}</span>
+            <span class="copy" 
+              v-clipboard:copy="scope.row.keyapi"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+            ></span>
+          </template>
         </el-table-column>
         <el-table-column
           prop="keysecret"
@@ -175,6 +183,20 @@ export default {
       totalsum:"187820",
       totalday:"567",
     }
+  },
+  methods: {
+    onCopy () {
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      });
+    },
+    onError () {
+      this.$message({
+        message: '复制失败',
+        type: 'error'
+      });
+    }
   }
 }
 </script>
@@ -261,6 +283,15 @@ export default {
     width:222px;
     height:64px;
     border:1px solid rgba(229,233,242,1);
+  }
+  .copy{
+    display: inline-block;
+    width:12px;
+    height: 16px;
+    background: url('../../assets/img/copy.png') no-repeat;
+    background-size: 12px 16px;
+    margin-left: 10px;
+    cursor: pointer;
   }
 </style>
 
