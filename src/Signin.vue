@@ -1,21 +1,19 @@
 <template>
-    <div id="sign">
-        {{msg}}
-    </div>
+  <div id="sign">
+    <login></login>
+  </div>
 </template>
  
 <script>
+import login from './views/login/index.vue'
 export default {
-    data() {
-        return {
-            msg: 'hello demo'
-        }
+  data() {
+    return {
+      
     }
+  },
+  components: {
+    login
+  }
 }
 </script>
- 
-<style>
-#app{
-    color: aqua;
-}
-</style>

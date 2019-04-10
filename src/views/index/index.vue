@@ -179,7 +179,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped >
   .gailan{
 
     padding-top: 8px;
