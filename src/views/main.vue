@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height:100%">
     <el-container>
       <el-header>
         <header-menu></header-menu>
