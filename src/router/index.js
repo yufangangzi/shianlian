@@ -58,7 +58,7 @@ router.beforeEach((to, from, next) => {
   // 判断该路由是否需要登录权限
   if (to.meta.requireAuth) {
     // 判断是否是登录状态
-    if (Cookies.get('isLogin') === '1') {
+    if (Cookies.get('food_isLogin') === '1') {
       next()
     } else {
       // 否则跳回登录页

@@ -28,7 +28,7 @@ export default {
       }
     },
     loginOut () {
-      Cookies.set('isLogin', '0')
+      Cookies.set('food_isLogin', '0')
       this.$router.push({
         path: '/login'
       })

@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     logining () {
-      Cookies.set('isLogin', '1')
+      Cookies.set('food_isLogin', '1')
       this.$router.push({
         path: '/'
       })
