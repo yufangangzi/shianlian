@@ -34,7 +34,7 @@
           </el-menu>
         </el-col>
         <el-col :span="18" class="right">
-          <div class="chart-t">近一周API总调用情况</div>
+          <div class="chart-t">{{chartT}}API总调用情况</div>
           <div class="date-btns">
             <ul>
               <li :class="currentIndex == 0 ? 'active':''" @click="getAPIByDay(0)">今天</li>
@@ -62,7 +62,9 @@
                 updateData:{},
                 queryData:{},
                 timeList: [],
-                apiData: []
+                apiData: [],
+                chartT: '近一周',
+                chartTlist:['今天','昨天','近一周','近一月','近一年']
             }
         },
         components:{
@@ -154,6 +156,7 @@
             },
             getAPIByDay(dayType){
                 this.currentIndex = dayType;
+                this.chartT = this.chartTlist[dayType]
                 this.getAPIData(this.currentKey-1,dayType)
             },
             getAPIData(apiType,dayType){

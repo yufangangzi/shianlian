@@ -22,7 +22,7 @@
           :value="item.value">
         </el-option>
       </el-select>
-      <el-button type="primary" class="cha-btn" @click="getList">查询</el-button>
+      <el-button type="primary" class="cha-btn" @click="getListby">查询</el-button>
       <el-button class="reset-btn" @click="resetList">重置</el-button>
     </div>
     <div class="add-btn">
@@ -74,14 +74,15 @@
     <div class="pagination">
       <el-pagination
         background
-        layout="total,prev, pager, next"
+        layout="total,prev, pager, next,jumper"
         :page-size="totalPageSize"
         style="text-align: center"
         @current-change="gotoPage"
+        :current-page="currentPageNum"
         :total="listNum">
       </el-pagination>
     </div>
-    <el-dialog title="添加用户" :visible.sync="dialogFormVisible"  width="500px">
+    <el-dialog title="添加用户" :visible.sync="dialogFormVisible"  width="500px" @close="adduserCancel">
       <el-form :model="form" ref="form" :rules="addformRules">
         <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName">
           <el-input v-model="form.userName"  placeholder="6-18位英文字母，数字组合"></el-input>
@@ -89,7 +90,7 @@
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
           <el-input v-model="form.password" type="password"  placeholder="6-18位英文字母，数字组合"></el-input>
         </el-form-item>
-        <el-form-item label="用户角色" :label-width="formLabelWidth" prop="roleName">
+        <el-form-item label="角色" :label-width="formLabelWidth" prop="roleName">
           <el-select v-model="form.roleName" placeholder="请选择用户角色">
             <el-option label="管理员" value="管理员"></el-option>
             <el-option label="操作员" value="操作员"></el-option>
@@ -102,12 +103,12 @@
         <el-button type="primary" @click="adduserOk">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="编辑用户" :visible.sync="editformVisble" width="500px">
+    <el-dialog title="编辑用户" :visible.sync="editformVisble" width="500px" @close="edituserCancel">
       <el-form :model="editForm" ref="editForm" :rules="addformRules">
         <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName">
           <el-input v-model="editForm.userName" autocomplete="off" placeholder="6-18位英文字母，数字组合"></el-input>
         </el-form-item>
-        <el-form-item label="用户角色" :label-width="formLabelWidth" prop="roleName">
+        <el-form-item label="角色" :label-width="formLabelWidth" prop="roleName">
           <el-select v-model="editForm.roleName" placeholder="请选择用户角色">
             <el-option label="管理员" value="管理员"></el-option>
             <el-option label="操作员" value="操作员"></el-option>
@@ -120,7 +121,7 @@
         <el-button type="primary" @click="edituserOk">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="重置密码" :visible.sync="passwordreset" width="500px">
+    <el-dialog title="重置密码" :visible.sync="passwordreset" width="500px" @close="passwordResetCancel">
       <el-form :model="resetForm" ref="resetForm" :rules="passwordRules">
         <el-form-item label="设置新密码" :label-width="formLabelWidth" prop="oldpassword">
           <el-input v-model="resetForm.oldpassword" type="password" autocomplete="off" placeholder="6-18位英文字母，数字组合"></el-input>
@@ -310,6 +311,10 @@ export default {
         }
       })
     },
+    getListby () {
+      this.currentPageNum = 1
+      this.getList()
+    },
     gotoPage (currentPage) {
       this.currentPageNum = currentPage
       this.getList()
@@ -332,6 +337,7 @@ export default {
     },
     adduserCancel () {
       this.initAddUser()
+      this.$refs.form.resetFields()
     },
     editUser (val) {
       console.log(val)
@@ -344,6 +350,7 @@ export default {
     },
     edituserCancel() {
       this.editformVisble = false
+      this.$refs.editForm.resetFields()
     },
     edituserOk () {
       const data = Object.assign({},this.editForm)
@@ -413,32 +420,37 @@ export default {
             }
           })
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+              
         });
     },
     passwordResetCancel (val) {
       this.passwordreset = false
+      this.resetForm.password = ""
+      this.resetForm.oldpassword = ''
+      this.$refs.resetForm.resetFields()
     },
     passwordResetOk () {
-      this.passwordreset = false
-      const data = {
-        id: this.resetForm.id,
-        password: this.resetForm.password,
-      }
-      api.backUpdate(data).then(res => {
-        if (res.code === 0) {
-          this.$message({
-            message: '修改用户密码成功',
-            type: 'success'
-          });
-        } else {
-          this.$message({
-            message: '修改用户密码失败',
-            type: 'error'
-          });
+      this.$refs.resetForm.validate(vaild => {
+        if (vaild) {
+          this.passwordreset = false
+          const data = {
+            id: this.resetForm.id,
+            password: this.resetForm.password,
+          }
+          api.backUpdate(data).then(res => {
+            if (res.code === 0) {
+              this.$message({
+                message: '修改用户密码成功',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                message: '修改用户密码失败',
+                type: 'error'
+              });
+            }
+            this.passwordResetCancel()
+          })
         }
       })
     },
@@ -472,10 +484,10 @@ export default {
             }
           })
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+          // this.$message({
+          //   type: 'info',
+          //   message: '已取消删除'
+          // });          
         });
     }
   }
