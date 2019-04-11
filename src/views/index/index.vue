@@ -73,9 +73,9 @@
       
       <h6 class='yingyongmiaoshu'>应用描述</h6>
       <el-card :body-style="{ padding: '0px' }" class="card" >
-        <img src="../../assets/img/zon.png" class="image"> 
-        <div style="padding: 0px ;float:right">
-          <span>总调用量（次）</span>
+          <img src="../../assets/img/zon.png" class="image"> 
+        <div style="padding: 11px ;float:right;margin-left:8px">
+          <span >总调用量（次）&nbsp;&nbsp;&nbsp;</span>
           <br>
           <br>
           <span>{{formatNumToThousands(totalsum)}}</span>
@@ -83,8 +83,8 @@
       </el-card>
       <el-card :body-style="{ padding: '0px'}" class="card" >
         <img src="../../assets/img/ri.png" class="image"> 
-        <div style="padding: 0px ;float:right;">
-          <span>今日调用量（次）</span>
+        <div style="padding: 11px ;float:right;margin-left:8px">
+          <span >今日调用量（次）</span>
           <br>
           <br>
           <span >{{formatNumToThousands( totalday)}}</span>
