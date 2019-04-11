@@ -145,7 +145,7 @@
   </div>
 </template>
 <script>
-import { formatFloatNumber, toThousands } from '@/util/filter.js'
+import {toThousands } from '@/util/filter.js'
 export default {
   data() {
     return {
