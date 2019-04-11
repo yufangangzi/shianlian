@@ -37,6 +37,11 @@
         
         style="width: 100%">
         <el-table-column
+          type="index"
+          align="center"
+          >
+        </el-table-column>
+        <el-table-column
           prop="id"
           label="用户ID"
           align="center"
@@ -74,8 +79,10 @@
     <div class="pagination">
       <el-pagination
         background
-        layout="total,prev, pager, next,jumper"
+        layout="total,prev, pager, next,sizes,jumper"
         :page-size="totalPageSize"
+        @size-change="handleSizeChange"
+        :page-sizes="[10, 20, 30, 40]"
         style="text-align: center"
         @current-change="gotoPage"
         :current-page="currentPageNum"
@@ -310,6 +317,11 @@ export default {
           this.tableData = res.result.list
         }
       })
+    },
+    handleSizeChange(val) {
+      console.log(val)
+      this.totalPageSize = val
+      this.getList()
     },
     getListby () {
       this.currentPageNum = 1
