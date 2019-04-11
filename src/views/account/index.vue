@@ -267,7 +267,7 @@ export default {
         id: ''
       },
       currentPageNum: 1,
-      totalPageSize: 3
+      totalPageSize: 10
     }
   },
   mounted() {
