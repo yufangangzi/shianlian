@@ -22,7 +22,7 @@
           :value="item.value">
         </el-option>
       </el-select>
-      <el-button type="primary" class="cha-btn" @click="getList">查询</el-button>
+      <el-button type="primary" class="cha-btn" @click="getListby">查询</el-button>
       <el-button class="reset-btn" @click="resetList">重置</el-button>
     </div>
     <div class="add-btn">
@@ -74,10 +74,11 @@
     <div class="pagination">
       <el-pagination
         background
-        layout="total,prev, pager, next"
+        layout="total,prev, pager, next,jumper"
         :page-size="totalPageSize"
         style="text-align: center"
         @current-change="gotoPage"
+        :current-page="currentPageNum"
         :total="listNum">
       </el-pagination>
     </div>
@@ -89,7 +90,7 @@
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
           <el-input v-model="form.password" type="password"  placeholder="6-18位英文字母，数字组合"></el-input>
         </el-form-item>
-        <el-form-item label="用户角色" :label-width="formLabelWidth" prop="roleName">
+        <el-form-item label="角色" :label-width="formLabelWidth" prop="roleName">
           <el-select v-model="form.roleName" placeholder="请选择用户角色">
             <el-option label="管理员" value="管理员"></el-option>
             <el-option label="操作员" value="操作员"></el-option>
@@ -107,7 +108,7 @@
         <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName">
           <el-input v-model="editForm.userName" autocomplete="off" placeholder="6-18位英文字母，数字组合"></el-input>
         </el-form-item>
-        <el-form-item label="用户角色" :label-width="formLabelWidth" prop="roleName">
+        <el-form-item label="角色" :label-width="formLabelWidth" prop="roleName">
           <el-select v-model="editForm.roleName" placeholder="请选择用户角色">
             <el-option label="管理员" value="管理员"></el-option>
             <el-option label="操作员" value="操作员"></el-option>
@@ -310,6 +311,10 @@ export default {
         }
       })
     },
+    getListby () {
+      this.currentPageNum = 1
+      this.getList()
+    },
     gotoPage (currentPage) {
       this.currentPageNum = currentPage
       this.getList()
@@ -413,32 +418,36 @@ export default {
             }
           })
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+              
         });
     },
     passwordResetCancel (val) {
       this.passwordreset = false
+      this.resetForm.password = ""
+      this.resetForm.oldpassword = ''
     },
     passwordResetOk () {
-      this.passwordreset = false
-      const data = {
-        id: this.resetForm.id,
-        password: this.resetForm.password,
-      }
-      api.backUpdate(data).then(res => {
-        if (res.code === 0) {
-          this.$message({
-            message: '修改用户密码成功',
-            type: 'success'
-          });
-        } else {
-          this.$message({
-            message: '修改用户密码失败',
-            type: 'error'
-          });
+      this.$refs.resetForm.validate(vaild => {
+        if (vaild) {
+          this.passwordreset = false
+          const data = {
+            id: this.resetForm.id,
+            password: this.resetForm.password,
+          }
+          api.backUpdate(data).then(res => {
+            if (res.code === 0) {
+              this.$message({
+                message: '修改用户密码成功',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                message: '修改用户密码失败',
+                type: 'error'
+              });
+            }
+            this.passwordResetCancel()
+          })
         }
       })
     },
@@ -472,10 +481,10 @@ export default {
             }
           })
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+          // this.$message({
+          //   type: 'info',
+          //   message: '已取消删除'
+          // });          
         });
     }
   }

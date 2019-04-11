@@ -131,7 +131,7 @@
           align="center"
           >
           <template slot-scope="scope">
-            <el-button type="text" size="small">查看</el-button>
+            <el-button @click="gotolook" type="text" size="small">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -206,6 +206,11 @@ export default {
         message: '复制失败',
         type: 'error'
       });
+    },
+    gotolook () {
+      this.$router.push({
+        path: '/statistics'
+      })
     },
     changeType() {
         this.pwdType = this.pwdType ? false : true;

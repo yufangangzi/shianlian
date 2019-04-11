@@ -5,7 +5,27 @@
     </div>
     <div class="title">食安物链管理后台</div>
     <div class="user">
-      <el-dropdown @command="handleCommand">
+      <el-dropdown>
+        <span class="el-dropdown-link">
+          <img src="../assets/img/wenti.png" alt="疑问" style="width: 22px; margin-left: 10px; height: 22px; vertical-align: middle;">
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <span style="color: #AAACB1;fontSize:12px;paddingLeft:15px;">帮助中心</span>
+          <el-dropdown-item>
+            <i class="head-menu-api"></i>
+            <span>API文档</span>
+          </el-dropdown-item>
+          <el-dropdown-item >
+            <i class="head-menu-sdk"></i>
+            <span>SDK下载</span>
+          </el-dropdown-item>
+          <el-dropdown-item >
+            <i class="head-menu-wenti"></i>
+            <span>常见问题</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <el-dropdown @command="handleCommand" style="marginLeft:30px">
         <span class="el-dropdown-link">
           <img src="../assets/img/user.png" alt="头像" style="width: 30px; margin-left: 10px; height: 30px; vertical-align: middle;">
           <span class="username">{{userName}}</span>
