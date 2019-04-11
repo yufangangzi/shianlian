@@ -82,7 +82,7 @@
         :total="listNum">
       </el-pagination>
     </div>
-    <el-dialog title="添加用户" :visible.sync="dialogFormVisible"  width="500px">
+    <el-dialog title="添加用户" :visible.sync="dialogFormVisible"  width="500px" @close="adduserCancel">
       <el-form :model="form" ref="form" :rules="addformRules">
         <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName">
           <el-input v-model="form.userName"  placeholder="6-18位英文字母，数字组合"></el-input>
@@ -103,7 +103,7 @@
         <el-button type="primary" @click="adduserOk">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="编辑用户" :visible.sync="editformVisble" width="500px">
+    <el-dialog title="编辑用户" :visible.sync="editformVisble" width="500px" @close="edituserCancel">
       <el-form :model="editForm" ref="editForm" :rules="addformRules">
         <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName">
           <el-input v-model="editForm.userName" autocomplete="off" placeholder="6-18位英文字母，数字组合"></el-input>
@@ -121,7 +121,7 @@
         <el-button type="primary" @click="edituserOk">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="重置密码" :visible.sync="passwordreset" width="500px">
+    <el-dialog title="重置密码" :visible.sync="passwordreset" width="500px" @close="passwordResetCancel">
       <el-form :model="resetForm" ref="resetForm" :rules="passwordRules">
         <el-form-item label="设置新密码" :label-width="formLabelWidth" prop="oldpassword">
           <el-input v-model="resetForm.oldpassword" type="password" autocomplete="off" placeholder="6-18位英文字母，数字组合"></el-input>
@@ -337,6 +337,7 @@ export default {
     },
     adduserCancel () {
       this.initAddUser()
+      this.$refs.form.resetFields()
     },
     editUser (val) {
       console.log(val)
@@ -349,6 +350,7 @@ export default {
     },
     edituserCancel() {
       this.editformVisble = false
+      this.$refs.editForm.resetFields()
     },
     edituserOk () {
       const data = Object.assign({},this.editForm)
@@ -425,6 +427,7 @@ export default {
       this.passwordreset = false
       this.resetForm.password = ""
       this.resetForm.oldpassword = ''
+      this.$refs.resetForm.resetFields()
     },
     passwordResetOk () {
       this.$refs.resetForm.validate(vaild => {
