@@ -194,7 +194,7 @@ export default {
       }],
       totalsum:"2187820",
       totalday:"567123",
-      pwdType: true, // 密码类型
+      pwdType: false, // 密码类型
       openeye: require('../../assets/img/1.png'), //图片地址
 
     }
