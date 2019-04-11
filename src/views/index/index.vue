@@ -2,7 +2,11 @@
   <div>
     <div class="gailan">概览</div>
     <div class="box2">
+      <div class="xiaolandian" >
+      </div>
+      <div class="box3">
       <p class="xinxigailan">信息概览</p>
+      </div>
       <h6 class="jibenxinxi">基本信息</h6>
       <div class="table-box">
         <el-table
@@ -70,20 +74,20 @@
       <h6 class='yingyongmiaoshu'>应用描述</h6>
       <el-card :body-style="{ padding: '0px' }" class="card" >
         <img src="../../assets/img/zon.png" class="image"> 
-        <div style="padding: 14px ;float:right">
+        <div style="padding: 0px ;float:right">
           <span>总调用量（次）</span>
           <br>
           <br>
-          <span>{{totalsum}}</span>
+          <span>{{formatNumToThousands(totalsum)}}</span>
           </div>
       </el-card>
       <el-card :body-style="{ padding: '0px'}" class="card" >
         <img src="../../assets/img/ri.png" class="image"> 
-        <div style="padding: 14px ;float:right">
+        <div style="padding: 0px ;float:right;">
           <span>今日调用量（次）</span>
           <br>
           <br>
-          <span>{{totalday}}</span>
+          <span >{{formatNumToThousands( totalday)}}</span>
         </div>
       </el-card>
     
@@ -127,7 +131,7 @@
           >
         </el-table-column>
         <el-table-column
-          label="统计详情"
+          label="操作"
           align="center"
           >
           <template slot-scope="scope">
@@ -141,6 +145,7 @@
   </div>
 </template>
 <script>
+import { formatFloatNumber, toThousands } from '@/util/filter.js'
 export default {
   data() {
     return {
@@ -187,8 +192,8 @@ export default {
         limit:'无限量',
         limitnum:'111',
       }],
-      totalsum:"187820",
-      totalday:"567",
+      totalsum:"2187820",
+      totalday:"567123",
       pwdType: true, // 密码类型
       openeye: require('../../assets/img/1.png'), //图片地址
 
@@ -212,6 +217,9 @@ export default {
         console.log('pwdtype='+this.pwdType)
         this.openeye = this.openeye == require("../../assets/img/2.png") ? require("../../assets/img/1.png") : require("../../assets/img/2.png");
       },
+     formatNumToThousands (num) {
+      return toThousands(num)
+    },
   }
 }
 
@@ -229,8 +237,7 @@ export default {
     line-height:17px;
   }
   .xinxigailan{
-    padding-top: 24px;
-    padding-left: 35px;
+    
     font-size:16px;
     font-family:PingFangSC-Regular;
     font-weight:400;
@@ -308,6 +315,18 @@ export default {
     background-size: 12px 16px;
     margin-left: 10px;
     cursor: pointer;
+  }
+  .xiaolandian{
+    width:3px;
+    height:10px;
+    background:rgba(0,135,237,1);
+    display: inline-block;
+    margin-top:30px;
+    margin-left:24px
+  }
+  .box3{
+    display: inline-block;
+    margin-left: 8px;
   }
 </style>
 
