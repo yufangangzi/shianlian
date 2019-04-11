@@ -2,12 +2,13 @@
   <div>
     <div class="gailan">概览</div>
     <div class="box2">
-      <div class="xiaolandian" >
-      </div>
-      <div class="box3">
+      <!-- <div class="xiaolandian" > </div> 
+       <div class="box3">
       <p class="xinxigailan">信息概览</p>
-      </div>
-      <h6 class="jibenxinxi">基本信息</h6>
+      </div> -->
+       <div class="top-bar">信息概览</div>
+      
+      <div class="jibenxinxi">基本信息</div>
       <div class="table-box">
         <el-table
         :data="tableData"
@@ -229,17 +230,18 @@ export default {
     color:rgba(102,102,102,1);
     line-height:17px;
   }
-  .xinxigailan{
+  /* .xinxigailan{
     
     font-size:16px;
     font-family:PingFangSC-Regular;
     font-weight:400;
     color:rgba(51,51,51,1);
-    line-height:22px;
-  }
+    line-height:20px;
+   
+
+  } */
   .box2{
-    /* margin-top: 41px;
-    margin-left: 24px; */
+
     margin: 41px 0 24px 24px;
     padding-bottom: 60px;
     height:100%;
@@ -247,7 +249,7 @@ export default {
     box-shadow:0px 2px 10px 0px rgba(232,236,240,1);
   }
   .jibenxinxi{
-    padding-top: 11px;
+    margin-top: 0px;
     padding-left: 24px;
     font-size:16px;
     font-family:PingFangSC-Regular;
@@ -309,18 +311,37 @@ export default {
     margin-left: 10px;
     cursor: pointer;
   }
-  .xiaolandian{
+  /* .xiaolandian{
     width:3px;
-    height:10px;
+    height:20px;
     background:rgba(0,135,237,1);
     display: inline-block;
-    margin-top:30px;
+    margin-top:24px;
     margin-left:24px
-  }
+  } */
   .box3{
     display: inline-block;
     margin-left: 8px;
   }
+  .top-bar{
+    font-size:16px;
+    width: 100%;
+    height:60px;
+    line-height: 60px; 
+    margin-left:6px; 
+    
+  }
+  .top-bar::before{
+    content: '';
+    float: left;
+    width:3px;
+    height:20px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 4px;
+    background:rgba(0,135,237,1);
+  }
+
 </style>
 
 
