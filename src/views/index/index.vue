@@ -170,7 +170,7 @@ export default {
       tableData2:[{
         api:'数据上传',
         type:'正常',
-        url:'http://vop.baidu.com/server_api',
+        url:'http://vop.sinochem.com/server_api',
         limit:'无限量',
         limitnum:'111',
       },{
