@@ -174,21 +174,9 @@ export default {
         limit:'无限量',
         limitnum:'111',
       },{
-        api:'数据上传',
+        api:'数据查询',
         type:'正常',
-        url:'http://vop.baidu.com/server_api',
-        limit:'无限量',
-        limitnum:'111',
-      },{
-        api:'数据上传',
-        type:'正常',
-        url:'http://vop.baidu.com/server_api',
-        limit:'无限量',
-        limitnum:'111',
-      },{
-        api:'数据上传',
-        type:'正常',
-        url:'http://vop.baidu.com/server_api',
+        url:'http://vop.sinochem.com/sdata_api',
         limit:'无限量',
         limitnum:'111',
       }],
