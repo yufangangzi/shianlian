@@ -10,7 +10,7 @@
       @select="select"
       text-color="#fff"
       active-text-color="#fff">
-      <el-menu-item v-for="(item,index) in asideList" :index="item.path" :key="index" >
+      <el-menu-item v-for="(item,index) in asideList" :index="item.path" :key="index" :disabled="item.disabled" v-if="item.show">
         <i class="icon" :class="item.iconclass"></i>
         <span slot="title">{{item.title}}</span>
       </el-menu-item>
@@ -31,10 +31,22 @@
       $route (val) {
         this.pathfull = val.path
         console.log(val)
-      }
+      },
+
     },
     mounted() {
-      this.pathfull = this.$route.path
+      this.pathfull = this.$route.path;
+      // 在此处更改左侧显隐
+      console.log(this.asideList);
+      // this.asideList[1].disabled = true;
+      // 从登录接口取出的权限 超管 企业 企业2：代表审核未通过的
+      const levelName = '超管';
+      // const levelName = '企业';
+      // const levelName = '企业2';
+      this.asideList = this.asideList.map((v) => {
+        v.show = v.meta.belongList.indexOf(levelName)>-1;
+        return v;
+      })
     },
     methods: {
       select (key) {

@@ -42,7 +42,7 @@ module.exports = merge(webpackDevConfig, {
   ],
   devServer: {
     host: 'localhost',
-    port: 3000,
+    port: 8080,
     hot: true
   } // webpack-dev-derver
 })
