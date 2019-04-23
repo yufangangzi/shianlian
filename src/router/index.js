@@ -9,6 +9,12 @@ let loginRouter = {
   component: () => import('../views/login'),
   meta: { requireAuth: false }
 }
+let regRouter = {
+  path: '/register',
+  name: 'register',
+  component: () => import('../views/reg'),
+  meta: { requireAuth: false }
+}
 let aside = [
   {
     path: '/',
@@ -121,6 +127,20 @@ const otherRouter = [
         component: () => import('../views/account'),
         meta: { requireAuth: true }
       },
+      {
+        path: '/enterpriseAudit',
+        name: 'enterpriseAudit',
+        title: '企业审核',
+        component: () => import('../views/enterpriseAudit'),
+        meta: { requireAuth: true }
+      },
+      {
+        path: '/companyDetails',
+        name: 'companyDetails',
+        title: '企业审核',
+        component: () => import('../views/enterpriseAudit/details.vue'),
+        meta: { requireAuth: true }
+      }
     ]
   },
 ]
@@ -128,6 +148,7 @@ let router = new VueRouter({
   mode: 'hash',
   routes: [
     loginRouter,
+    regRouter,
     ...appRouter,
     ...otherRouter,
   ]

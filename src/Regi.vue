@@ -1,11 +1,11 @@
 <template>
-  <div id="sign">
-    <login></login>
+  <div id="reg">
+    <reg></reg>
   </div>
 </template>
  
 <script>
-import login from './views/login/index.vue'
+import reg from './views/reg/index.vue'
 export default {
   data() {
     return {
@@ -13,7 +13,7 @@ export default {
     }
   },
   components: {
-    login
+    reg
   }
 }
 </script>

@@ -42,6 +42,9 @@
              <div class="loginForm">
               <span @click="logining" class="loginBtn">登陆</span>
             </div>
+            <div>
+              <span @click="reging">没有账号,请先注册</span>
+            </div>
           </div>
         </el-col>
       </el-row>
@@ -73,6 +76,11 @@ export default {
           path: '/'
         })
       }
+    },
+    reging(){
+      this.$router.push({
+          path: '/register'
+        })
     },
     savePass () {
       this.passsave = ! this.passsave
