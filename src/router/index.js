@@ -105,11 +105,31 @@ const appRouter = [
     children:  [...aside]
   },
 ]
+// 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
+const otherRouter = [
+  {
+    path: '/',
+    name: 'zhuye',
+    title: 'main',
+    component: Main,
+    children:  [
+      {
+        path: '/account-2',
+        name: 'account2',
+        title: '用户管理新增',
+        iconclass: 'icon-2',
+        component: () => import('../views/account'),
+        meta: { requireAuth: true }
+      },
+    ]
+  },
+]
 let router = new VueRouter({
   mode: 'hash',
   routes: [
     loginRouter,
     ...appRouter,
+    ...otherRouter,
   ]
 })
 
