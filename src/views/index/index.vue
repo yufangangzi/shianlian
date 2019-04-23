@@ -11,6 +11,46 @@
       <div class="jibenxinxi">基本信息</div>
       <div class="table-box">
         <el-table
+        :data="chainData"
+        class="biaoge"
+        :header-cell-style="biaostyle"
+        border
+        >
+        <el-table-column 
+          prop="name"
+          label="业务链名称"
+          align="center"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="enterprise"
+          label="企业数"
+          align="center"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="transaction"
+          align="center"
+          label="交易数">
+        </el-table-column>
+        <el-table-column
+          prop="block"
+          align="center"
+          label="区块高度">
+        </el-table-column>
+        <el-table-column
+          prop="examine"
+          label="企业审核"
+          align="center"
+          >
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="$router.push('/enterpriseAudit?id=' + scope.row.examine)">审核</el-button>
+          </template>
+        </el-table-column>
+      </el-table> 
+      </div>
+      <!-- <div class="table-box">
+        <el-table
         :data="tableData"
         class="biaoge"
         :header-cell-style="biaostyle"
@@ -69,8 +109,8 @@
             <el-button type="text" size="small">提交审核</el-button>
           </template>
         </el-table-column>
-      </el-table>
-      </div>
+      </el-table> 
+      </div>-->
       
       <h6 class='yingyongmiaoshu'>应用描述</h6>
       <el-card :body-style="{ padding: '0px' }" class="card" >
@@ -156,6 +196,36 @@ export default {
         color: '#333',
         fontWeight: '400'
       },
+      chainData: [
+        {
+          name:'产业链',
+          enterprise: '2',
+          transaction: '0',
+          block: '0',
+          examine: '1'
+        },
+        {
+          name:'加工链',
+          enterprise: '2',
+          transaction: '0',
+          block: '0',
+          examine: '2'
+        },
+        {
+          name:'物流链',
+          enterprise: '2',
+          transaction: '0',
+          block: '0',
+          examine: '3'
+        },
+        {
+          name:'销售链',
+          enterprise: '2',
+          transaction: '0',
+          block: '0',
+          examine: '4'
+        }
+      ],
       tableData: [{
         name:'青岛岸山农业集团',
         appid:'18519226670',
@@ -241,8 +311,7 @@ export default {
 
   } */
   .box2{
-
-    margin: 41px 0 24px 24px;
+    margin: 16px 0 24px 24px;
     padding-bottom: 60px;
     height:100%;
     background:rgba(255,255,255,1);
