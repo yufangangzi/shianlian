@@ -16,7 +16,23 @@ let aside = [
     title: '概览',
     iconclass: 'icon-0',
     component: () => import('../views/index/index.vue'),
-    meta: { requireAuth: true }
+    meta: { requireAuth: true, belongList: ['超管'] }
+  },
+  {
+    path: '/overview',
+    name: 'overview',
+    title: '概览',
+    iconclass: 'icon-0',
+    component: () => import('../views/index/index.vue'),
+    meta: { requireAuth: true, belongList: ['企业'] }
+  },
+  {
+    path: '/overview',
+    name: 'overview',
+    title: '概览',
+    iconclass: 'icon-0',
+    component: () => import('../views/index/index.vue'),
+    meta: { requireAuth: true, belongList: ['企业2'] }
   },
   {
     path: '/statistics',
@@ -24,7 +40,42 @@ let aside = [
     title: '统计报表',
     iconclass: 'icon-1',
     component: () => import('../views/statistics'),
-    meta: { requireAuth: true }
+    meta: { requireAuth: true, belongList: ['超管', '企业'] }
+  },
+  {
+    path: '/statistics',
+    name: 'statistics',
+    title: '统计报表',
+    iconclass: 'icon-1',
+    component: () => import('../views/statistics'),
+    disabled: true,
+    meta: { requireAuth: true, belongList: ['企业2'] }
+  },
+  {
+    path: '/business',
+    name: 'business',
+    title: '业务链管理',
+    iconclass: 'icon-2',
+    component: () => import('../views/account'),
+    disabled: true,
+    meta: { requireAuth: true, belongList: ['超管'] }
+  },
+  {
+    path: '/datachain',
+    name: 'datachain',
+    title: '数据上链',
+    iconclass: 'icon-2',
+    component: () => import('../views/index/index.vue'),
+    meta: { requireAuth: true, belongList: ['企业'] }
+  },
+  {
+    path: '/datachain',
+    name: 'datachain',
+    title: '数据上链',
+    iconclass: 'icon-2',
+    component: () => import('../views/index/index.vue'),
+    disabled: true,
+    meta: { requireAuth: true, belongList: ['企业2'] }
   },
   {
     path: '/account',
@@ -32,8 +83,18 @@ let aside = [
     title: '用户管理',
     iconclass: 'icon-2',
     component: () => import('../views/account'),
-    meta: { requireAuth: true }
-  }
+    meta: { requireAuth: true, belongList: ['超管', '企业'] }
+  },
+  {
+    path: '/account',
+    name: 'account',
+    title: '用户管理',
+    iconclass: 'icon-2',
+    component: () => import('../views/account'),
+    disabled: true,
+    meta: { requireAuth: true, belongList: ['企业2'] }
+  },
+  
 ]
 const appRouter = [
   {
