@@ -19,6 +19,7 @@
 </el-row>
 </template>
 <script>
+  import Cookies from 'js-cookie'
   import {aside} from '@/router/index.js'
   export default {
     data () {
@@ -40,9 +41,11 @@
       console.log(this.asideList);
       // this.asideList[1].disabled = true;
       // 从登录接口取出的权限 超管 企业 企业2：代表审核未通过的
-      const levelName = '超管';
+      // const levelName = '超管';
       // const levelName = '企业';
-      // const levelName = '企业2';
+      const levelName = '企业2';
+      const status = levelName == '超管' ? 0 : levelName == '企业' ? 1 : 2
+      Cookies.set('food_jurisdiction', status);
       this.asideList = this.asideList.map((v) => {
         v.show = v.meta.belongList.indexOf(levelName)>-1;
         return v;
