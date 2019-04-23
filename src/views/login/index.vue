@@ -79,7 +79,7 @@ export default {
     },
     reging(){
       this.$router.push({
-          path: '/'
+          path: '/register'
         })
     },
     savePass () {

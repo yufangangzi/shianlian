@@ -9,6 +9,12 @@ let loginRouter = {
   component: () => import('../views/login'),
   meta: { requireAuth: false }
 }
+let regRouter = {
+  path: '/register',
+  name: 'register',
+  component: () => import('../views/reg'),
+  meta: { requireAuth: false }
+}
 let aside = [
   {
     path: '/',
@@ -128,6 +134,7 @@ let router = new VueRouter({
   mode: 'hash',
   routes: [
     loginRouter,
+    regRouter,
     ...appRouter,
     ...otherRouter,
   ]

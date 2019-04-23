@@ -1,5 +1,6 @@
 <template>
   <div class="regit">
+     注册页面
   </div>
 </template>
 <script>
