@@ -127,6 +127,20 @@ const otherRouter = [
         component: () => import('../views/account'),
         meta: { requireAuth: true }
       },
+      {
+        path: '/enterpriseAudit',
+        name: 'enterpriseAudit',
+        title: '企业审核',
+        component: () => import('../views/enterpriseAudit'),
+        meta: { requireAuth: true }
+      },
+      {
+        path: '/companyDetails',
+        name: 'companyDetails',
+        title: '企业审核',
+        component: () => import('../views/enterpriseAudit/details.vue'),
+        meta: { requireAuth: true }
+      }
     ]
   },
 ]
