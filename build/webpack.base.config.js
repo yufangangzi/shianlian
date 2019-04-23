@@ -52,10 +52,11 @@ module.exports = {
     ]
   }, // 放置loader 加载器
   plugins: [
-    // new CopyWebpackPlugin([
-    //   {from: 'src/common'},
-    //   {from: 'src/commonimg'}
-    // ]),
+    new CopyWebpackPlugin([
+      {from: 'src/assets/js'}
+      // {from: 'src/common'},
+      // {from: 'src/commonimg'}
+    ]),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',

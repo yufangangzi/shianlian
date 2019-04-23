@@ -65,7 +65,7 @@ let aside = [
     name: 'datachain',
     title: '数据上链',
     iconclass: 'icon-2',
-    component: () => import('../views/index/index.vue'),
+    component: () => import('../views/datachain/index.vue'),
     meta: { requireAuth: true, belongList: ['企业'] }
   },
   {
@@ -73,7 +73,7 @@ let aside = [
     name: 'datachain',
     title: '数据上链',
     iconclass: 'icon-2',
-    component: () => import('../views/index/index.vue'),
+    component: () => import('../views/datachain/index.vue'),
     disabled: true,
     meta: { requireAuth: true, belongList: ['企业2'] }
   },
