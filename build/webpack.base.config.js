@@ -9,6 +9,7 @@ module.exports = {
   entry: {
     app: './src/main.js',
     signin: './src/sign.js',
+    regi: './src/regi.js',
   }, // 入口文件
   output: {
     filename: '[name].[hash].js',
@@ -67,6 +68,13 @@ module.exports = {
       filename: 'signin.html',
       template: './src/template/signin.html',
       chunks: ['signin','common'],
+      cache: true,
+      meta: {}
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'reg.html',
+      template: './src/template/reg.html',
+      chunks: ['reg','common'],
       cache: true,
       meta: {}
     }),
