@@ -4,7 +4,7 @@
       数据上链
     </div>
     <div class="select-box">
-      <span class="sel-lab sel-lab-first">数据筛选：</span>
+      <!-- <span class="sel-lab sel-lab-first">数据筛选：</span>
       <el-select v-model="rulevalue" placeholder="全部">
         <el-option
           v-for="item in rules"
@@ -12,7 +12,7 @@
           :label="item.label"
           :value="item.value">
         </el-option>
-      </el-select>
+      </el-select> -->
       <span class="sel-lab" v-show="false">用户状态：</span>
       <el-select v-model="typevalue" placeholder="请选择状态" v-show="false">
         <el-option
@@ -27,7 +27,7 @@
       <el-button class="reset-btn" @click="resetList">重置</el-button>
     </div>
     <div class="add-btn">
-      <el-button @click="createChain" type="primary" size="medium">新建数据</el-button>
+      <el-button @click="createChain" type="primary" icon="el-icon-plus" size="medium">新建数据</el-button>
     </div>
     <div class="table-box">
       <el-table
@@ -351,6 +351,7 @@ export default {
     resetList () {
       this.rulevalue = '';
       this.typevalue = '';
+      this.inputValue = '';
       this.getList()
     },
     adduser () {
