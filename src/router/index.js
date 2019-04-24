@@ -145,7 +145,7 @@ const otherRouter = [
         path: '/datachainDetails',
         name: 'datachainDetails',
         title: '数据上链详情',
-        component: () => import('../views/datachain/detail.vue'),
+        component: () => import('../views/datachain/details.vue'),
         meta: { requireAuth: true }
       }
     ]
