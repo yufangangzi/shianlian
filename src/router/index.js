@@ -17,7 +17,7 @@ let regRouter = {
 }
 let aside = [
   {
-    path: '/',
+    path: '/',// 超级管理员路由
     name: 'Index',
     title: '概览',
     iconclass: 'icon-0',
@@ -25,19 +25,19 @@ let aside = [
     meta: { requireAuth: true, belongList: ['超管'] }
   },
   {
-    path: '/overview',
+    path: '/overview',// 已审核
     name: 'overview',
     title: '概览',
     iconclass: 'icon-0',
-    component: () => import('../views/index/index.vue'),
+    component: () => import('../views/index/overview.vue'),
     meta: { requireAuth: true, belongList: ['企业'] }
   },
   {
-    path: '/overview',
-    name: 'overview',
+    path: '/unaudited',// 未审核
+    name: 'unaudited',
     title: '概览',
     iconclass: 'icon-0',
-    component: () => import('../views/index/index.vue'),
+    component: () => import('../views/index/unaudited.vue'),
     meta: { requireAuth: true, belongList: ['企业2'] }
   },
   {

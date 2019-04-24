@@ -12,40 +12,62 @@
       <div class="jibenxinxi">基本信息</div>
       <div class="table-box">
         <el-table
-        :data="chainData"
+        :data="tableData"
         class="biaoge"
         :header-cell-style="biaostyle"
         border
         >
         <el-table-column 
           prop="name"
-          label="业务链名称"
+          label="企业名称"
           align="center"
           >
         </el-table-column>
         <el-table-column
-          prop="enterprise"
-          label="企业数"
+          prop="appid"
+          label="AppID"
           align="center"
           >
         </el-table-column>
         <el-table-column
-          prop="transaction"
+          prop="lian"
           align="center"
-          label="交易数">
+          label="所在链条">
         </el-table-column>
         <el-table-column
-          prop="block"
+          prop="keyapi"
           align="center"
-          label="区块高度">
+          label="API Key">
+          <template slot-scope="scope">
+            <span>{{scope.row.keyapi}}</span>
+            <span class="copy" 
+              v-clipboard:copy="scope.row.keyapi"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+            ></span>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="examine"
-          label="企业审核"
+          prop="keysecret"
+          align="center"
+          label="Secret Key"
+          type="password"
+          > 
+          <template slot-scope="scope" >
+            {{pwdType?scope.row.keysecret:"******"}}
+            
+
+            <img :src="openeye" class="eye"  @click="changeType()" style="float:right">
+          </template>
+         
+          
+        </el-table-column>
+        <el-table-column
+          label="食安认证"
           align="center"
           >
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="$router.push('/enterpriseAudit?id=' + scope.row.examine)">审核</el-button>
+            <el-button type="text" size="small">提交审核</el-button>
           </template>
         </el-table-column>
       </el-table> 
@@ -120,9 +142,7 @@
         </el-table-column>
       </el-table>
       </div>
-       
     </div>
-    <!--超级管理员显示内容end-->
   </div>
 </template>
 <script>
@@ -136,36 +156,13 @@ export default {
         color: '#333',
         fontWeight: '400'
       },
-      chainData: [
-        {
-          name:'产业链',
-          enterprise: '2',
-          transaction: '0',
-          block: '0',
-          examine: '1'
-        },
-        {
-          name:'加工链',
-          enterprise: '2',
-          transaction: '0',
-          block: '0',
-          examine: '2'
-        },
-        {
-          name:'物流链',
-          enterprise: '2',
-          transaction: '0',
-          block: '0',
-          examine: '3'
-        },
-        {
-          name:'销售链',
-          enterprise: '2',
-          transaction: '0',
-          block: '0',
-          examine: '4'
-        }
-      ],
+      tableData: [{
+        name:'青岛岸山农业集团',
+        appid:'18519226670',
+        lian:'产地/加工/物流/销售',
+        keyapi:'6FnB8gKicOtHwLbKvt7eQkK',
+        keysecret:'12324'
+      }],
       tableData1:[{
         totalsum:'187820',
         totalday:'678',
@@ -184,14 +181,6 @@ export default {
         limit:'无限量',
         limitnum:'111',
       }],
-      beAuditedData: [
-        {
-          name: '青岛岸山农业集团',
-          status: 0,
-          details: '您的企业审核存在如下问题:1.营业执照统一社会信用代码不清晰2.复印件未加盖企业公章',
-          id: 1
-        }
-      ],
       totalsum:"2187820",
       totalday:"567123",
       pwdType: false, // 密码类型
