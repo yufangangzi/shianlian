@@ -27,7 +27,7 @@
       <el-button class="reset-btn" @click="resetList">重置</el-button>
     </div>
     <div class="add-btn">
-      <el-button @click="adduser" type="primary" size="medium">新建用户</el-button>
+      <el-button @click="createChain" type="primary" size="medium">新建数据</el-button>
     </div>
     <div class="table-box">
       <el-table
@@ -368,23 +368,16 @@ export default {
       this.initAddUser()
       this.$refs.form.resetFields()
     },
+    createChain () {
+      this.$router.push('/datachainDetails?type=1')
+    },
     editChain (val) {
       console.log(val)
-      this.editForm = {
-        userName: val.userName,
-        roleName: val.roleName,
-        id: val.id
-      }
-      this.editformVisble = true
+      this.$router.push('/datachainDetails?id=' + val.id+'&type=1')
     },
     viewChain (val) {
       console.log(val)
-      this.editForm = {
-        userName: val.userName,
-        roleName: val.roleName,
-        id: val.id
-      }
-      this.editformVisble = true
+      this.$router.push('/datachainDetails?id=' + val.id+'&type=2')
     },
     editUser (val) {
       console.log(val)
