@@ -140,6 +140,13 @@ const otherRouter = [
         title: '企业审核',
         component: () => import('../views/enterpriseAudit/details.vue'),
         meta: { requireAuth: true }
+      },
+      {
+        path: '/datachainDetails',
+        name: 'datachainDetails',
+        title: '数据上链详情',
+        component: () => import('../views/datachain/details.vue'),
+        meta: { requireAuth: true }
       }
     ]
   },
