@@ -39,8 +39,8 @@
       // 在此处更改左侧显隐
       // console.log(this.asideList);
       // this.asideList[1].disabled = true;
-      // 从登录接口取出的权限 超管 企业 企业2：代表审核未通过的
-      const levelName = '超管';
+      // 从登录接口取出的权限 管理员 操作员 运营者：代表审核未通过的
+      const levelName = localStorage.getItem('food_roleName');
       // const levelName = '企业';
       // const levelName = '企业2';
       this.asideList = this.asideList.map((v) => {

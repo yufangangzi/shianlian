@@ -26,7 +26,7 @@
         >
           <template slot-scope="scope">
             <span type="text" size="small" style="color:red;">
-              {{scope.row.status == 0 ? '审批驳回' : '审批成功'}}
+              {{scope.row.status == 0 ? '审批驳回' : '审批中'}}
             </span>
           </template>
         </el-table-column>
@@ -42,19 +42,35 @@
           align="center"
           >
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="$router.push('/enterpriseAudit?id=' + scope.row.id)">提交审核</el-button>
+            <el-button type="text" size="small" :disabled="scope.row.status == 0 ? false : true" @click="$router.push('/enterpriseAudit?id=' + scope.row.id)">提交审核</el-button>
           </template>
         </el-table-column>
       </el-table> 
       </div>
     </div>
     <!--待审核end-->
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="500px"
+      >
+        <h3>您的企业审核信息已提交！</h3>
+        <p>
+          您提交的新建企业申请已经提交成功，并已提交由系统管理员审核。通常，审核会在3~5个工作日内完成。
+        </p>
+        <p>在审核完成后，您将可以使用本账号作为企业管理员进行登录。</p>
+        <p>如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</p>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      dialogVisible: false,
       biaostyle: {
         backgroundColor: '#F6F7FB',
         fontSize: '14px',

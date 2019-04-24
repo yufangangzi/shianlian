@@ -17,5 +17,11 @@ export default {
   },
   getAPI (params) {
     return post(url.getAPI, params)
+  },
+  getVerify (params) {
+    return get(url.getVerify, params)
+  },
+  login (params) {
+    return post(url.login, params)
   }
 }
