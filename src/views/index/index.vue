@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="gailan">概览</div>
-    <div class="box2">
+    <!--超级管理员显示的内容-->
+    <div class="box2" v-if="status == 0 || status == 1">
       <!-- <div class="xiaolandian" > </div> 
        <div class="box3">
       <p class="xinxigailan">信息概览</p>
@@ -9,7 +10,7 @@
        <div class="top-bar">信息概览</div>
       
       <div class="jibenxinxi">基本信息</div>
-      <div class="table-box">
+      <div class="table-box" v-show="status == 0">
         <el-table
         :data="chainData"
         class="biaoge"
@@ -49,7 +50,7 @@
         </el-table-column>
       </el-table> 
       </div>
-      <!-- <div class="table-box">
+      <div class="table-box" v-show="status == 1">
         <el-table
         :data="tableData"
         class="biaoge"
@@ -110,7 +111,7 @@
           </template>
         </el-table-column>
       </el-table> 
-      </div>-->
+      </div>
       
       <h6 class='yingyongmiaoshu'>应用描述</h6>
       <el-card :body-style="{ padding: '0px' }" class="card" >
@@ -183,9 +184,59 @@
       </div>
        
     </div>
+    <!--超级管理员显示内容end-->
+    <!--待审核-->
+    <div class="box2" v-if="status == 2">
+      <div class="top-bar">信息概览</div>
+      <div class="jibenxinxi">基本信息</div>
+
+      <div class="table-box" v-show="true">
+        <el-table
+        :data="beAuditedData"
+        class="biaoge"
+        :header-cell-style="biaostyle"
+        border
+        >
+        <el-table-column 
+          prop="name"
+          label="企业名称"
+          align="center"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          label="审批状态"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <span type="text" size="small" style="color:red;">
+              {{scope.row.status == 0 ? '审批驳回' : '审批成功'}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="details"
+          align="center"
+          :show-overflow-tooltip="true"
+          label="审批详情">
+        </el-table-column>
+        <el-table-column
+          prop="id"
+          label="企业创建"
+          align="center"
+          >
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="$router.push('/enterpriseAudit?id=' + scope.row.id)">提交审核</el-button>
+          </template>
+        </el-table-column>
+      </el-table> 
+      </div>
+    </div>
+    <!--待审核end-->
   </div>
 </template>
 <script>
+import Cookies from 'js-cookie'
 import {toThousands } from '@/util/filter.js'
 export default {
   data() {
@@ -251,12 +302,24 @@ export default {
         limit:'无限量',
         limitnum:'111',
       }],
+      beAuditedData: [
+        {
+          name: '青岛岸山农业集团',
+          status: 0,
+          details: '您的企业审核存在如下问题:1.营业执照统一社会信用代码不清晰2.复印件未加盖企业公章',
+          id: 1
+        }
+      ],
       totalsum:"2187820",
       totalday:"567123",
       pwdType: false, // 密码类型
       openeye: require('../../assets/img/1.png'), //图片地址
-
+      status: 0
     }
+  },
+  created () {
+    console.log(Cookies.get('food_jurisdiction'))
+    this.status = Cookies.get('food_jurisdiction')
   },
   methods: {
     onCopy () {

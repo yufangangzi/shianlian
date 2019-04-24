@@ -46,16 +46,48 @@
           <img src="../../assets/img/loginbg.png"/>
         </p>
       </div>
+      <div class="detailBt">
+        <el-button @click="$router.replace('/enterpriseAudit')">返回</el-button>
+        <el-button type="primary" @click="adopt">通过</el-button>
+        <el-button type="info" @click="refuse">拒绝</el-button>
+      </div>
     </div>
+    <adopt-dialog :adoptVisible="adoptVisible" :adoptOk="adoptOk"></adopt-dialog>
+    <refuse-dialog v-if="refuseVisible" :refuseVisible="refuseVisible" :refuseCancel="refuseCancel" :refuseOk="refuseOk"></refuse-dialog>
   </div>
 </template>
 <script>
+import AdoptDialog from './adopt-dialog.vue'
+import RefuseDialog from './refuse-dialog.vue'
   export default {
     data() {
       return {
+        adoptVisible: false,
+        refuseVisible: false
       };
     },
+    components: {
+      AdoptDialog,
+      RefuseDialog
+    },
     methods: {
+      // 通过审核
+      adopt () {
+        this.adoptVisible = true;
+      },
+      adoptOk () {
+        this.adoptVisible = false;
+      },
+      // 拒绝审核
+      refuse () {
+        this.refuseVisible = true;
+      },
+      refuseCancel () {
+        this.refuseVisible = false;
+      },
+      refuseOk (data) {
+        this.refuseVisible = false;
+      }
     }
   };
 </script>
@@ -111,5 +143,8 @@
 .detailCt img{
   width: 90%;
   margin-top: 20px;
+}
+.detailBt{
+  text-align: center;
 }
 </style>

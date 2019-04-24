@@ -60,6 +60,7 @@ export default {
     },
     loginOut () {
       Cookies.set('food_isLogin', '0')
+      Cookies.set('food_jurisdiction', '0')
       this.$router.push({
         path: '/login'
       })
