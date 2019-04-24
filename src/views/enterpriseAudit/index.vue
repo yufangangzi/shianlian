@@ -13,8 +13,8 @@
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="$router.push('/companyDetails?id=' + scope.row.id)">详情</el-button>
-              <el-button type="text" size="small" @click="adopt">通过</el-button>
-              <el-button type="text" size="small" @click="refuse">拒绝</el-button>
+              <el-button type="text" size="small" @click="adopt" class="adopt">通过</el-button>
+              <el-button type="text" size="small" @click="refuse" class="refuse">拒绝</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -145,5 +145,11 @@ export default {
 }
 .table-box{
   padding: 0 24px;
+}
+.adopt{
+  color: #4DD287;
+}
+.refuse{
+  color: #FF5454;
 }
 </style>

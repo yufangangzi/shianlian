@@ -25,7 +25,7 @@
           align="center"
         >
           <template slot-scope="scope">
-            <span type="text" size="small" style="color:red;">
+            <span type="text" size="small" :class="scope.row.status == 0 ? 'rejectColor' : 'approvalColor' ">
               {{scope.row.status == 0 ? '审批驳回' : '审批中'}}
             </span>
           </template>
@@ -33,8 +33,12 @@
         <el-table-column
           prop="details"
           align="center"
-          :show-overflow-tooltip="true"
           label="审批详情">
+          <template slot-scope="scope">
+            <div class="hidden">
+              {{scope.row.details}}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
           prop="id"
@@ -83,6 +87,12 @@ export default {
           status: 0,
           details: '您的企业审核存在如下问题:1.营业执照统一社会信用代码不清晰2.复印件未加盖企业公章',
           id: 1
+        },
+        {
+          name: '张三果蔬公司',
+          status: 1,
+          details: '您的企业审核存在如下问题:1.营业执照统一社会信用代码不清晰2.复印件未加盖企业公章',
+          id: 2
         }
       ],
     }
@@ -216,7 +226,18 @@ export default {
     margin-right: 4px;
     background:rgba(0,135,237,1);
   }
-
+  .rejectColor{
+    color: #FF5454;
+  }
+  .approvalColor{
+    color: #4DD287;
+  }
+  .hidden{
+    min-width: 250px;
+    overflow: hidden;/*超出部分隐藏*/
+    white-space: nowrap;/*不换行*/
+    text-overflow:ellipsis;/*超出部分文字以...显示*/
+  }
 </style>
 
 
