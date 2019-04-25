@@ -23,5 +23,9 @@ export default {
   },
   login (params) {
     return post(url.login, params)
+  },
+  register (params) {
+    return post(url.register, params)
   }
+
 }

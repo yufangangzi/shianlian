@@ -142,6 +142,13 @@ const otherRouter = [
         meta: { requireAuth: true }
       },
       {
+        path: '/qyAudit',
+        name: 'qyAudit',
+        title: '企业审核',
+        component: () => import('../views/reg/qyAudit.vue'),
+        meta: { requireAuth: true }
+      },
+      {
         path: '/datachainDetails',
         name: 'datachainDetails',
         title: '数据上链详情',
