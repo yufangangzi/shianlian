@@ -27,7 +27,8 @@ export function post (url, params) {
   return new Promise((resolve, reject) => {
     axios.post(url, params, { 
       headers: { 
-        'Authorization': token ? 'Bearer ' + token : '' ,
+        // 'Authorization': token ? 'Bearer ' + token : '' ,
+        'Authorization': token,
         'verifyCode-authentic-request-header': verifyCodeToken ? verifyCodeToken : ''
       } 
     })

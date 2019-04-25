@@ -112,20 +112,21 @@ export default {
 
             Cookies.set('food_isLogin', '1')
             Cookies.set('food_user', res.result.user.userName)
-            localStorage.setItem('food_roleName',res.result.user.roleName)
+            localStorage.setItem('userInfor', JSON.stringify(res.result.user))
             localStorage.setItem('access_token',res.result.token)
 
-            if (roleName == '管理员') {
-              oUrl = '/'
-            } else if (roleName == '操作员') {
-              oUrl = '/overview'
-            } else if (roleName == '运营者') {
-              oUrl = '/unaudited'
-            }
+            this.getOrgStatus(res.result.user.organId)
+            // if (roleName == '管理员') {
+            //   oUrl = '/'
+            // } else if (roleName == '操作员') {
+            //   oUrl = '/overview'
+            // } else if (roleName == '运营者') {
+            //   oUrl = '/unaudited'
+            // }
             
-            this.$router.push({
-              path: oUrl
-            })
+            // this.$router.push({
+            //   path: oUrl
+            // })
           }
         } else {
           this.$message.error(res.msg);
@@ -183,6 +184,14 @@ export default {
         const token = new Date().getTime();
         localStorage.setItem('verifyCodeToken',token)
         this.identifyImg = localStorage.getItem('domain') + '/userBack/getVerify?verifyCode-authentic-request-header=' + token;
+      })
+    },
+    getOrgStatus (id) {
+      let data = {
+        organId: id
+      }
+      api.getOrgStatus(data).then(res => {
+        console.log(res)
       })
     }
   }

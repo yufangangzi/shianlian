@@ -35,7 +35,7 @@
           align="center"
           label="审批详情">
           <template slot-scope="scope">
-            <div class="hidden">
+            <div class="hidden" @click="approvalDetails">
               {{scope.row.details}}
             </div>
           </template>
@@ -68,6 +68,25 @@
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+    <!--审核驳回原因-->
+    <el-dialog
+      title=""
+      :visible.sync="rejectVisible"
+      width="380px"
+    >
+      <div class="rejectBox">
+        <h3>审批驳回原因</h3>
+        <div class="rejectCt">
+          <h4>您的企业审核存在如下问题: </h4>
+          <p>1.营业执照统一社会信用代码不清晰</p>
+          <p>2.复印件未加盖企业公章</p>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </div>
+    </el-dialog>
+    <!--审核驳回原因-->
   </div>
 </template>
 <script>
@@ -75,6 +94,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      rejectVisible: false,
       biaostyle: {
         backgroundColor: '#F6F7FB',
         fontSize: '14px',
@@ -100,6 +120,9 @@ export default {
   created () {
   },
   methods: {
+    approvalDetails () {
+      this.rejectVisible = true;
+    }
   }
 }
 
@@ -233,10 +256,40 @@ export default {
     color: #4DD287;
   }
   .hidden{
+    cursor: pointer;
     min-width: 250px;
     overflow: hidden;/*超出部分隐藏*/
     white-space: nowrap;/*不换行*/
     text-overflow:ellipsis;/*超出部分文字以...显示*/
+  }
+  .rejectBox h3{
+    text-align: center;
+    color: #514C4A;
+    font-size: 16px;
+    margin-bottom: 11px;
+  }
+  .rejectCt{
+    max-width: 240px;
+    margin: 0 auto;
+  }
+  .rejectCt h4{
+    font-weight: normal;
+    color: #54575A;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .rejectCt p{
+    margin-bottom: 10px;
+    color: #514C4A;
+  }
+  .rejectBox .dialog-footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 36px;
+  }
+  .rejectBox .el-button{
+    width: 78px;
   }
 </style>
 

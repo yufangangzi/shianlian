@@ -23,5 +23,20 @@ export default {
   },
   login (params) {
     return post(url.login, params)
+  },
+  getOrgStatus (params) {
+    return post(url.getOrgStatus, params)
+  },
+  getOrgList (params) {
+    return post(url.getOrgList, params)
+  },
+  getOrgDetail (params) {
+    return post(url.getOrgList, params)
+  },
+  orgPass (params) {
+    return post(url.orgPass, params)
+  },
+  orgRefuse (params) {
+    return post(url.orgRefuse, params)
   }
 }
