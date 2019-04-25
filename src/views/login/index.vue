@@ -124,7 +124,8 @@ export default {
             localStorage.setItem('food_roleNameOrigin',res.result.user.roleName)
             localStorage.setItem('access_token',res.result.token)
             localStorage.setItem('u_organId',organId)
-
+            localStorage.setItem('u_organName',res.result.user.organName)
+            
             if (roleName == '操作员') {
               oUrl = '/'
               api.getOrgStatus({

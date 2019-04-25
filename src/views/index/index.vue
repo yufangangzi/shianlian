@@ -45,7 +45,7 @@
           align="center"
           >
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="$router.push('/enterpriseAudit?id=' + scope.row.examine)">审核</el-button>
+            <el-button type="text" size="small" @click="$router.push('/enterpriseAudit?id=' + scope.row.id)">审核</el-button>
           </template>
         </el-table-column>
       </el-table> 
@@ -138,34 +138,34 @@ export default {
         fontWeight: '400'
       },
       chainData: [
-        {
-          name:'产业链',
-          enterprise: '2',
-          transaction: '0',
-          block: '0',
-          examine: '1'
-        },
-        {
-          name:'加工链',
-          enterprise: '2',
-          transaction: '0',
-          block: '0',
-          examine: '2'
-        },
-        {
-          name:'物流链',
-          enterprise: '2',
-          transaction: '0',
-          block: '0',
-          examine: '3'
-        },
-        {
-          name:'销售链',
-          enterprise: '2',
-          transaction: '0',
-          block: '0',
-          examine: '4'
-        }
+        // {
+        //   name:'产业链',
+        //   enterprise: '2',
+        //   transaction: '0',
+        //   block: '0',
+        //   id: '1'
+        // },
+        // {
+        //   name:'加工链',
+        //   enterprise: '2',
+        //   transaction: '0',
+        //   block: '0',
+        //   id: '2'
+        // },
+        // {
+        //   name:'物流链',
+        //   enterprise: '2',
+        //   transaction: '0',
+        //   block: '0',
+        //   id: '3'
+        // },
+        // {
+        //   name:'销售链',
+        //   enterprise: '2',
+        //   transaction: '0',
+        //   block: '0',
+        //   id: '4'
+        // }
       ],
       tableData1:[{
         totalsum:'187820',
@@ -200,7 +200,7 @@ export default {
     }
   },
   created () {
-    this.getOrgList()
+    this.getStatisticsChainList()
   },
   methods: {
     onCopy () {
@@ -228,14 +228,21 @@ export default {
     formatNumToThousands (num) {
       return toThousands(num)
     },
-    getOrgList () {
-      let data = {
-        "orderBy": "create_time",
-        "pageNum": 0,
-        "pageSize": 0,
-      }
-      api.getOrgList(data).then(res => {
-        console.log(res)
+    getStatisticsChainList () {
+      let data = {}
+      api.getStatisticsChain(data).then(res => {
+        if (res.code == 0) {
+          this.chainData = res.result.map((item,index)=>{
+            let str = item.chainName.substring(-3, 2)
+            return {
+              name: str + '链',
+              enterprise: item.orgNum,
+              transaction: item.tradeNum,
+              block: 0,
+              id: item.chainId
+            }
+          })
+        }
       })
     }
   }

@@ -25,8 +25,8 @@
           align="center"
         >
           <template slot-scope="scope">
-            <span type="text" size="small" :class="scope.row.status == 0 ? 'rejectColor' : 'approvalColor' ">
-              {{scope.row.status == 0 ? '审批驳回' : '审批中'}}
+            <span type="text" size="small" :class="scope.row.status == 1 ? 'approvalColor' : scope.row.status == 2 ? 'rejectColor' : 'approvalColor' ">
+              {{scope.row.status == 1 ? '审批中' : scope.row.status == 2 ? '审批驳回' : '审批成功'}}
             </span>
           </template>
         </el-table-column>
@@ -46,7 +46,7 @@
           align="center"
           >
           <template slot-scope="scope">
-            <el-button type="text" size="small" :disabled="scope.row.status == 0 ? false : true" @click="$router.push('/qyAudit?id=' + scope.row.id)">提交审核</el-button>
+            <el-button type="text" size="small" :disabled="scope.row.status == 2 ? false : true" @click="$router.push('/qyAudit?id=' + scope.row.id)">提交审核</el-button>
           </template>
         </el-table-column>
       </el-table> 
@@ -78,8 +78,11 @@
         <h3>审批驳回原因</h3>
         <div class="rejectCt">
           <h4>您的企业审核存在如下问题: </h4>
-          <p>1.营业执照统一社会信用代码不清晰</p>
-          <p>2.复印件未加盖企业公章</p>
+          <p v-for="(item,index) in approvalData " :key="index">
+            {{item.content}}
+          </p>
+          <!-- <p>1.营业执照统一社会信用代码不清晰</p>
+          <p>2.复印件未加盖企业公章</p> -->
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -90,6 +93,7 @@
   </div>
 </template>
 <script>
+import api from '@/feath/api.js'
 export default {
   data() {
     return {
@@ -102,26 +106,54 @@ export default {
         fontWeight: '400'
       },
       beAuditedData: [
-        {
-          name: '青岛岸山农业集团',
-          status: 0,
-          details: '您的企业审核存在如下问题:1.营业执照统一社会信用代码不清晰2.复印件未加盖企业公章',
-          id: 1
-        },
-        {
-          name: '张三果蔬公司',
-          status: 1,
-          details: '您的企业审核存在如下问题:1.营业执照统一社会信用代码不清晰2.复印件未加盖企业公章',
-          id: 2
-        }
+        // {
+        //   name: '青岛岸山农业集团',
+        //   status: 0,
+        //   details: '您的企业审核存在如下问题:1.营业执照统一社会信用代码不清晰2.复印件未加盖企业公章',
+        //   id: 1
+        // },
+        // {
+        //   name: '张三果蔬公司',
+        //   status: 1,
+        //   details: '您的企业审核存在如下问题:1.营业执照统一社会信用代码不清晰2.复印件未加盖企业公章',
+        //   id: 2
+        // }
       ],
+      approvalData: [
+        // {
+        //   content: '第一条数据'
+        // },
+        // {
+        //   content: '第二条数据'
+        // }
+      ]
     }
   },
   created () {
   },
+  mounted () {
+    this.getStatusList()
+  },
   methods: {
     approvalDetails () {
       this.rejectVisible = true;
+    },
+    getStatusList () {
+      api.getOrgStatus({
+        "organId": localStorage.getItem('u_organId')
+      }).then(res => {
+        if (res.code == 0) {
+          this.beAuditedData.push({
+            name: res.result.organName,
+            status: res.result.approvalStatus,
+            details: res.result.approvalDetail,
+            id: res.result.id
+          })
+          this.approvalData.push({
+            content: res.result.approvalDetail
+          })
+        }
+      });
     }
   }
 }

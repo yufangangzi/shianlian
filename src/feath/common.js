@@ -37,12 +37,15 @@ export default {
     return post(url.getOrgList, params)
   },
   getOrgDetail (params) {
-    return post(url.getOrgList, params)
+    return post(url.getOrgDetail, params)
   },
   orgPass (params) {
     return post(url.orgPass, params)
   },
   orgRefuse (params) {
     return post(url.orgRefuse, params)
+  },
+  getStatisticsChain (params) {
+    return post(url.getStatisticsChain, params)
   }
 }

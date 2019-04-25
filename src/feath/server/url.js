@@ -14,5 +14,6 @@ export default {
   getOrgList: domain + '/organization/list',
   getOrgDetail: domain + '/organization/detail',
   orgPass: domain + '/organization/pass',
-  orgRefuse: domain + '/organization/refuse'
+  orgRefuse: domain + '/organization/refuse',
+  getStatisticsChain: domain + '/statisticalReportBack/getStatisticsChain'
 }
