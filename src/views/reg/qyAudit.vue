@@ -228,7 +228,7 @@ import api from '@/feath/api.js'
         },
         ruleValidate: {
           qyName: [{ required: true, validator: qyNameFlag, trigger: 'blur' }],
-          qyNumber: [{ required: true, message: utilCheckSocialCreditCode, trigger: 'blur' }],
+          qyNumber: [{ required: true, message: CheckSocialCreditCode, trigger: 'blur' }],
           regAddress: [{ required: true, message: '注册地址不能为空', trigger: 'blur' }],
           telAddress: [{ required: true, message: '联络地址不能为空', trigger: 'blur' }],   
           qyfr: [{ required: true, message: '法人代表不能为空', trigger: 'blur' }],	
