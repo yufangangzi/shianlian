@@ -45,6 +45,23 @@ export default {
   },
   register (params) {
     return post(url.register, params)
+  },
+  getOrgStatus (params) {
+    return post(url.getOrgStatus, params)
+  },
+  getOrgList (params) {
+    return post(url.getOrgList, params)
+  },
+  getOrgDetail (params) {
+    return post(url.getOrgDetail, params)
+  },
+  orgPass (params) {
+    return post(url.orgPass, params)
+  },
+  orgRefuse (params) {
+    return post(url.orgRefuse, params)
+  },
+  getStatisticsChain (params) {
+    return post(url.getStatisticsChain, params)
   }
-
 }

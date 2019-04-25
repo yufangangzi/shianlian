@@ -6,35 +6,35 @@
       <div class="detailCt">
         <p>
           <span class="detailLeft">企业名称：</span>
-          <span class="detailRt">青岛大成集团</span>
+          <span class="detailRt">{{detailData.name}}</span>
         </p>
         <p>
           <span class="detailLeft">统一社会信用代码：</span>
-          <span class="detailRt">9144030071526726XG</span>
+          <span class="detailRt">{{detailData.creditCode}}</span>
         </p>
         <p>
           <span class="detailLeft">注册地址：</span>
-          <span class="detailRt">山东省青岛市黄岛区铁橛山路1111号石桥大厦</span>
+          <span class="detailRt">{{detailData.registerAddress}}</span>
         </p>
         <p>
           <span class="detailLeft">联络地址：</span>
-          <span class="detailRt">山东省青岛市黄岛区铁橛山路1111号石桥大厦</span>
+          <span class="detailRt">{{detailData.contactAddress}}</span>
         </p>
         <p>
           <span class="detailLeft">法人代表：</span>
-          <span class="detailRt">赵敏</span>
+          <span class="detailRt">{{detailData.corporate}}</span>
         </p>
         <p>
           <span class="detailLeft">归属地区：</span>
-          <span class="detailRt">山东省青岛市黄岛区</span>
+          <span class="detailRt">{{detailData.attributionArea}}</span>
         </p>
         <p>
           <span class="detailLeft">生产许可证：</span>
-          <span class="detailRt">12356450</span>
+          <span class="detailRt">{{detailData.plantLicence}}</span>
         </p>
         <p>
           <span class="detailLeft">种养殖许可证：</span>
-          <span class="detailRt">12356450</span>
+          <span class="detailRt">{{detailData.productLicence}}</span>
         </p>
         <p>
           <span class="detailLeft">上链类型：</span>
@@ -42,11 +42,11 @@
         </p>
         <p>
           <span class="detailLeft">工商营业执照：</span>
-          <span class="detailRt"><img src="../../assets/img/loginbg.png"/></span>
+          <span class="detailRt"><img :src="detailData.businessLicense"/></span>
         </p>
       </div>
       <div class="detailBt">
-        <el-button @click="$router.replace('/enterpriseAudit')" class="backBtn">返回</el-button>
+        <el-button @click="$router.back(-1);" class="backBtn">返回</el-button>
         <el-button type="primary" @click="adopt" class="adoptBtn">通过</el-button>
         <el-button type="info" @click="refuse" class="refuseBtn">拒绝</el-button>
       </div>
@@ -56,24 +56,39 @@
   </div>
 </template>
 <script>
+import api from '@/feath/api.js'
 import AdoptDialog from './adopt-dialog.vue'
 import RefuseDialog from './refuse-dialog.vue'
   export default {
     data() {
       return {
         adoptVisible: false,
-        refuseVisible: false
+        refuseVisible: false,
+        id: '',
+        detailData: {
+          name: '',
+          creditCode: '',
+          registerAddress: '',
+          contactAddress: '',
+          corporate: '',
+          attributionArea: '',
+          plantLicence: '',
+          productLicence: '',
+          applyChain: '',
+          businessLicense: ''
+        }
       };
     },
     components: {
       AdoptDialog,
       RefuseDialog
     },
+    mounted () {
+      this.id = Number(this.$route.query.id);
+      this.orgDetail()
+    },
     methods: {
       // 通过审核
-      adopt () {
-        this.adoptVisible = true;
-      },
       adoptOk () {
         this.adoptVisible = false;
       },
@@ -85,8 +100,76 @@ import RefuseDialog from './refuse-dialog.vue'
         this.refuseVisible = false;
       },
       refuseOk (data) {
-        this.refuseVisible = false;
-      }
+        let oData = {
+          approvalDetail: data,
+          id: this.id
+        }
+        api.orgRefuse(oData).then(res => {
+          if (res.code == 0) {
+            this.$message({
+              message: '拒绝成功！',
+              type: 'success'
+            });
+            this.refuseVisible = false;
+            this.getOrgList()
+          } else {
+            this.$message.error(res.msg);
+          }
+        })
+      },
+      orgDetail () {
+        let data = {
+          id: this.id
+        }
+        api.getOrgDetail(data).then(res => {
+          console.log(res)
+          if (res.code == 0) {
+            this.detailData.name = res.result.name;
+            this.detailData.creditCode = res.result.creditCode;
+            this.detailData.registerAddress = res.result.registerAddress;
+            this.detailData.contactAddress = res.result.contactAddress;
+            this.detailData.corporate = res.result.corporate;
+            this.detailData.attributionArea = res.result.attributionArea;
+            this.detailData.plantLicence = res.result.plantLicence;
+            this.detailData.productLicence = res.result.productLicence;
+            this.detailData.applyChain = res.result.applyChain;
+            this.detailData.businessLicense = localStorage.getItem('domain') + '/' + res.result.businessLicense;
+          }
+        })
+      },
+      // 通过审核
+      adopt () {
+        let data = {
+          id: this.id
+        }
+        api.orgPass(data).then(res => {
+          console.log(res)
+          if (res.code == 0) {
+            this.adoptVisible = true;
+          } else {
+            this.$message.error(res.msg);
+          }
+        })
+      },
+      // 拒绝
+      // refuse (data) {
+      //   let oData = {
+      //     approvalDetail: data,
+      //     id: this.id,
+      //     organId: localStorage.getItem('u_organId')
+      //   }
+      //   api.orgRefuse(oData).then(res => {
+      //     if (res.code == 0) {
+      //       this.$message({
+      //         message: '拒绝成功！',
+      //         type: 'success'
+      //       });
+      //       this.refuseVisible = false;
+      //     } else {
+      //       this.$message.error(res.msg);
+      //     }
+      //   })
+      // },
     }
   };
 </script>

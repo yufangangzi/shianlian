@@ -15,4 +15,10 @@ export default {
   login: domain + '/userBack/login',
   orgStatus: domain + '/organization/status',
   register: domain + '/organization/register',
+  getOrgStatus: domain + '/organization/status',
+  getOrgList: domain + '/organization/list',
+  getOrgDetail: domain + '/organization/detail',
+  orgPass: domain + '/organization/pass',
+  orgRefuse: domain + '/organization/refuse',
+  getStatisticsChain: domain + '/statisticalReportBack/getStatisticsChain'
 }

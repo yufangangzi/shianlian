@@ -124,7 +124,8 @@ export default {
             localStorage.setItem('food_roleNameOrigin',res.result.user.roleName)
             localStorage.setItem('access_token',res.result.token)
             localStorage.setItem('u_organId',organId)
-
+            localStorage.setItem('u_organName',res.result.user.organName)
+            
             if (roleName == '操作员') {
               oUrl = '/'
               api.getOrgStatus({
@@ -209,6 +210,14 @@ export default {
         const token = new Date().getTime();
         localStorage.setItem('verifyCodeToken',token)
         this.identifyImg = localStorage.getItem('domain') + '/userBack/getVerify?verifyCode-authentic-request-header=' + token;
+      })
+    },
+    getOrgStatus (id) {
+      let data = {
+        organId: id
+      }
+      api.getOrgStatus(data).then(res => {
+        console.log(res)
       })
     }
   }

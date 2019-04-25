@@ -13,8 +13,8 @@
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="$router.push('/companyDetails?id=' + scope.row.id)">详情</el-button>
-              <el-button type="text" size="small" @click="adopt" class="adopt">通过</el-button>
-              <el-button type="text" size="small" @click="refuse" class="refuse">拒绝</el-button>
+              <el-button type="text" size="small" @click="adopt(scope.row.id)" class="adopt">通过</el-button>
+              <el-button type="text" size="small" @click="refuse(scope.row.id)" class="refuse">拒绝</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -38,6 +38,8 @@
   </div>
 </template>
 <script>
+import api from '@/feath/api.js'
+import { formatDate } from '@/util/filter.js'
 import AdoptDialog from './adopt-dialog.vue'
 import RefuseDialog from './refuse-dialog.vue'
 export default {
@@ -50,60 +52,118 @@ export default {
         fontWeight: '400'
       },
       tableData: [
-        {
-          name: "青岛岸山农业集团",
-          creditCode: "9144030071526726XG",
-          address: "青岛市崂山区香港东路23号",
-          chain: "产地",
-          time: "2019/4/18",
-          id: '1'
-        },
-        {
-          name: "张三果蔬公司",
-          creditCode: "9144030071526726XG",
-          address: "青岛市崂山区香港东路23号",
-          chain: "产地",
-          time: "2019/4/18",
-          id: '2'
-        }
+        // {
+        //   name: "青岛岸山农业集团",
+        //   creditCode: "9144030071526726XG",
+        //   address: "青岛市崂山区香港东路23号",
+        //   chain: "产地",
+        //   time: "2019/4/18",
+        //   id: '1'
+        // },
+        // {
+        //   name: "张三果蔬公司",
+        //   creditCode: "9144030071526726XG",
+        //   address: "青岛市崂山区香港东路23号",
+        //   chain: "产地",
+        //   time: "2019/4/18",
+        //   id: '2'
+        // }
       ],
       currentPageNum: 1,
       totalPageSize: 10,
-      listNum: 17,
+      listNum: 0,
       adoptVisible: false,
-      refuseVisible: false
+      refuseVisible: false,
+      refuseId: '',
+      id: ''
     };
   },
   components: {
     AdoptDialog,
     RefuseDialog
   },
+  created () {
+    this.id = Number(this.$route.query.id);
+  },
+  mounted () {
+    this.getOrgList()
+  },
   methods: {
     handleSizeChange(val) {
-      console.log(val)
+      // console.log(val)
       this.totalPageSize = val;
-      // this.getList()
+      this.getOrgList()
     },
     gotoPage (currentPage) {
       this.currentPageNum = currentPage;
-      // this.getList()
+      this.getOrgList()
     },
     // 通过审核
-    adopt () {
-      this.adoptVisible = true;
+    adopt (id) {
+      let data = {
+        id: id
+      }
+      api.orgPass(data).then(res => {
+        console.log(res)
+        if (res.code == 0) {
+          this.adoptVisible = true;
+          this.getOrgList()
+        } else {
+          this.$message.error(res.msg);
+        }
+      })
     },
     adoptOk () {
       this.adoptVisible = false;
     },
     // 拒绝审核
-    refuse () {
+    refuse (id) {
       this.refuseVisible = true;
+      this.refuseId = id;
     },
     refuseCancel () {
       this.refuseVisible = false;
     },
     refuseOk (data) {
-      this.refuseVisible = false;
+      let oData = {
+        approvalDetail: data,
+        id: this.refuseId
+      }
+      api.orgRefuse(oData).then(res => {
+        if (res.code == 0) {
+          this.$message({
+            message: '拒绝成功！',
+            type: 'success'
+          });
+          this.refuseVisible = false;
+          this.getOrgList()
+        } else {
+          this.$message.error(res.msg);
+        }
+      })
+    },
+    getOrgList () {
+      let data = {
+        "orderBy": "create_time",
+        "id": this.id,
+        "pageNum": this.currentPageNum,
+        "pageSize": this.totalPageSize,
+      }
+      api.getOrgList(data).then(res => {
+        if (res.code == 0 && res.result.list.length !== 0) {
+          this.tableData = res.result.list.map((item, index) => {
+            return {
+              name: item.name,
+              creditCode: item.creditCode,
+              address: item.registerAddress,
+              chain: item.applyChain,
+              time: formatDate(item.applyTime,'yyyy/MM/dd'),
+              id: item.id
+            }
+          })
+          this.listNum = res.result.total
+        }
+      })
     }
   }
 };
