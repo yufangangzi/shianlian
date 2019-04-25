@@ -70,16 +70,16 @@
           <el-row type="flex" justify="center">
               <el-col :span="6">
                   <el-form-item label="种养殖许可证：" prop="breedLic" label-width="130px">
-                      <el-input v-model="tabForm.breedLice" size="small"></el-input>
+                      <el-input v-model="tabForm.breedLic" size="small"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
               <el-col :span="6">
                   <el-form-item label="工商营业执照：" prop="busineLic" label-width="130px">
-                   <el-upload>
+                   <!-- <el-upload>
                       <el-button size="small" type="primary">点击上传</el-button>
-                    </el-upload>    
+                    </el-upload>     -->
                   </el-form-item>
               </el-col>
           </el-row>
@@ -87,10 +87,8 @@
               <el-col :span="10">
                   <el-form-item label="上链类型：" prop="upperType">
                       <el-checkbox-group v-model="checkList">
-                        <el-checkbox label="产业链"></el-checkbox>
-                        <el-checkbox label="加工链"></el-checkbox>
-                        <el-checkbox label="物流链"></el-checkbox>
-                        <el-checkbox label="销售链"></el-checkbox>
+                        <el-checkbox v-for="i in checks" :label="i.name" :key="i.id" @change="handleCheckedChange(i)">{{i.name}}</el-checkbox>
+                        <!-- <el-checkbox v-for="(item,index) in checks" :value="item" :key="index" @change="handleCheckedChange(i)">{{ item }}</el-checkbox> -->
                       </el-checkbox-group>
                   </el-form-item>
                   <el-form-item class="upperdv">
@@ -170,50 +168,31 @@ import api from '@/feath/api.js'
         }
     };
     // 请输入18位统一社会信用代码
-    const CheckSocialCreditCode = (Code) => {
-      var patrn = /^[0-9A-Z]+$/;
-      //18位校验及大写校验
-      if ((Code.length != 18) || (patrn.test(Code) == false)) {
-        console.info("不是有效的统一社会信用编码！");
-        return false;
-      }
-      else {
-        var Ancode;//统一社会信用代码的每一个值
-        var Ancodevalue;//统一社会信用代码每一个值的权重 
-        var total = 0;
-        var weightedfactors = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];//加权因子 
-        var str = '0123456789ABCDEFGHJKLMNPQRTUWXY';
-        //不用I、O、S、V、Z 
-        for (var i = 0; i < Code.length - 1; i++) {
-          Ancode = Code.substring(i, i + 1);
-          Ancodevalue = str.indexOf(Ancode);
-          total = total + Ancodevalue * weightedfactors[i];
-          //权重与加权因子相乘之和 
-        }
-        var logiccheckcode = 31 - total % 31;
-        if (logiccheckcode == 31) {
-          logiccheckcode = 0;
-        }
-        var Str = "0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,J,K,L,M,N,P,Q,R,T,U,W,X,Y";
-        var Array_Str = Str.split(',');
-        logiccheckcode = Array_Str[logiccheckcode];
-        var checkcode = Code.substring(17, 18);
-        if (logiccheckcode != checkcode) {
-          console.info("不是有效的统一社会信用编码！");
-          return false;
+    const qycode = (rule, value, callback) => {
+      if (value === '') {
+            return callback(new Error('请输入18位统一社会信用编码'));
+          }
+        var devn = /^[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}$/;
+        if (!devn.test(value)) {
+          callback(new Error('不是有效的统一社会信用编码！'));
         }else{
-          console.info("yes");
+          callback();
         }
-        return true;
-       }
-    　}
-      return {
+    };
+    return {
         active: 0,
         checked:true,
-        checkList: ['产业链',],
         isShow:1,
         options: regionData,
         selectedOptions: [],
+        checkList: [],
+        checks:[
+          {id:'1',name:'产业链'},
+          {id:'2',name:'加工链'},
+          {id:'3',name:'物流链'},
+          {id:'4',name:'销售链'}
+        ],
+        checks2:{'产业链':4,'加工链':3,'物流链':2,'销售链':1},
         tabForm: {
           qyName: '',
           qyNumber: '',
@@ -228,7 +207,7 @@ import api from '@/feath/api.js'
         },
         ruleValidate: {
           qyName: [{ required: true, validator: qyNameFlag, trigger: 'blur' }],
-          qyNumber: [{ required: true, message: CheckSocialCreditCode, trigger: 'blur' }],
+          qyNumber: [{ required: true, validator: qycode, trigger: 'blur' }],
           regAddress: [{ required: true, message: '注册地址不能为空', trigger: 'blur' }],
           telAddress: [{ required: true, message: '联络地址不能为空', trigger: 'blur' }],   
           qyfr: [{ required: true, message: '法人代表不能为空', trigger: 'blur' }],	
@@ -248,7 +227,9 @@ import api from '@/feath/api.js'
         
       },
       submit () {
+       
         let data = {
+          name: this.tabForm.qyName,
           creditCode: this.tabForm.qyNumber,
           registerAddress: this.tabForm.regAddress,
           contactAddress: this.tabForm.telAddress,   
@@ -256,13 +237,14 @@ import api from '@/feath/api.js'
           attributionArea: this.tabForm.gsAddress,
           plantLicence: this.tabForm.prodLic,		
           productLicence: this.tabForm.breedLic,   
-          businessLicense: this.tabForm.busineLic, // img/stepimg.png 
-          applyChain: this.tabForm.upperType	
+          // businessLicense: this.tabForm.busineLic,  
+          businessLicense: 'img/stepimg.png',  
+          applyChain:this.tabForm.applyChain,
+          chainIds: this.tabForm.chainIds,	
         }
         api.register(data).then(res => {
           if (res.code == 0) {
             if (res.result.token) {
-              
               let oUrl = '/'
               this.$router.push({
                 path: oUrl
@@ -277,7 +259,18 @@ import api from '@/feath/api.js'
       // 通过审核
       handleChange (value) {
         console.log(value)
+        this.tabForm.gsAddress = value;
       },
+      // 上链类型
+      handleCheckedChange(item){
+        this.tabForm.applyChain = this.checkList.map(v => {
+                 return v;
+              }).join("/");
+        this.tabForm.chainIds = this.checkList.map(v => {
+                 //console.log("v=="+v);
+                 return this.checks2[v];
+              })
+      }
     }
   };
 </script>
