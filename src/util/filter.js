@@ -202,3 +202,5 @@ export const beforeUpload = (file, obj) => {
   console.log(isOk)
   return isOk
 }
+
+

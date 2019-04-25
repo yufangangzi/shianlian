@@ -46,7 +46,7 @@
           align="center"
           >
           <template slot-scope="scope">
-            <el-button type="text" size="small" :disabled="scope.row.status == 0 ? false : true" @click="$router.push('/enterpriseAudit?id=' + scope.row.id)">提交审核</el-button>
+            <el-button type="text" size="small" :disabled="scope.row.status == 0 ? false : true" @click="$router.push('/qyAudit?id=' + scope.row.id)">提交审核</el-button>
           </template>
         </el-table-column>
       </el-table> 
