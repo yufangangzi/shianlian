@@ -1,6 +1,11 @@
 let domain = ''
 
 export default {
+  dataChainSave: domain + '/dataChain/save',
+  dataChainUpdate: domain + '/dataChain/update',
+  dataChainList: domain + '/dataChain/list',
+  dataChainGet: domain + '/dataChain/get',
+  complaintUpload: domain + '/complaint/complaint',
   backList: domain + '/userBack/list',
   backSave: domain + '/userBack/save',
   backRemove: domain + '/userBack/remove',

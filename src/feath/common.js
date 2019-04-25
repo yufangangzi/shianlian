@@ -3,6 +3,22 @@ import { get, post } from './server/http.js'
 import axios from 'axios'
 
 export default {
+  dataChainSave (params) {
+    return post(url.dataChainSave, params)
+  },
+  dataChainUpdate (params) {
+    return post(url.dataChainUpdate, params)
+  },
+  dataChainList (params) {
+    return post(url.dataChainList, params)
+  },
+  dataChainGet (params) {
+    return post(url.dataChainGet, params)
+  },
+  complaintUpload (params) {
+    return post(url.complaintUpload, params)
+  },
+  
   backList (params) {
     return post(url.backList, params)
   },
