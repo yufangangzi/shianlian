@@ -140,7 +140,7 @@
         </div>
         <!-- 审核通过end -->
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="8">
                   <el-form-item>
                       <el-button type="" @click="cancel">取消</el-button>
                       <el-button type="primary" @click="submit">提交审核</el-button>
