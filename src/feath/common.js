@@ -26,5 +26,9 @@ export default {
   },
   getOrgStatus (params) {
     return post(url.orgStatus, params)
+  },
+  register (params) {
+    return post(url.register, params)
   }
+
 }

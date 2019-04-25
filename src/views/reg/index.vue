@@ -210,6 +210,7 @@
 <script>
 import Cookies from 'js-cookie'
 import { regionData } from 'element-china-area-data'
+import api from '@/feath/api.js'
 export default {
   data () {
     return {
@@ -242,8 +243,39 @@ export default {
      --this.active;
       if (this.active++ < 0) this.active = 0;
    },
-  submit () {
-  },
+   submit () {
+        let data = {
+          userName: this.tabForm.name,
+          password: this.tabForm.password,
+          repassword: this.tabForm.repassword,
+          telephone: this.tabForm.tel,
+          email: this.tabForm.email,
+
+          creditCode: this.tabForm.qyNumber,
+          registerAddress: this.tabForm.regAddress,
+          contactAddress: this.tabForm.telAddress,   
+          corporate: this.tabForm.qyfr,	
+          attributionArea: this.tabForm.gsAddress,
+          plantLicence: this.tabForm.prodLic,		
+          productLicence: this.tabForm.breedLic,   
+          businessLicense: this.tabForm.busineLic,  
+          applyChain: './img/stepimg.png'		
+        }
+        api.register(data).then(res => {
+          if (res.code == 0) {
+            if (res.result.token) {
+              
+              let oUrl = '/'
+              this.$router.push({
+                path: oUrl
+              })
+            }
+          } else {
+            this.$message.error(res.msg);
+          }
+        
+        })
+      },
   reback(){
 
   },

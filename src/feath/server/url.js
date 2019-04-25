@@ -9,4 +9,5 @@ export default {
   getVerify: domain + '/userBack/getVerify',
   login: domain + '/userBack/login',
   orgStatus: domain + '/organization/status',
+  register: domain + '/organization/register',
 }
