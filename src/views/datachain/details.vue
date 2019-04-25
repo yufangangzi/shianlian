@@ -60,6 +60,30 @@
             <el-form-item label="国际条码" prop="">
               <el-input v-model="ruleForm.barCode" class="lvwidth"></el-input>
             </el-form-item>
+            <el-form-item label="产品图片" prop="">
+              <el-upload
+                class="avatar-uploader"
+                :headers="customHeaders"
+                :action="uploadUrl"
+                name="imageFile"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+                <div class="avatar" style="display:inline-block;">
+                  <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                  <img v-else src="../../assets/img/default-up.png" style="margin:35px 51px;">
+                </div>
+                <!-- <i class="el-icon-plus avatar-uploader-icon"></i> -->
+                <div class="avatar-right" style="display:inline-block;margin-left:24px;text-align: left;">
+                  <div slot="tip" class="el-upload__tip txt">
+                    格式要求：<br>
+                    请上传产品图片，将显示为溯源产品题图。 <br>
+                    支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。
+                  </div>
+                  <el-button size="small" type="primary">点击上传</el-button>
+                </div>
+              </el-upload>
+            </el-form-item>
 
           </el-tab-pane>
           <el-tab-pane label="地块" name="second">
@@ -188,6 +212,8 @@
   </div>
 </template>
 <script>
+import api from '@/feath/api.js'
+import {complaintUploadUrl} from '@/feath/server/http.js'
 import AdoptDialog from './adopt-dialog.vue'
 import RefuseDialog from './refuse-dialog.vue'
   export default {
@@ -199,6 +225,13 @@ import RefuseDialog from './refuse-dialog.vue'
         detailId: '',
         labelPosition: 'right',
         activeName: 'first',
+
+        imageUrl: '',
+        imageUrl2: '',
+        uploadUrl: complaintUploadUrl,
+        customHeaders: {
+          'identity-authentic-request-header': localStorage.getItem('access_token'),
+        },
 
         productTypeList: [
           {
@@ -340,6 +373,34 @@ import RefuseDialog from './refuse-dialog.vue'
       console.log('this.detailId', this.detailId);
     },
     methods: {
+      handleAvatarSuccess(res, file) {
+        // debugger;
+        if(res.code===0 && res.result){
+          this.imageUrl = URL.createObjectURL(file.raw);
+          this.imageUrl2 = res.result;
+        }
+      },
+      beforeAvatarUpload(file) {
+        const imgFormat = {
+          'image/jpeg': true,
+          'image/jpg': true,
+          'image/png': true,
+          'image/gif': true,
+          'image/bmp': true,
+          'image/gif': true,
+        }
+        // const isJPG = file.type === 'image/jpeg';
+        const isJPG = imgFormat[file.type] ? true: false;
+        const isLt2M = file.size / 1024 / 1024 < 5;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 5MB!');
+        }
+        return isJPG && isLt2M;
+      },
       // 通过审核
       adopt () {
         this.adoptVisible = true;
@@ -359,8 +420,65 @@ import RefuseDialog from './refuse-dialog.vue'
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
+          // debugger
           if (valid) {
-            alert('submit!');
+            // alert('submit!');
+            console.log(this.ruleForm);
+            let saveOp = api.dataChainSave;
+            if(this.detailId){
+              saveOp = api.dataChainUpdate;
+            }
+            
+            let dikuai = [
+              ['归属产地单位', this.ruleForm.productPlace],
+              ['面积', this.ruleForm.area],
+              ['土壤特性', this.ruleForm.soilProp],
+              ['目前主要作物', this.ruleForm.mainCrops]
+            ];
+            
+            let data = {
+              "academicName": this.ruleForm.scienceName,
+              "attribute": this.ruleForm.productProp,
+              "barCode": this.ruleForm.barCode,
+              "category": this.ruleForm.productType,
+              "code": "",
+              "imageurl":"sss.jpg",
+              "foodProductDetailDTOList": [
+                {
+                  "logName": "地块",//（必填，固定值“地块”）
+                  "logRemark": "归属产地单位：基施高钾水溶肥、螯合锌微肥\n主要农资生产商：国灵集团",
+                  "macId": 11//（必填，固定值 11）
+                }
+              ],
+              "name": this.ruleForm.productName,
+              "title": this.ruleForm.title,//（必填）
+              "usuallyName": this.ruleForm.circulationName
+            };
+            data.foodProductDetailDTOList[0].logRemark = dikuai.map((v) => v[0] + '：' +v[1]).join('\n');
+
+            if(this.imageUrl2){
+              data.imageurl = this.imageUrl2;
+            }
+
+            console.log(JSON.stringify(data))
+            // debugger;
+            // return;
+            saveOp(data).then(res => {
+              debugger;
+              if (res.code === 0) {
+                this.$message({
+                  message: '保存成功',
+                  type: 'success'
+                });
+                this.$router.go(-1);
+              } else {
+                this.$message({
+                  message: '保存失败',
+                  type: 'error'
+                });
+              }
+              
+            })
           } else {
             console.log('error submit!!');
             return false;
@@ -464,4 +582,43 @@ import RefuseDialog from './refuse-dialog.vue'
 .detailBt{
   text-align: center;
 }
+
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    display: block;
+    width:160px;
+    height:120px;
+    background:rgba(247,247,247,1);
+    border:1px solid rgba(215,215,215,1);
+  }
+  .avatar-right{
+    vertical-align: top;
+  }
+  .avatar-right .txt{
+    width:358px;
+    height:60px;
+    /*font-size:14px;*/
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(137,137,137,1);
+    line-height:20px;
+    text-align: left;
+  }
 </style>

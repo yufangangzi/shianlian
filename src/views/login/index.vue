@@ -131,7 +131,7 @@ export default {
                 "organId": organId
               }).then(res => {
                 if (res.code == 0) {
-                  if(res.result.approvalStatus===3){
+                  if(!res.result){
                     oUrl = '/overview'
                   }else{
                     oUrl = '/unaudited'
