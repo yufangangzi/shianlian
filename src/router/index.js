@@ -17,28 +17,28 @@ let regRouter = {
 }
 let aside = [
   {
-    path: '/',
+    path: '/',// 超级管理员路由
     name: 'Index',
     title: '概览',
     iconclass: 'icon-0',
     component: () => import('../views/index/index.vue'),
-    meta: { requireAuth: true, belongList: ['超管'] }
+    meta: { requireAuth: true, belongList: ['管理员'] }
   },
   {
-    path: '/overview',
+    path: '/overview',// 已审核
     name: 'overview',
     title: '概览',
     iconclass: 'icon-0',
-    component: () => import('../views/index/index.vue'),
-    meta: { requireAuth: true, belongList: ['企业'] }
+    component: () => import('../views/index/overview.vue'),
+    meta: { requireAuth: true, belongList: ['操作员'] }
   },
   {
-    path: '/overview',
-    name: 'overview',
+    path: '/unaudited',// 未审核
+    name: 'unaudited',
     title: '概览',
     iconclass: 'icon-0',
-    component: () => import('../views/index/index.vue'),
-    meta: { requireAuth: true, belongList: ['企业2'] }
+    component: () => import('../views/index/unaudited.vue'),
+    meta: { requireAuth: true, belongList: ['运营者'] }
   },
   {
     path: '/statistics',
@@ -46,7 +46,7 @@ let aside = [
     title: '统计报表',
     iconclass: 'icon-1',
     component: () => import('../views/statistics'),
-    meta: { requireAuth: true, belongList: ['超管', '企业'] }
+    meta: { requireAuth: true, belongList: ['管理员', '操作员'] }
   },
   {
     path: '/statistics',
@@ -55,7 +55,7 @@ let aside = [
     iconclass: 'icon-1',
     component: () => import('../views/statistics'),
     disabled: true,
-    meta: { requireAuth: true, belongList: ['企业2'] }
+    meta: { requireAuth: true, belongList: ['运营者'] }
   },
   {
     path: '/business',
@@ -64,24 +64,24 @@ let aside = [
     iconclass: 'icon-2',
     component: () => import('../views/account'),
     disabled: true,
-    meta: { requireAuth: true, belongList: ['超管'] }
+    meta: { requireAuth: true, belongList: ['管理员'] }
   },
   {
     path: '/datachain',
     name: 'datachain',
     title: '数据上链',
-    iconclass: 'icon-2',
+    iconclass: 'icon-3',
     component: () => import('../views/datachain/index.vue'),
-    meta: { requireAuth: true, belongList: ['企业'] }
+    meta: { requireAuth: true, belongList: ['操作员'] }
   },
   {
     path: '/datachain',
     name: 'datachain',
     title: '数据上链',
-    iconclass: 'icon-2',
+    iconclass: 'icon-3',
     component: () => import('../views/datachain/index.vue'),
     disabled: true,
-    meta: { requireAuth: true, belongList: ['企业2'] }
+    meta: { requireAuth: true, belongList: ['运营者'] }
   },
   {
     path: '/account',
@@ -89,7 +89,7 @@ let aside = [
     title: '用户管理',
     iconclass: 'icon-2',
     component: () => import('../views/account'),
-    meta: { requireAuth: true, belongList: ['超管', '企业'] }
+    meta: { requireAuth: true, belongList: ['管理员', '操作员'] }
   },
   {
     path: '/account',
@@ -98,7 +98,7 @@ let aside = [
     iconclass: 'icon-2',
     component: () => import('../views/account'),
     disabled: true,
-    meta: { requireAuth: true, belongList: ['企业2'] }
+    meta: { requireAuth: true, belongList: ['运营者'] }
   },
   
 ]
@@ -130,15 +130,22 @@ const otherRouter = [
       {
         path: '/enterpriseAudit',
         name: 'enterpriseAudit',
-        title: '企业审核',
+        title: '操作员审核',
         component: () => import('../views/enterpriseAudit'),
         meta: { requireAuth: true }
       },
       {
         path: '/companyDetails',
         name: 'companyDetails',
-        title: '企业审核',
+        title: '操作员审核',
         component: () => import('../views/enterpriseAudit/details.vue'),
+        meta: { requireAuth: true }
+      },
+      {
+        path: '/datachainDetails',
+        name: 'datachainDetails',
+        title: '数据上链详情',
+        component: () => import('../views/datachain/details.vue'),
         meta: { requireAuth: true }
       }
     ]

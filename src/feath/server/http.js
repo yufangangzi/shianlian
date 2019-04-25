@@ -1,8 +1,9 @@
 import axios from 'axios'
 console.log(process.env);
-const devUrl = 'https://tiot.sinochem-tech.com/shianlianwxdev' // 测试地址 http://10.144.132.30:8005
+const devUrl = 'http://10.26.4.87:8005' // 测试地址 http://10.144.132.30:8005
 const proUrl = 'https://tiot.sinochem-tech.com/shianlianwxdev' // 线上地址
 let domain = process.env.BRANCH !== 'production' ? devUrl : proUrl
+localStorage.setItem('domain',domain)
 // 设置baseURL
 axios.defaults.baseURL = domain
 
@@ -22,8 +23,14 @@ export function get (url, params) {
 }
 export function post (url, params) {
   let token = localStorage.getItem('access_token')
+  let verifyCodeToken= localStorage.getItem('verifyCodeToken')
   return new Promise((resolve, reject) => {
-    axios.post(url, params, { headers: { 'Authorization': token ? 'Bearer ' + token : '' } })
+    axios.post(url, params, { 
+      headers: { 
+        'Authorization': token ? 'Bearer ' + token : '' ,
+        'verifyCode-authentic-request-header': verifyCodeToken ? verifyCodeToken : ''
+      } 
+    })
       .then(response => {
         resolve(response.data)
       }, err => {

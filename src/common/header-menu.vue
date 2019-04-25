@@ -59,8 +59,9 @@ export default {
       }
     },
     loginOut () {
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('food_roleName')
       Cookies.set('food_isLogin', '0')
-      Cookies.set('food_jurisdiction', '0')
       this.$router.push({
         path: '/login'
       })
