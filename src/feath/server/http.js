@@ -1,6 +1,6 @@
 import axios from 'axios'
 console.log(process.env);
-const devUrl = 'http://10.26.4.87:8005' // 测试地址 http://10.144.132.30:8005
+const devUrl = 'http://10.144.132.30:8005'//'http://10.26.4.87:8005' // 测试地址 http://10.144.132.30:8005
 const proUrl = 'https://tiot.sinochem-tech.com/shianlianwxdev' // 线上地址
 let domain = process.env.BRANCH !== 'production' ? devUrl : proUrl
 localStorage.setItem('domain',domain)

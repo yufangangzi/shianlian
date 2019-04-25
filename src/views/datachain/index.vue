@@ -29,8 +29,14 @@
     <div class="add-btn">
       <el-button @click="createChain" type="primary" icon="el-icon-plus" size="medium">新建数据</el-button>
     </div>
+    <div class="cc-box">
+      <div class="">
+        <div class="tli"></div>
+        <div class="tit">数据上链</div>
+      </div>
     <div class="table-box">
       <el-table
+        border
         :data="tableData"
         header-row-class-name="biao-head"
         :header-cell-style="biaostyle"
@@ -99,6 +105,7 @@
         :current-page="currentPageNum"
         :total="listNum">
       </el-pagination>
+    </div>
     </div>
     <el-dialog title="添加用户" :visible.sync="dialogFormVisible"  width="500px" @close="adduserCancel">
       <el-form :model="form" ref="form" :rules="addformRules">
