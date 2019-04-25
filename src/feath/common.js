@@ -18,7 +18,7 @@ export default {
   complaintUpload (params) {
     return post(url.complaintUpload, params)
   },
-  
+
   backList (params) {
     return post(url.backList, params)
   },

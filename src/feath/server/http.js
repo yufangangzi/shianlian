@@ -7,10 +7,21 @@ localStorage.setItem('domain',domain)
 // 设置baseURL
 axios.defaults.baseURL = domain
 
+// 设置数据上链图片地址
+const complaintUploadUrl = domain + '/complaint/uploadImg'
+export {
+  complaintUploadUrl
+}
+
 export function get (url, params) {
   let token = localStorage.getItem('access_token')
   return new Promise((resolve, reject) => {
-    axios.get(url, { params: params, headers: { 'Authorization': token ? 'Bearer ' + token : '' } })
+    axios.get(url, { params: params, 
+      headers: { 
+        'Authorization': token ? 'Bearer ' + token : '',
+        'identity-authentic-request-header': token,
+      } 
+    })
       .then(response => {
         resolve(response.data)
       }, err => {

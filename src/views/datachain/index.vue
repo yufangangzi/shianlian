@@ -301,10 +301,10 @@ export default {
     }
   },
   mounted() {
-    
+    this.getList()
   },
   created () {
-    this.getList()
+    
   },
   methods: {
     cellStyle (row, column, rowIndex, columnIndex) {
@@ -323,20 +323,22 @@ export default {
     getList () {
       const data = {
         pageNum: this.currentPageNum,
-        pageSize: this.totalPageSize,
-        roleName: this.rulevalue,
-        status: this.typevalue
+        // pageSize: this.totalPageSize,
+        // roleName: this.rulevalue,
+        // status: this.typevalue
+        title: this.inputValue
       }
-      data.roleName = '';
-      api.backList(data).then(res => {
+      api.dataChainList(data).then(res => {
+        // debugger
         if (res.code ===0) {
-          res.result.list.forEach(item => {
-            if (item.status === 0) {
-              item.statusKey = '启用'
-            } else {
-              item.statusKey = '禁用'
-            }
-          })
+          res.result.list = res.result.list || [];
+          // res.result.list.forEach(item => {
+          //   if (item.status === 0) {
+          //     item.statusKey = '启用'
+          //   } else {
+          //     item.statusKey = '禁用'
+          //   }
+          // })
           this.listNum = res.result.total
           this.tableData = res.result.list
         }
