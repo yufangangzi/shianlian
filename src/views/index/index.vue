@@ -126,6 +126,7 @@
   </div>
 </template>
 <script>
+import api from '@/feath/api.js'
 import {toThousands } from '@/util/filter.js'
 export default {
   data() {
@@ -199,6 +200,7 @@ export default {
     }
   },
   created () {
+    this.getOrgList()
   },
   methods: {
     onCopy () {
@@ -223,9 +225,19 @@ export default {
         console.log('pwdtype='+this.pwdType)
         this.openeye = this.openeye == require("../../assets/img/2.png") ? require("../../assets/img/1.png") : require("../../assets/img/2.png");
       },
-     formatNumToThousands (num) {
+    formatNumToThousands (num) {
       return toThousands(num)
     },
+    getOrgList () {
+      let data = {
+        "orderBy": "create_time",
+        "pageNum": 0,
+        "pageSize": 0,
+      }
+      api.getOrgList(data).then(res => {
+        console.log(res)
+      })
+    }
   }
 }
 

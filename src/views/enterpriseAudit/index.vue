@@ -13,7 +13,7 @@
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="$router.push('/companyDetails?id=' + scope.row.id)">详情</el-button>
-              <el-button type="text" size="small" @click="adopt" class="adopt">通过</el-button>
+              <el-button type="text" size="small" @click="adopt(scope.row.id)" class="adopt">通过</el-button>
               <el-button type="text" size="small" @click="refuse" class="refuse">拒绝</el-button>
             </template>
           </el-table-column>
@@ -38,6 +38,7 @@
   </div>
 </template>
 <script>
+import api from '@/feath/api.js'
 import AdoptDialog from './adopt-dialog.vue'
 import RefuseDialog from './refuse-dialog.vue'
 export default {
@@ -89,7 +90,13 @@ export default {
       // this.getList()
     },
     // 通过审核
-    adopt () {
+    adopt (id) {
+      let data = {
+        id: id
+      }
+      api.orgPass(data).then(res => {
+        console.log(res)
+      })
       this.adoptVisible = true;
     },
     adoptOk () {
@@ -104,6 +111,24 @@ export default {
     },
     refuseOk (data) {
       this.refuseVisible = false;
+      // let oData = {
+      //   approvalDetail: "string",
+      //   // id: id,
+      //   organId: 0
+      // }
+      // api.orgRefuse(oData).then(res => {
+      //   console.log(res)
+      // })
+    },
+    getOrgList () {
+      let data = {
+        "orderBy": "create_time",
+        "pageNum": 0,
+        "pageSize": 0,
+      }
+      api.getOrgList(data).then(res => {
+        console.log(res)
+      })
     }
   }
 };

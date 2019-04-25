@@ -56,6 +56,7 @@
   </div>
 </template>
 <script>
+import api from '@/feath/api.js'
 import AdoptDialog from './adopt-dialog.vue'
 import RefuseDialog from './refuse-dialog.vue'
   export default {
@@ -86,6 +87,14 @@ import RefuseDialog from './refuse-dialog.vue'
       },
       refuseOk (data) {
         this.refuseVisible = false;
+      },
+      orgDetail (id) {
+        let data = {
+          id: id
+        }
+        api.getOrgDetail(data).then(res => {
+          console.log(res)
+        })
       }
     }
   };
