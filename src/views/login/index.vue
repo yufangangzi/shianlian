@@ -89,6 +89,7 @@ export default {
   },
   methods: {
     logining () {
+      const _this = this;
       if (this.loginform.name == '') {
         this.userNameBlur();
         return false;
@@ -107,26 +108,50 @@ export default {
       api.login(data).then(res => {
         if (res.code == 0) {
           if (res.result.token) {
-            let roleName = res.result.user.roleName
+            const roleMap = {
+              '超级管理员': '管理员',
+              '操作员': '管理员',//--此系统无效
+              '运营者': '管理员',//--此系统无效角色
+              '管理员': '操作员',
+            }
+            let roleName = roleMap[res.result.user.roleName]
             let oUrl = '/'
+            const organId = res.result.user.organId;
 
             Cookies.set('food_isLogin', '1')
             Cookies.set('food_user', res.result.user.userName)
-            localStorage.setItem('userInfor', JSON.stringify(res.result.user))
+            localStorage.setItem('food_roleName',roleName)
+            localStorage.setItem('food_roleNameOrigin',res.result.user.roleName)
             localStorage.setItem('access_token',res.result.token)
+            localStorage.setItem('u_organId',organId)
 
-            this.getOrgStatus(res.result.user.organId)
-            // if (roleName == '管理员') {
-            //   oUrl = '/'
-            // } else if (roleName == '操作员') {
-            //   oUrl = '/overview'
-            // } else if (roleName == '运营者') {
-            //   oUrl = '/unaudited'
-            // }
+            if (roleName == '操作员') {
+              oUrl = '/'
+              api.getOrgStatus({
+                "organId": organId
+              }).then(res => {
+                if (res.code == 0) {
+                  if(res.result.approvalStatus===3){
+                    oUrl = '/overview'
+                  }else{
+                    oUrl = '/unaudited'
+                    //企业未审核通过
+                    localStorage.setItem('food_roleName','运营者')
+                  }
+
+                  _this.$router.push({
+                    path: oUrl
+                  })
+                }
+              });
+            }else{
+              oUrl = '/';
+              this.$router.push({
+                path: oUrl
+              })
+            }
             
-            // this.$router.push({
-            //   path: oUrl
-            // })
+            
           }
         } else {
           this.$message.error(res.msg);

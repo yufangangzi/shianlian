@@ -24,6 +24,9 @@ export default {
   login (params) {
     return post(url.login, params)
   },
+  getOrgStatus (params) {
+    return post(url.orgStatus, params)
+  },
   register (params) {
     return post(url.register, params)
   },

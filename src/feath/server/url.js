@@ -8,6 +8,7 @@ export default {
   getAPI: domain + '/statisticalReportBack/getAPI',
   getVerify: domain + '/userBack/getVerify',
   login: domain + '/userBack/login',
+  orgStatus: domain + '/organization/status',
   register: domain + '/organization/register',
   getOrgStatus: domain + '/organization/status',
   getOrgList: domain + '/organization/list',
