@@ -6,11 +6,13 @@ let domain = process.env.BRANCH !== 'production' ? devUrl : proUrl
 localStorage.setItem('domain',domain)
 // 设置baseURL
 axios.defaults.baseURL = domain
+const baseURL = process.env.BRANCH !== 'production' ? 'http://10.144.132.135:8888' : 'https://tiot.sinochem-tech.com/fastdfs'
 
 // 设置数据上链图片地址
 const complaintUploadUrl = domain + '/complaint/uploadImg'
 export {
-  complaintUploadUrl
+  complaintUploadUrl,
+  baseURL
 }
 
 export function get (url, params) {
