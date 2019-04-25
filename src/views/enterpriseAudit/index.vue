@@ -125,6 +125,10 @@ export default {
       this.refuseVisible = false;
     },
     refuseOk (data) {
+      if (!data) {
+        this.$message.error('请输入拒绝原因');
+        return false;
+      }
       let oData = {
         approvalDetail: data,
         id: this.refuseId
