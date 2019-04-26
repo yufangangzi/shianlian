@@ -74,8 +74,8 @@
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center" label-width="260px">
-                  <el-form-item label="工商营业执照：" prop="">
+          <el-row type="flex" justify="center">
+                  <el-form-item label="工商营业执照：" prop="" label-width="460px">
                     <el-upload
                       class="avatar-uploader"
                       :headers="customHeaders"
@@ -106,7 +106,7 @@
                       <el-checkbox-group v-model="checkList">
                         <el-checkbox v-for="i in checks" :label="i.name" :key="i.id" @change="handleCheckedChange(i)">{{i.name}}</el-checkbox>
                       </el-checkbox-group>
-                      <el-span>请根据业务情况,选择至少一条业务链加入</el-span>
+                      <span>请根据业务情况,选择至少一条业务链加入</span>
                   </el-form-item>
                   <el-form-item class="upperdv">
                     

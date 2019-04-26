@@ -115,8 +115,8 @@
                   </el-form-item>
               </el-col>
           </el-row>
-         <el-row type="flex" justify="center" label-width="260px">
-                  <el-form-item label="工商营业执照：" prop="">
+         <el-row type="flex" justify="center">
+                  <el-form-item label="工商营业执照：" prop=""  label-width="460px">
                     <el-upload
                       class="avatar-uploader"
                       :headers="customHeaders"
