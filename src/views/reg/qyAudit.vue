@@ -198,6 +198,7 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
         }
     };
     return {
+        id:'',
         active: 0,
         checked:true,
         isShow:1,
@@ -246,7 +247,31 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
     components: {
       
     },
+    mounted () {
+      this.id = Number(this.$route.query.id);
+      this.orgDetail()
+    },
     methods: {
+      orgDetail () {
+        let data = {
+          id: this.id
+        }
+        api.getOrgDetail(data).then(res => {
+          console.log(res)
+          if (res.code == 0) {
+            this.tabForm.qyName = res.result.name;
+            this.tabForm.qyNumber = res.result.creditCode;
+            this.tabForm.regAddress = res.result.registerAddress;
+            this.tabForm.telAddress = res.result.contactAddress;
+            this.tabForm.qyfr = res.result.corporate;
+            this.tabForm.gsAddress = res.result.attributionArea;
+            this.tabForm.prodLic = res.result.plantLicence;
+            this.tabForm.breedLic = res.result.productLicence;
+            this.tabForm.upperType = res.result.applyChain;
+            this.tabForm.busineLic = localStorage.getItem('domain') + '/' + res.result.businessLicense;
+          }
+        })
+      },
       cancel(){
         
       },
@@ -278,8 +303,8 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
         return isJPG && isLt2M;
       },
       submit () {
-       
         let data = {
+          id:this.id,
           name: this.tabForm.qyName,
           creditCode: this.tabForm.qyNumber,
           registerAddress: this.tabForm.regAddress,

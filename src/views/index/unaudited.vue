@@ -46,7 +46,7 @@
           align="center"
           >
           <template slot-scope="scope">
-            <el-button type="text" size="small" :disabled="scope.row.status == 2 ? false : true" @click="$router.push('/qyAudit?id=' + scope.row.id)">提交审核</el-button>
+            <el-button type="text" size="small" :disabled="scope.row.status == 2 ? false : true" @click="$router.push('/qyAudit?id=' + scope.row.organId)">提交审核</el-button>
           </template>
         </el-table-column>
       </el-table> 
@@ -147,6 +147,7 @@ export default {
             name: res.result.organName,
             status: res.result.approvalStatus,
             details: res.result.approvalDetail,
+            organId: res.result.organId,
             id: res.result.id
           })
           this.approvalData.push({

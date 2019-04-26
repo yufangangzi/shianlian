@@ -218,6 +218,7 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
 export default {
   data () {
     return {
+      id:'',
       active: 0,
       checked:true,
        checkList: ['产业链',],
@@ -236,13 +237,28 @@ export default {
         password2: '',
         tel: '',
         email: '',
+        creditCode: '',
+        registerAddress: '',
+        contactAddress: '',
+        corporate: '',
+        attributionArea: '',
+        plantLicence: '',
+        productLicence: '',
+        applyChain: '',
+        businessLicense: ''
       },
       nameError: '',
       passWordError: '',
       passsave: false
     }
   },
+  created () {
+  },
+  mounted () {
+    
+  },
   methods: {
+     
    next() {
     if (this.active++ > 2) this.active = 0;
      //step1 step2 step3 step4
