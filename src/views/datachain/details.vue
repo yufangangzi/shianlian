@@ -179,6 +179,7 @@
             </el-form-item>
             <el-form-item label="产品图片" prop="">
               <el-upload
+                disabled
                 class="avatar-uploader"
                 :headers="customHeaders"
                 :action="uploadUrl"
@@ -423,8 +424,10 @@ import RefuseDialog from './refuse-dialog.vue'
 
             this.ruleForm = Object.assign({}, this.ruleForm, obj);
 
-            this.imageUrl = baseURL + result.imageurl;
-            this.imageUrl2 = result.imageurl;
+            if(result.imageurl){
+              this.imageUrl = baseURL + result.imageurl;
+              this.imageUrl2 = result.imageurl;
+            }
             
           }
         })
