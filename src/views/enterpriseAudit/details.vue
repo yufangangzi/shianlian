@@ -59,6 +59,7 @@
 import api from '@/feath/api.js'
 import AdoptDialog from './adopt-dialog.vue'
 import RefuseDialog from './refuse-dialog.vue'
+import { baseURL } from '@/feath/server/http.js'
   export default {
     data() {
       return {
@@ -133,7 +134,7 @@ import RefuseDialog from './refuse-dialog.vue'
             this.detailData.plantLicence = res.result.plantLicence;
             this.detailData.productLicence = res.result.productLicence;
             this.detailData.applyChain = res.result.applyChain;
-            this.detailData.businessLicense = localStorage.getItem('domain') + '/' + res.result.businessLicense;
+            this.detailData.businessLicense = baseURL + res.result.businessLicense;
           }
         })
       },

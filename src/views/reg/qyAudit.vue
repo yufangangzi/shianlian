@@ -23,7 +23,7 @@
           <el-row type="flex" justify="center">
               <el-col :span="6">
                   <el-form-item label="统一社会信用代码：" prop="qyNumber" label-width="150px">
-                      <el-input v-model="tabForm.qyNumber" size="small"></el-input>
+                      <el-input v-model="tabForm.qyNumber" size="small" ></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
@@ -74,8 +74,8 @@
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center" label-width="260px">
-                  <el-form-item label="工商营业执照：" prop="">
+          <el-row type="flex" justify="center">
+                  <el-form-item label="工商营业执照：" prop="" label-width="460px">
                     <el-upload
                       class="avatar-uploader"
                       :headers="customHeaders"
@@ -106,16 +106,23 @@
                       <el-checkbox-group v-model="checkList">
                         <el-checkbox v-for="i in checks" :label="i.name" :key="i.id" @change="handleCheckedChange(i)">{{i.name}}</el-checkbox>
                       </el-checkbox-group>
-                      <el-span>请根据业务情况,选择至少一条业务链加入</el-span>
+                      <span>请根据业务情况,选择至少一条业务链加入</span>
                   </el-form-item>
                   <el-form-item class="upperdv">
                     
                   </el-form-item>
               </el-col>
           </el-row>
+          <el-row type="flex" justify="center">
+              <el-col :span="8">
+                  <el-form-item>
+                      <el-button type="" @click="cancel">取消</el-button>
+                      <el-button type="primary" @click="saveOK">提交审核</el-button>
+                  </el-form-item>
+              </el-col>
+          </el-row>
         </div>
           <!-- 企业信息end -->
-        <!-- <div class="uhide"> -->
         <div class="step3 " v-show="isShow == 2">  
           <el-row type="flex" justify="center">
               <el-col :span="3">
@@ -128,40 +135,24 @@
               <el-col :span="6">
                   <el-form-item >
                     <div class="subdv">你的企业信息已提交,请等待审核</div>
-                    <div class="subtip">审核时间为3-5个工作日，请谨记您的账号。 
-                      在审核完成后，您将可以使用该账号作为企业管理员进行登录。 
-                      如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</div>
+                    <div class="subtip">
+                      <p class="pint">审核时间为3-5个工作日，请谨记您的账号。</p>
+                      <p>在审核完成后，您将可以使用该账号作为企业管理员进行登录。</p>
+                      <p>如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</p>
+                    </div>
+                  </el-form-item>
+              </el-col>
+          </el-row>
+           <el-row type="flex" justify="center">
+              <el-col :span="2">
+                  <el-form-item>
+                      <el-button type="primary" @click="sureOK">确定</el-button>
                   </el-form-item>
               </el-col>
           </el-row>
         </div>
           <!-- 提交审核end -->
-        <div class="step4" v-show="isShow == 3">  
-          <el-row type="flex" justify="center">
-              <el-col :span="3">
-                  <el-form-item >
-                      <img class="subimg" src="../../assets/img/subtip.png"/>
-                  </el-form-item>
-              </el-col>
-          </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item >
-                    <div class="subdv">恭喜您，审核通过！</div>
-                    <div class="subtip">返回首页，快去登录吧</div>
-                  </el-form-item>
-              </el-col>
-          </el-row>
-        </div>
-        <!-- 审核通过end -->
-          <el-row type="flex" justify="center">
-              <el-col :span="8">
-                  <el-form-item>
-                      <el-button type="" @click="cancel">取消</el-button>
-                      <el-button type="primary" @click="submit">提交审核</el-button>
-                  </el-form-item>
-              </el-col>
-          </el-row>
+          
       </el-form>
   </div>
     </div>  
@@ -171,7 +162,7 @@
 import Cookies from 'js-cookie'
 import { regionData } from 'element-china-area-data'
 import api from '@/feath/api.js'
-import {complaintUploadUrl} from '@/feath/server/http.js'
+import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
   export default {
     data() {
       const qyNameFlag = (rule, value, callback) => {
@@ -198,6 +189,7 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
         }
     };
     return {
+        id:'',
         active: 0,
         checked:true,
         isShow:1,
@@ -246,9 +238,36 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
     components: {
       
     },
+    mounted () {
+      this.id = Number(this.$route.query.id);
+      this.orgDetail()
+    },
     methods: {
+      orgDetail () {
+        let data = {
+          id: this.id
+        }
+        api.getOrgDetail(data).then(res => {
+          console.log(res)
+          if (res.code == 0) {
+            this.tabForm.qyName = res.result.name;
+            this.tabForm.qyNumber = res.result.creditCode;
+            this.tabForm.regAddress = res.result.registerAddress;
+            this.tabForm.telAddress = res.result.contactAddress;
+            this.tabForm.qyfr = res.result.corporate;
+            this.selectedOptions = res.result.attributionArea.split(','); // 字符串转数组，
+            this.tabForm.prodLic = res.result.plantLicence;
+            this.tabForm.breedLic = res.result.productLicence;
+            this.checkList = res.result.applyChain.split('/');
+            this.imageUrl = baseURL + res.result.businessLicense;
+          }
+        })
+      },
       cancel(){
-        
+        let oUrl = '/unaudited';
+        this.$router.push({
+          path: oUrl
+        })
       },
       handleAvatarSuccess(res, file) {
         // debugger;
@@ -277,27 +296,43 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
         }
         return isJPG && isLt2M;
       },
-      submit () {
-       
+      saveOK () {
+        if(this.selectedOptions){
+          this.tabForm.gsAddress = this.selectedOptions.join();
+        }
+        if(this.checkList){
+          this.tabForm.applyChain = this.checkList.map(v => {
+                 return v;
+              }).join("/");
+          this.tabForm.chainIds = this.checkList.map(v => {
+                 return this.checks2[v];
+              })
+        }
         let data = {
+          id:this.id,
           name: this.tabForm.qyName,
           creditCode: this.tabForm.qyNumber,
           registerAddress: this.tabForm.regAddress,
           contactAddress: this.tabForm.telAddress,   
           corporate: this.tabForm.qyfr,	
-          attributionArea: this.tabForm.gsAddress.join(),
+          attributionArea: this.tabForm.gsAddress,
           plantLicence: this.tabForm.prodLic,		
           productLicence: this.tabForm.breedLic,   
           businessLicense: 'img/stepimg.png',  
           applyChain:this.tabForm.applyChain,
           chainIds: this.tabForm.chainIds,	
         }
+        if(this.imageUrl){
+          data.businessLicense = this.imageUrl;
+        }
         if(this.imageUrl2){
             data.businessLicense = this.imageUrl2;
           }
-          console.log(data)
+        console.log(data)
+          debugger
         api.reregister(data).then(res => {
           if (res.code == 0) {
+              this.isShow = 2;
             if (res.result.token) {
               let oUrl = '/'
               this.$router.push({
@@ -310,10 +345,16 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
         
         })
       },
-      // 通过审核
+      sureOK(){
+        let oUrl = '/';
+        this.$router.push({
+          path: oUrl
+        })
+      },
+      // 省市区
       handleChange (value) {
         console.log(value)
-        this.tabForm.gsAddress = value;
+        this.tabForm.gsAddress = value.join();
       },
       // 上链类型
       handleCheckedChange(item){
@@ -397,4 +438,30 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
     line-height:20px;
     text-align: left;
   }
+  .subimg{
+    width: 60px;
+    height: 60px;
+    margin-top: 61px;
+  }
+   .subdv{
+    width:425px;
+    height:36px;
+    font-size:25px;
+    font-weight:400;
+    color:rgba(81,76,74,1);
+    line-height:36px;
+    margin-top: -20px;
+  }
+  .pint{
+    text-indent:26px;
+  }
+  .subtip{
+    width:450px;
+    height:63px;
+    font-size:15px;
+    font-weight:400;
+    color:rgba(137,137,137,1);
+    line-height:21px;
+    margin-top: 10px;
+    }
 </style>

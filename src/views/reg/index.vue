@@ -142,6 +142,7 @@
                   </el-form-item>
               </el-col>
           </el-row>
+
           <el-row>
             <el-col :span="18" :offset="6">
               <el-form-item label="工商营业执照：" prop="businessLicense">
@@ -169,6 +170,7 @@
                 <el-input v-model="tabForm.businessLicense" size="small" class="lvwidth" style="display: none;"></el-input>
               </el-form-item>
             </el-col>
+
           </el-row>
           <el-row>
               <el-col :span="18" :offset="6">
@@ -298,6 +300,7 @@ export default {
       };
     
     return {
+      id:'',
       active: 0,
       checked:true,
        // checkList: ['产业链',],
@@ -318,6 +321,7 @@ export default {
         tel: '',
         email: '',
 
+
         qyName: '',
         qyNumber: '',
         regAddress: '',
@@ -328,6 +332,8 @@ export default {
         breedLic: '',
         businessLicense: '',
         applyChain: ['产地链'],
+
+
           
       },
 
@@ -489,6 +495,9 @@ export default {
           // chain: [
           //   { required: true, message: '请选择业务链', trigger: 'change' }
           // ],
+
+        
+
       },
       
 
@@ -565,7 +574,6 @@ export default {
       this.isShow--;
       this.active--;
     },
-   
     handleAvatarSuccess(res, file) {
         // debugger;
         if(res.code===0 && res.result){
