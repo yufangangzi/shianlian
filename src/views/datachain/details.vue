@@ -399,8 +399,9 @@ import RefuseDialog from './refuse-dialog.vue'
 
               
             }
-            if(result.foodProductDetailDTOList && Array.isArray(result.foodProductDetailDTOList) && result.foodProductDetailDTOList.length===1){
-              const logRemark = result.foodProductDetailDTOList[0].logRemark;
+            // debugger;
+            if(result.foodProductDetailVOList && Array.isArray(result.foodProductDetailVOList) && result.foodProductDetailVOList.length===1){
+              const logRemark = result.foodProductDetailVOList[0].logRemark;
               logRemark.split('\n').forEach((it, i) =>{
                 const v = it.split('：')[1]
                 if(i===0){
@@ -414,6 +415,8 @@ import RefuseDialog from './refuse-dialog.vue'
                 }
 
               })
+
+              this.foodProductDetail = result.foodProductDetailVOList[0].id;
             }
             // debugger;
 
@@ -514,6 +517,9 @@ import RefuseDialog from './refuse-dialog.vue'
             if(this.detailId){
               saveOp = api.dataChainUpdate;
               data.id = this.detailId;
+              if(this.foodProductDetail){
+                data.foodProductDetailDTOList[0].id = this.foodProductDetail;
+              }
             }
 
             console.log(JSON.stringify(data))

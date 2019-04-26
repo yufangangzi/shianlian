@@ -15,6 +15,9 @@ export default {
   dataChainGet (params) {
     return post(url.dataChainGet, params)
   },
+  dataChainOn (params) {
+    return post(url.dataChainOn, params)
+  },
   complaintUpload (params) {
     return post(url.complaintUpload, params)
   },

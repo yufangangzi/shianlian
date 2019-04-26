@@ -53,7 +53,7 @@
           prop="tradingId"
           label="交易ID"
           align="center"
-          width="180"
+          width="280"
           >
         </el-table-column>
         <el-table-column
@@ -378,30 +378,28 @@ export default {
       });
       
     },
-    upChain () {
-      this.$refs.resetForm.validate(vaild => {
-        if (vaild) {
-          this.passwordreset = false
-          const data = {
-            id: this.resetForm.id,
-            password: this.resetForm.password,
-          }
-          api.backUpdate(data).then(res => {
-            if (res.code === 0) {
-              this.$message({
-                message: '修改用户密码成功',
-                type: 'success'
-              });
-            } else {
-              this.$message({
-                message: '修改用户密码失败',
-                type: 'error'
-              });
-            }
-            // this.passwordResetCancel()
-          })
+    upChain (row) {
+      
+      
+      const data = {
+        id: row.id,
+      }
+      api.dataChainOn(data).then(res => {
+        if (res.code === 0) {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          });
+        } else {
+          this.$message({
+            message: '操作失败',
+            type: 'error'
+          });
         }
+        this.getList()
       })
+        
+      
     },
     
     

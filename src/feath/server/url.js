@@ -5,6 +5,7 @@ export default {
   dataChainUpdate: domain + '/dataChain/update',
   dataChainList: domain + '/dataChain/list',
   dataChainGet: domain + '/dataChain/get',
+  dataChainOn: domain + '/dataChain/dataOnChain',
   complaintUpload: domain + '/complaint/complaint',
   backList: domain + '/userBack/list',
   backSave: domain + '/userBack/save',
