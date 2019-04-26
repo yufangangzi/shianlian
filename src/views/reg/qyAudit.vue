@@ -5,10 +5,19 @@
       <div class="top-bar">企业信息</div>
       <div class="regdemo">
       <el-form ref="form" :model="tabForm" label-width="150px" :rules="ruleValidate">
-          <el-steps :active="active" simple class="step">
+         <div class="stepBox">
+            <span class="step1" :class="{'stepActive':isShow == 1}">
+              1.企业信息
+              <a :class="[isShow==1 ? 'blue_arrow' : 'gray_arrow' ]"></a>
+            </span>
+            <span class="step2" :class="{'stepActive':isShow == 2}">
+              2.提交审核
+            </span>
+          </div>
+          <!-- <el-steps :active="active" simple class="step">
             <el-step title="1企业信息" icon="none"></el-step>
             <el-step title="2提交审核" icon="none"></el-step>
-          </el-steps>
+          </el-steps> -->
           <!-- 头部step -->
           <!-- 账户信息end -->
         <div class="step2" v-show="isShow == 1">
@@ -474,4 +483,67 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
   .subend{
     margin-top: 40px;
   }
+  .stepBox{
+  height: 48px;
+  border-top: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  line-height: 54px;
+  margin: 40px 118px;
+  display: flex;
+}
+.stepBox span{
+  flex: 1;
+  text-align: center;
+  color: #000000;
+  font-size: 18px;
+  height: 54px;
+  position: relative;
+  background: #EDEFF4;
+}
+.stepBox .stepActive{
+  background: #38ADFF;
+  color: #fff;
+}
+.gray_arrow{
+  width: 36px;
+  height: 54px;
+  display: inline-block;
+  position: absolute;
+  right: -36px;
+  top: 0px;
+  background: url('../../assets/img/arrow.png') no-repeat;
+  background-size: contain;
+  z-index: 1;
+}
+.gray_arrow:before{
+  content: '';
+  width:0; 
+  height:0; 
+  position: absolute;
+  left: 0px;
+  border-top:27px solid transparent;
+  border-bottom: 27px solid transparent;
+  border-left: 28px solid #EDEFF4;
+}
+.blue_arrow{
+  width: 36px;
+  height: 54px;
+  display: inline-block;
+  position: absolute;
+  right: -36px;
+  top: 0px;
+  background: url('../../assets/img/arrow.png') no-repeat;
+  background-size: contain;
+  z-index: 1;
+}
+.blue_arrow:before{
+  content: '';
+  width:0; 
+  height:0; 
+  position: absolute;
+  left: 0px;
+  border-top:27px solid transparent;
+  border-bottom: 27px solid transparent;
+  border-left: 27px solid #38ADFF;
+}
 </style>

@@ -8,15 +8,15 @@
       <div class="layot">
       <el-form ref="tabForm" :model="tabForm" :rules="rules" label-width="150px"  :inline-message="true">
           <div class="stepBox">
-            <span class="step1 stepActive">
+            <span class="step1" :class="{'stepActive':isShow == 1}">
               1.账户信息
-              <a class="blue_arrow"></a>
+              <a :class="[isShow==1 ? 'blue_arrow' : 'gray_arrow' ]"></a>
             </span>
-            <span class="step2">
+            <span class="step2" :class="{'stepActive':isShow == 2}">
               2.企业信息
-              <a class="gray_arrow"></a>
+              <a :class="[isShow==2 ? 'blue_arrow' : 'gray_arrow' ]"></a>
             </span>
-            <span class="step3">
+            <span class="step3" :class="{'stepActive':isShow == 3}">
               3.提交审核
             </span>
           </div>
@@ -723,7 +723,7 @@ export default {
   left: 0px;
   border-top:27px solid transparent;
   border-bottom: 27px solid transparent;
-  border-left: 27px solid #EDEFF4;
+  border-left: 28px solid #EDEFF4;
 }
 .blue_arrow{
   width: 36px;
