@@ -4,7 +4,7 @@
     <div class="detailBox">
       <div class="top-bar">企业信息</div>
       <div class="regdemo">
-      <el-form ref="form" :model="tabForm" label-width="100px" :rules="ruleValidate">
+      <el-form ref="form" :model="tabForm" label-width="150px" :rules="ruleValidate">
           <el-steps :active="active" simple class="step">
             <el-step title="1企业信息" icon="none"></el-step>
             <el-step title="2提交审核" icon="none"></el-step>
@@ -14,44 +14,45 @@
         <div class="step2" v-show="isShow == 1">
         <!-- <div> -->
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="企业名称："  placeholder="请输入企业名称"  prop="qyName">
-                      <el-input v-model="tabForm.qyName" size="small"></el-input>
+                      <el-input v-model="tabForm.qyName" size="small" class="lvwidth" ></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="统一社会信用代码：" prop="qyNumber" label-width="150px">
-                      <el-input v-model="tabForm.qyNumber" size="small" ></el-input>
+                      <el-input v-model="tabForm.qyNumber" size="small" class="lvwidth" ></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="注册地址：" prop="regAddress">
-                      <el-input v-model="tabForm.regAddress" size="small"></el-input>
+                      <el-input v-model="tabForm.regAddress" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="联络地址：" prop="telAddress">
-                      <el-input v-model="tabForm.telAddress" size="small"></el-input>
+                      <el-input v-model="tabForm.telAddress" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="法人代表：" prop="qyfr">
-                      <el-input v-model="tabForm.qyfr" size="small"></el-input>
+                      <el-input v-model="tabForm.qyfr" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="归属地区：" prop="gsAddress">
                       <el-cascader
+                       class="lvwidth"
                         size="large"
                         :options="options"
                         v-model="selectedOptions"
@@ -61,20 +62,20 @@
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="生产许可证：" prop="prodLic" label-width="110px">
-                      <el-input v-model="tabForm.prodLic" size="small"></el-input>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="生产许可证：" prop="prodLic" >
+                      <el-input v-model="tabForm.prodLic" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="种养殖许可证：" prop="breedLic" label-width="130px">
-                      <el-input v-model="tabForm.breedLic" size="small"></el-input>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="种养殖许可证：" prop="breedLic" >
+                      <el-input v-model="tabForm.breedLic" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
+          <el-row :span="18" :offset="6">
                   <el-form-item label="工商营业执照：" prop="" label-width="460px">
                     <el-upload
                       class="avatar-uploader"
@@ -132,7 +133,7 @@
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item >
                     <div class="subdv">你的企业信息已提交,请等待审核</div>
                     <div class="subtip">
@@ -198,17 +199,18 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
         checkList: [],
         imageUrl: '',
         imageUrl2: '',
+        tempUrl: '',
         uploadUrl: complaintUploadUrl,
         customHeaders: {
           'identity-authentic-request-header': localStorage.getItem('access_token'),
         },
         checks:[
-          {id:'1',name:'产业链'},
+          {id:'1',name:'产地链'},
           {id:'2',name:'加工链'},
           {id:'3',name:'物流链'},
           {id:'4',name:'销售链'}
         ],
-        checks2:{'产业链':4,'加工链':3,'物流链':2,'销售链':1},
+        checks2:{'产地链':4,'加工链':3,'物流链':2,'销售链':1},
         tabForm: {
           qyName: '',
           qyNumber: '',
@@ -260,6 +262,7 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
             this.tabForm.breedLic = res.result.productLicence;
             this.checkList = res.result.applyChain.split('/');
             this.imageUrl = baseURL + res.result.businessLicense;
+            this.tempUrl = res.result.businessLicense;
           }
         })
       },
@@ -323,13 +326,13 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
           chainIds: this.tabForm.chainIds,	
         }
         if(this.imageUrl){
-          data.businessLicense = this.imageUrl;
+          data.businessLicense = this.tempUrl;
         }
         if(this.imageUrl2){
             data.businessLicense = this.imageUrl2;
           }
         console.log(data)
-          debugger
+          
         api.reregister(data).then(res => {
           if (res.code == 0) {
               this.isShow = 2;
@@ -464,4 +467,7 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
     line-height:21px;
     margin-top: 10px;
     }
+  .lvwidth {
+      width: 302px;
+  }
 </style>
