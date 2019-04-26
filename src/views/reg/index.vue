@@ -203,24 +203,16 @@
         <!-- <div class="uhide"> -->
         <div class="step3 " v-if="isShow == 3">  
           <el-row type="flex" justify="center">
-                  
-                      <img class="subimg" src="../../assets/img/subtip.png"/>
-                  
-             
+                <img class="subimg" src="../../assets/img/subtip.png"/>
           </el-row>
           <el-row type="flex" justify="center">
-              
-                  
-                    <div class="subdv">你的企业信息已提交,请等待审核</div>
-                    
-               
+              <div class="subdv">你的企业信息已提交,请等待审核</div>
           </el-row>
           <el-row type="flex" justify="center">
-                    <div class="subtip">
-                      审核时间为3-5个工作日，请谨记您的账号。<br/> 
-                      在审核完成后，您将可以使用该账号作为企业管理员进行登录。<br/> 
-                      如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</div>
-               
+              <div class="subtip">
+                审核时间为3-5个工作日，请谨记您的账号。<br/> 
+                在审核完成后，您将可以使用该账号作为企业管理员进行登录。<br/> 
+                如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</div>
           </el-row>
           <el-row type="flex" justify="center">
                <div class="subend">
@@ -513,24 +505,24 @@ export default {
     this.rules = this.rules1;
     this.isShow = 1;
 
-    // this.tabForm = {
-    //     name: 'chang1',
-    //     password: 'admin123',
-    //     password2: 'admin123',
-    //     tel: '15811599822',
-    //     email: '158991@qq.com',
+    this.tabForm = {
+        name: 'chang1',
+        password: 'admin123',
+        password2: 'admin123',
+        tel: '15811599822',
+        email: '158991@qq.com',
 
-    //     qyName: '北京安捷乐',
-    //     qyNumber: '92330783MA29QJ0F5X',
-    //     regAddress: '大连靠山屯',
-    //     telAddress: '大连广发',
-    //     qyfr: '尼古拉赵四哥',
-    //     gsAddress: '',
-    //     prodLic: '许可有效S3204034',
-    //     breedLic: 'NS300323042',
-    //     businessLicense: '',
-    //     applyChain: ['产地链'],
-    //   }
+        qyName: '北京安捷乐',
+        qyNumber: '92330783MA29QJ0F5X',
+        regAddress: '大连靠山屯',
+        telAddress: '大连广发',
+        qyfr: '尼古拉赵四哥',
+        gsAddress: '',
+        prodLic: '许可有效S3204034',
+        breedLic: 'NS300323042',
+        businessLicense: '',
+        applyChain: ['产地链'],
+      }
 
     // this.rules = this.rules2;
     // this.isShow = 2;
