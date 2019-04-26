@@ -4,7 +4,7 @@
     <div class="detailBox">
       <div class="top-bar">企业信息</div>
       <div class="regdemo">
-      <el-form ref="form" :model="tabForm" label-width="100px" :rules="ruleValidate">
+      <el-form ref="form" :model="tabForm" label-width="150px" :rules="ruleValidate">
           <el-steps :active="active" simple class="step">
             <el-step title="1企业信息" icon="none"></el-step>
             <el-step title="2提交审核" icon="none"></el-step>
@@ -14,44 +14,45 @@
         <div class="step2" v-show="isShow == 1">
         <!-- <div> -->
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="企业名称："  placeholder="请输入企业名称"  prop="qyName">
-                      <el-input v-model="tabForm.qyName" size="small"></el-input>
+                      <el-input v-model="tabForm.qyName" size="small" class="lvwidth" ></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="统一社会信用代码：" prop="qyNumber" label-width="150px">
-                      <el-input v-model="tabForm.qyNumber" size="small" ></el-input>
+                      <el-input v-model="tabForm.qyNumber" size="small" class="lvwidth" ></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="注册地址：" prop="regAddress">
-                      <el-input v-model="tabForm.regAddress" size="small"></el-input>
+                      <el-input v-model="tabForm.regAddress" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="联络地址：" prop="telAddress">
-                      <el-input v-model="tabForm.telAddress" size="small"></el-input>
+                      <el-input v-model="tabForm.telAddress" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="法人代表：" prop="qyfr">
-                      <el-input v-model="tabForm.qyfr" size="small"></el-input>
+                      <el-input v-model="tabForm.qyfr" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="归属地区：" prop="gsAddress">
                       <el-cascader
+                       class="lvwidth"
                         size="large"
                         :options="options"
                         v-model="selectedOptions"
@@ -61,20 +62,20 @@
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="生产许可证：" prop="prodLic" label-width="110px">
-                      <el-input v-model="tabForm.prodLic" size="small"></el-input>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="生产许可证：" prop="prodLic" >
+                      <el-input v-model="tabForm.prodLic" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="种养殖许可证：" prop="breedLic" label-width="130px">
-                      <el-input v-model="tabForm.breedLic" size="small"></el-input>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="种养殖许可证：" prop="breedLic" >
+                      <el-input v-model="tabForm.breedLic" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
+          <el-row :span="18" :offset="6">
                   <el-form-item label="工商营业执照：" prop="" label-width="460px">
                     <el-upload
                       class="avatar-uploader"
@@ -101,12 +102,12 @@
                   </el-form-item>
           </el-row>           
           <el-row type="flex" justify="center">
-              <el-col :span="10">
+              <el-col :span="18" :offset="6">
                   <el-form-item label="上链类型：" prop="upperType">
                       <el-checkbox-group v-model="checkList">
                         <el-checkbox v-for="i in checks" :label="i.name" :key="i.id" @change="handleCheckedChange(i)">{{i.name}}</el-checkbox>
                       </el-checkbox-group>
-                      <span>请根据业务情况,选择至少一条业务链加入</span>
+                      <div class="tips2">请根据业务情况,选择至少一条业务链加入</div>
                   </el-form-item>
                   <el-form-item class="upperdv">
                     
@@ -114,7 +115,7 @@
               </el-col>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="8">
+              <el-col :span="18" :offset="6">
                   <el-form-item>
                       <el-button type="" @click="cancel">取消</el-button>
                       <el-button type="primary" @click="saveOK">提交审核</el-button>
@@ -125,30 +126,21 @@
           <!-- 企业信息end -->
         <div class="step3 " v-show="isShow == 2">  
           <el-row type="flex" justify="center">
-              <el-col :span="3">
-                  <el-form-item >
-                      <img class="subimg" src="../../assets/img/subtip.png"/>
-                  </el-form-item>
-              </el-col>
+                <img class="subimg" src="../../assets/img/subtip.png"/>
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item >
-                    <div class="subdv">你的企业信息已提交,请等待审核</div>
-                    <div class="subtip">
-                      <p class="pint">审核时间为3-5个工作日，请谨记您的账号。</p>
-                      <p>在审核完成后，您将可以使用该账号作为企业管理员进行登录。</p>
-                      <p>如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</p>
-                    </div>
-                  </el-form-item>
-              </el-col>
+              <div class="subdv">你的企业信息已提交,请等待审核</div>
           </el-row>
-           <el-row type="flex" justify="center">
-              <el-col :span="2">
-                  <el-form-item>
-                      <el-button type="primary" @click="sureOK">确定</el-button>
-                  </el-form-item>
-              </el-col>
+          <el-row type="flex" justify="center">
+              <div class="subtip pint">
+                审核时间为3-5个工作日，请谨记您的账号。<br/> 
+                在审核完成后，您将可以使用该账号作为企业管理员进行登录。<br/> 
+                如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</div>
+          </el-row>
+          <el-row type="flex" justify="center">
+               <div class="subend">
+                 <el-button type="primary" @click="sureOk">确定</el-button>
+               </div>
           </el-row>
         </div>
           <!-- 提交审核end -->
@@ -198,17 +190,18 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
         checkList: [],
         imageUrl: '',
         imageUrl2: '',
+        tempUrl: '',
         uploadUrl: complaintUploadUrl,
         customHeaders: {
           'identity-authentic-request-header': localStorage.getItem('access_token'),
         },
         checks:[
-          {id:'1',name:'产业链'},
+          {id:'1',name:'产地链'},
           {id:'2',name:'加工链'},
           {id:'3',name:'物流链'},
           {id:'4',name:'销售链'}
         ],
-        checks2:{'产业链':4,'加工链':3,'物流链':2,'销售链':1},
+        checks2:{'产地链':4,'加工链':3,'物流链':2,'销售链':1},
         tabForm: {
           qyName: '',
           qyNumber: '',
@@ -260,6 +253,7 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
             this.tabForm.breedLic = res.result.productLicence;
             this.checkList = res.result.applyChain.split('/');
             this.imageUrl = baseURL + res.result.businessLicense;
+            this.tempUrl = res.result.businessLicense;
           }
         })
       },
@@ -323,13 +317,13 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
           chainIds: this.tabForm.chainIds,	
         }
         if(this.imageUrl){
-          data.businessLicense = this.imageUrl;
+          data.businessLicense = this.tempUrl;
         }
         if(this.imageUrl2){
             data.businessLicense = this.imageUrl2;
           }
         console.log(data)
-          debugger
+          
         api.reregister(data).then(res => {
           if (res.code == 0) {
               this.isShow = 2;
@@ -450,7 +444,7 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
     font-weight:400;
     color:rgba(81,76,74,1);
     line-height:36px;
-    margin-top: -20px;
+    margin-top: 40px;
   }
   .pint{
     text-indent:26px;
@@ -463,5 +457,21 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
     color:rgba(137,137,137,1);
     line-height:21px;
     margin-top: 10px;
+    margin-left: 30px;
+    
     }
+  .lvwidth {
+      width: 302px;
+  }
+  .tips2{
+    height:20px;
+    font-size:14px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(184,184,184,1);
+    line-height:20px;
+  }
+  .subend{
+    margin-top: 40px;
+  }
 </style>

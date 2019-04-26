@@ -66,6 +66,9 @@ export default {
   orgRefuse (params) {
     return post(url.orgRefuse, params)
   },
+  chiansGet (params) {
+    return post(url.chiansGet, params)
+  },
   getStatisticsChain (params) {
     return post(url.getStatisticsChain, params)
   }

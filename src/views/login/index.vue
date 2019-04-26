@@ -38,8 +38,8 @@
                 <i class="user-icon code-icon"></i>
                 <input class="username" @blur="codeBlur" v-model="loginform.code" placeholder="验证码计算结果" type="text">
                 <span class="error">{{codeError}}</span>
-                <img :src="identifyImg" class="codeImg" @click="getCode"/>
-                <span class="changeImg" @click="getCode">
+                <img :src="identifyImg" class="codeImg regcs" @click="getCode"/>
+                <span class="changeImg regcs" @click="getCode">
                   换一张
                 </span>
               </div>
@@ -50,11 +50,12 @@
                 <span>记住密码</span>
               </div>
             </div>
-             <div class="loginForm">
-              <span @click="logining" class="loginBtn">登陆</span>
+
+             <div class="loginForm" style="cursor: pointer;">
+              <span @click="logining" class="loginBtn regcs">登陆</span>
             </div>
-            <div>
-              <span @click="reging" class="reging">没有账号,请<span>立即注册</span></span>
+            <div style="cursor: pointer;">
+              <span @click="reging" class="reging">没有账号,请<span class="regcs">立即注册</span></span>
             </div>
           </div>
         </el-col>
@@ -128,22 +129,36 @@ export default {
             
             if (roleName == '操作员') {
               oUrl = '/'
-              api.getOrgStatus({
-                "organId": organId
+              api.chiansGet({
+                "id": organId
               }).then(res => {
-                if (res.code == 0) {
-                  if(!res.result){
-                    oUrl = '/overview'
-                  }else{
-                    oUrl = '/unaudited'
-                    //企业未审核通过
-                    localStorage.setItem('food_roleName','运营者')
-                  }
-
-                  _this.$router.push({
-                    path: oUrl
+                
+                try{
+                  const chainList = res.result.map((v) => {
+                    return {'1':"销售链",'2':"物流链",'3':"加工链",'4':"产地链"}[v.chainId]
                   })
+                  localStorage.setItem('o_chainList',JSON.stringify(chainList));
+                }catch(e){
+                  localStorage.setItem('o_chainList',JSON.stringify([]));
                 }
+                // debugger
+                api.getOrgStatus({
+                  "organId": organId
+                }).then(res => {
+                  if (res.code == 0) {
+                    if(!res.result){
+                      oUrl = '/overview'
+                    }else{
+                      oUrl = '/unaudited'
+                      //企业未审核通过
+                      localStorage.setItem('food_roleName','运营者')
+                    }
+
+                    _this.$router.push({
+                      path: oUrl
+                    })
+                  }
+                });
               });
             }else{
               oUrl = '/';

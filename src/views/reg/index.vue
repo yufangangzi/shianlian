@@ -38,7 +38,7 @@
           <el-row>
               <el-col :span="18" :offset="6">
                   <el-form-item label="密码：" prop="password" >
-                      <el-input v-model="tabForm.password" size="small" class="lvwidth"></el-input>
+                      <el-input v-model="tabForm.password" size="small" class="lvwidth" type="password"></el-input>
                   </el-form-item>
                   <div class="tips1">密码必须包含数字、大小写字母、长度不低于8位</div>
               </el-col>
@@ -46,7 +46,7 @@
           <el-row>
               <el-col :span="18" :offset="6">
                   <el-form-item label="确认密码：" prop="password2" >
-                      <el-input v-model="tabForm.password2" size="small" class="lvwidth"></el-input>
+                      <el-input v-model="tabForm.password2" size="small" class="lvwidth" type="password"></el-input>
                   </el-form-item>
                   <div class="tips1">请再次输入密码</div>
               </el-col>
@@ -216,31 +216,22 @@
         <!-- <div class="uhide"> -->
         <div class="step3 " v-if="isShow == 3">  
           <el-row type="flex" justify="center">
-                  
-                      <img class="subimg" src="../../assets/img/subtip.png"/>
-                  
-             
+                <img class="subimg" src="../../assets/img/subtip.png"/>
           </el-row>
           <el-row type="flex" justify="center">
-              
-                  
-                    <div class="subdv">你的企业信息已提交,请等待审核</div>
-                    
-               
+              <div class="subdv">你的企业信息已提交,请等待审核</div>
           </el-row>
           <el-row type="flex" justify="center">
-                    <div class="subtip">
-                      审核时间为3-5个工作日，请谨记您的账号。<br/> 
-                      在审核完成后，您将可以使用该账号作为企业管理员进行登录。<br/> 
-                      如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</div>
-               
+              <div class="subtip">
+                审核时间为3-5个工作日，请谨记您的账号。<br/> 
+                在审核完成后，您将可以使用该账号作为企业管理员进行登录。<br/> 
+                如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</div>
           </el-row>
           <el-row type="flex" justify="center">
                <div class="subend">
                  <el-button type="primary" @click="reback">返回首页</el-button>
                </div>
           </el-row>
-
         </div>
           <!-- 提交审核end -->
         <div class="step4" v-if="isShow == 4">  
@@ -526,16 +517,15 @@ export default {
     this.rules = this.rules1;
     this.isShow = 1;
 
-
     // this.tabForm = {
-    //     name: 'yanglin002',
+    //     name: 'chang1',
     //     password: 'admin123',
     //     password2: 'admin123',
     //     tel: '15811599822',
     //     email: '158991@qq.com',
 
-    //     qyName: '东北野人参产业有限公司',
-    //     qyNumber: '203930909029389892',
+    //     qyName: '北京安捷乐',
+    //     qyNumber: '92330783MA29QJ0F5X',
     //     regAddress: '大连靠山屯',
     //     telAddress: '大连广发',
     //     qyfr: '尼古拉赵四哥',
@@ -544,7 +534,6 @@ export default {
     //     breedLic: 'NS300323042',
     //     businessLicense: '',
     //     applyChain: ['产地链'],
-          
     //   }
 
     // this.rules = this.rules2;

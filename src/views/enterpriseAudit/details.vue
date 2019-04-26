@@ -60,11 +60,13 @@ import api from '@/feath/api.js'
 import AdoptDialog from './adopt-dialog.vue'
 import RefuseDialog from './refuse-dialog.vue'
 import { baseURL } from '@/feath/server/http.js'
+import { CodeToText } from 'element-china-area-data'
   export default {
     data() {
       return {
         adoptVisible: false,
         refuseVisible: false,
+        CodeToText: CodeToText,
         id: '',
         detailData: {
           name: '',
@@ -92,6 +94,7 @@ import { baseURL } from '@/feath/server/http.js'
       // 通过审核
       adoptOk () {
         this.adoptVisible = false;
+        this.$router.go(-1);
       },
       // 拒绝审核
       refuse () {
@@ -112,7 +115,8 @@ import { baseURL } from '@/feath/server/http.js'
               type: 'success'
             });
             this.refuseVisible = false;
-            this.getOrgList()
+            this.$router.go(-1);
+            // this.getOrgList()
           } else {
             this.$message.error(res.msg);
           }
@@ -130,11 +134,16 @@ import { baseURL } from '@/feath/server/http.js'
             this.detailData.registerAddress = res.result.registerAddress;
             this.detailData.contactAddress = res.result.contactAddress;
             this.detailData.corporate = res.result.corporate;
-            this.detailData.attributionArea = res.result.attributionArea;
+            const arr = res.result.attributionArea.split(',');
+            this.detailData.attributionArea = arr.map(v => {
+                 return this.CodeToText[v];
+              }).join(' ');
+            // this.detailData.attributionArea = res.result.attributionArea;
             this.detailData.plantLicence = res.result.plantLicence;
             this.detailData.productLicence = res.result.productLicence;
             this.detailData.applyChain = res.result.applyChain;
             this.detailData.businessLicense = baseURL + res.result.businessLicense;
+            
           }
         })
       },
