@@ -92,6 +92,7 @@ import { baseURL } from '@/feath/server/http.js'
       // 通过审核
       adoptOk () {
         this.adoptVisible = false;
+        this.$router.go(-1);
       },
       // 拒绝审核
       refuse () {
@@ -112,7 +113,8 @@ import { baseURL } from '@/feath/server/http.js'
               type: 'success'
             });
             this.refuseVisible = false;
-            this.getOrgList()
+            this.$router.go(-1);
+            // this.getOrgList()
           } else {
             this.$message.error(res.msg);
           }

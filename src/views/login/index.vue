@@ -50,10 +50,10 @@
                 <span>记住密码</span>
               </div>
             </div>
-             <div class="loginForm">
+             <div class="loginForm" style="cursor: pointer;">
               <span @click="logining" class="loginBtn">登陆</span>
             </div>
-            <div>
+            <div style="cursor: pointer;">
               <span @click="reging" class="reging">没有账号,请<span>立即注册</span></span>
             </div>
           </div>
