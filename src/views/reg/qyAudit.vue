@@ -23,7 +23,7 @@
           <el-row type="flex" justify="center">
               <el-col :span="6">
                   <el-form-item label="统一社会信用代码：" prop="qyNumber" label-width="150px">
-                      <el-input v-model="tabForm.qyNumber" size="small"></el-input>
+                      <el-input v-model="tabForm.qyNumber" size="small" ></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
