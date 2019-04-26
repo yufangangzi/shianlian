@@ -133,7 +133,7 @@ import RefuseDialog from './refuse-dialog.vue'
             this.detailData.plantLicence = res.result.plantLicence;
             this.detailData.productLicence = res.result.productLicence;
             this.detailData.applyChain = res.result.applyChain;
-            this.detailData.businessLicense = localStorage.getItem('domain') + '/' + res.result.businessLicense;
+            this.detailData.businessLicense = businessLicense + res.result.businessLicense;
           }
         })
       },

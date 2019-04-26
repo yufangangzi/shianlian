@@ -259,7 +259,7 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
             this.tabForm.prodLic = res.result.plantLicence;
             this.tabForm.breedLic = res.result.productLicence;
             this.checkList = res.result.applyChain.split('/');
-            this.imageUrl = localStorage.getItem('domain') + '/' + res.result.businessLicense;
+            this.imageUrl = baseURL + res.result.businessLicense;
           }
         })
       },
