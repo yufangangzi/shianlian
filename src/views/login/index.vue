@@ -38,8 +38,8 @@
                 <i class="user-icon code-icon"></i>
                 <input class="username" @blur="codeBlur" v-model="loginform.code" placeholder="验证码计算结果" type="text">
                 <span class="error">{{codeError}}</span>
-                <img :src="identifyImg" class="codeImg" @click="getCode"/>
-                <span class="changeImg" @click="getCode">
+                <img :src="identifyImg" class="codeImg regcs" @click="getCode"/>
+                <span class="changeImg regcs" @click="getCode">
                   换一张
                 </span>
               </div>
@@ -50,11 +50,12 @@
                 <span>记住密码</span>
               </div>
             </div>
+
              <div class="loginForm" style="cursor: pointer;">
-              <span @click="logining" class="loginBtn">登陆</span>
+              <span @click="logining" class="loginBtn regcs">登陆</span>
             </div>
             <div style="cursor: pointer;">
-              <span @click="reging" class="reging">没有账号,请<span>立即注册</span></span>
+              <span @click="reging" class="reging">没有账号,请<span class="regcs">立即注册</span></span>
             </div>
           </div>
         </el-col>

@@ -513,16 +513,15 @@ export default {
     this.rules = this.rules1;
     this.isShow = 1;
 
-
     // this.tabForm = {
-    //     name: 'yanglin002',
+    //     name: 'chang1',
     //     password: 'admin123',
     //     password2: 'admin123',
     //     tel: '15811599822',
     //     email: '158991@qq.com',
 
-    //     qyName: '东北野人参产业有限公司',
-    //     qyNumber: '203930909029389892',
+    //     qyName: '北京安捷乐',
+    //     qyNumber: '92330783MA29QJ0F5X',
     //     regAddress: '大连靠山屯',
     //     telAddress: '大连广发',
     //     qyfr: '尼古拉赵四哥',
@@ -531,7 +530,6 @@ export default {
     //     breedLic: 'NS300323042',
     //     businessLicense: '',
     //     applyChain: ['产地链'],
-          
     //   }
 
     // this.rules = this.rules2;
