@@ -1,7 +1,7 @@
 {
   "name": "webpcak4",
   "scripts": {
-    "build": "cross-env BRANCH_ENV=development webpack --config build/webpack.prod.config.js",
+    "build": "cross-env BRANCH_ENV=production webpack --config build/webpack.prod.config.js",
     "dev": "cross-env BRANCH_ENV=development webpack-dev-server --config build/webpack.dev.config.js"
   },
   "devDependencies": {
