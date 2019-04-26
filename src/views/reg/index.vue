@@ -25,7 +25,7 @@
           <el-row>
               <el-col :span="18" :offset="6">
                   <el-form-item label="密码：" prop="password" >
-                      <el-input v-model="tabForm.password" size="small" class="lvwidth"></el-input>
+                      <el-input v-model="tabForm.password" size="small" class="lvwidth" type="password"></el-input>
                   </el-form-item>
                   <div class="tips1">密码必须包含数字、大小写字母、长度不低于8位</div>
               </el-col>
@@ -33,7 +33,7 @@
           <el-row>
               <el-col :span="18" :offset="6">
                   <el-form-item label="确认密码：" prop="password2" >
-                      <el-input v-model="tabForm.password2" size="small" class="lvwidth"></el-input>
+                      <el-input v-model="tabForm.password2" size="small" class="lvwidth" type="password"></el-input>
                   </el-form-item>
                   <div class="tips1">请再次输入密码</div>
               </el-col>
@@ -219,7 +219,6 @@
                  <el-button type="primary" @click="reback">返回首页</el-button>
                </div>
           </el-row>
-
         </div>
           <!-- 提交审核end -->
         <div class="step4" v-if="isShow == 4">  
