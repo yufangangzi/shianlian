@@ -177,6 +177,30 @@
             <el-form-item label="国际条码" prop="">
               <el-input disabled v-model="ruleForm.barCode" class="lvwidth"></el-input>
             </el-form-item>
+            <el-form-item label="产品图片" prop="">
+              <el-upload
+                class="avatar-uploader"
+                :headers="customHeaders"
+                :action="uploadUrl"
+                name="imageFile"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+                <div class="avatar" style="display:inline-block;">
+                  <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                  <img v-else src="../../assets/img/default-up.png" style="margin:35px 51px;">
+                </div>
+                <!-- <i class="el-icon-plus avatar-uploader-icon"></i> -->
+                <!-- <div class="avatar-right" style="display:inline-block;margin-left:24px;text-align: left;">
+                  <div slot="tip" class="el-upload__tip txt">
+                    格式要求：<br>
+                    请上传产品图片，将显示为溯源产品题图。 <br>
+                    支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。
+                  </div>
+                  <el-button size="small" type="primary">点击上传</el-button>
+                </div> -->
+              </el-upload>
+            </el-form-item>
 
           </el-tab-pane>
           <el-tab-pane label="地块" name="second">
@@ -213,7 +237,7 @@
 </template>
 <script>
 import api from '@/feath/api.js'
-import {complaintUploadUrl} from '@/feath/server/http.js'
+import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
 import AdoptDialog from './adopt-dialog.vue'
 import RefuseDialog from './refuse-dialog.vue'
   export default {
@@ -289,14 +313,7 @@ import RefuseDialog from './refuse-dialog.vue'
           soilProp: '',
           mainCrops: '',
 
-          // name: '',
-          // region: '',
-          // date1: '',
-          // date2: '',
-          // delivery: false,
-          // type: [],
-          // resource: '',
-          // desc: ''
+          
         },
         rules: {
           title: [
@@ -334,28 +351,6 @@ import RefuseDialog from './refuse-dialog.vue'
           ],
 
 
-          // name: [
-          //   { required: true, message: '请输入活动名称', trigger: 'blur' },
-          //   { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          // ],
-          // region: [
-          //   { required: true, message: '请选择活动区域', trigger: 'change' }
-          // ],
-          // date1: [
-          //   { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-          // ],
-          // date2: [
-          //   { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-          // ],
-          // type: [
-          //   { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-          // ],
-          // resource: [
-          //   { required: true, message: '请选择活动资源', trigger: 'change' }
-          // ],
-          // desc: [
-          //   { required: true, message: '请填写活动形式', trigger: 'blur' }
-          // ]
         }
       };
     },
@@ -367,12 +362,73 @@ import RefuseDialog from './refuse-dialog.vue'
       // debugger;
       this.type = this.$route.query.type;
       if(this.$route.query.id){
-        this.detailId = this.$route.query.id;
+        this.detailId = this.$route.query.id * 1;
+        this.getDetail();
       }
       console.log('this.type', this.type);
       console.log('this.detailId', this.detailId);
     },
     methods: {
+      getDetail () {
+        const data = {
+          id: this.detailId
+        }
+        api.dataChainGet(data).then(res => {
+          // debugger
+          //模拟测试数据
+          // res.code = 0
+          // res.result = {"id":44,"name":"大兴西瓜","code":"","traceCode":"44","category":"2","attribute":"1","legalPerson":"冯敏","address":"杭州市江干区九盛路9号A13幢4楼423室","enterprise":"杭州如涵控股股份有限公司","imageurl":"/group1/M00/00/07/CpCEWFzBbWqAbuZcAABShQcS1Pg768.jpg","openId":null,"chainStatus":1,"title":"大兴西瓜棒棒哒","tradingId":"d622ba7804f0f05339e868b7c9b986ee8f83a322f621c2f7d56f542c336a0198","organId":11,"usuallyName":"大兴西瓜大兴西瓜","academicName":"大兴西瓜S8","barCode":"SN0230233232","updateTime":1556183646000,"foodProductDetailVOList":null};
+          if (res.code ===0) {
+            const result = res.result;
+            const obj = {
+              title: result.title,
+              chain: 1,
+              productId: 'test1234',   
+              productName: result.name,
+              productType: result.category,
+              productProp: result.attribute,  
+              circulationName: result.usuallyName,  
+              scienceName: result.academicName,  
+              barCode: result.barCode,
+
+              landId: 'test1234',
+              productPlace: '',
+              area: '',
+              soilProp: '',
+              mainCrops: '',
+
+              
+            }
+            // debugger;
+            if(result.foodProductDetailVOList && Array.isArray(result.foodProductDetailVOList) && result.foodProductDetailVOList.length===1){
+              const logRemark = result.foodProductDetailVOList[0].logRemark;
+              logRemark.split('\n').forEach((it, i) =>{
+                const v = it.split('：')[1]
+                if(i===0){
+                  obj.productPlace = v;
+                }else if(i===1){
+                  obj.area = v;
+                }else if(i===2){
+                  obj.soilProp = v;
+                }else if(i===3){
+                  obj.mainCrops = v;
+                }
+
+              })
+
+              this.foodProductDetail = result.foodProductDetailVOList[0].id;
+            }
+            // debugger;
+
+
+            this.ruleForm = Object.assign({}, this.ruleForm, obj);
+
+            this.imageUrl = baseURL + result.imageurl;
+            this.imageUrl2 = result.imageurl;
+            
+          }
+        })
+      },
       handleAvatarSuccess(res, file) {
         // debugger;
         if(res.code===0 && res.result){
@@ -424,10 +480,7 @@ import RefuseDialog from './refuse-dialog.vue'
           if (valid) {
             // alert('submit!');
             console.log(this.ruleForm);
-            let saveOp = api.dataChainSave;
-            if(this.detailId){
-              saveOp = api.dataChainUpdate;
-            }
+            
             
             let dikuai = [
               ['归属产地单位', this.ruleForm.productPlace],
@@ -458,6 +511,15 @@ import RefuseDialog from './refuse-dialog.vue'
 
             if(this.imageUrl2){
               data.imageurl = this.imageUrl2;
+            }
+
+            let saveOp = api.dataChainSave;
+            if(this.detailId){
+              saveOp = api.dataChainUpdate;
+              data.id = this.detailId;
+              if(this.foodProductDetail){
+                data.foodProductDetailDTOList[0].id = this.foodProductDetail;
+              }
             }
 
             console.log(JSON.stringify(data))

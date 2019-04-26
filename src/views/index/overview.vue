@@ -157,7 +157,7 @@ export default {
         fontWeight: '400'
       },
       tableData: [{
-        name:'青岛岸山农业集团',
+        name: localStorage.getItem('u_organName'),
         appid:'18519226670',
         lian:'产地/加工/物流/销售',
         keyapi:'6FnB8gKicOtHwLbKvt7eQkK',

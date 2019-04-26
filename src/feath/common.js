@@ -15,10 +15,12 @@ export default {
   dataChainGet (params) {
     return post(url.dataChainGet, params)
   },
+  dataChainOn (params) {
+    return post(url.dataChainOn, params)
+  },
   complaintUpload (params) {
     return post(url.complaintUpload, params)
   },
-
   backList (params) {
     return post(url.backList, params)
   },
@@ -47,7 +49,24 @@ export default {
     return post(url.register, params)
   },
   reregister (params) {
-    return post(url.reregister, params)
+    return post(url.reregister, params) 
+  },
+   getOrgStatus (params) {
+    return post(url.getOrgStatus, params)
+  },
+  getOrgList (params) {
+    return post(url.getOrgList, params)
+  },
+  getOrgDetail (params) {
+    return post(url.getOrgDetail, params)
+  },
+  orgPass (params) {
+    return post(url.orgPass, params)
+  },
+  orgRefuse (params) {
+    return post(url.orgRefuse, params)
+  },
+  getStatisticsChain (params) {
+    return post(url.getStatisticsChain, params)
   }
-
 }
