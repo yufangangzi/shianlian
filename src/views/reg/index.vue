@@ -1,193 +1,243 @@
 <template>
+  
   <div class="regdemo">
-      <el-form ref="form" :model="tabForm" label-width="50px">
+    <el-container>
+      <el-header>
+        <header-menu></header-menu>
+      </el-header>
+      <div class="layot">
+      <el-form ref="tabForm" :model="tabForm" :rules="rules" label-width="150px"  :inline-message="true">
           <el-steps :active="active" simple class="step">
             <el-step title="1账户信息" icon="none"></el-step>
             <el-step title="2企业信息" icon="none"></el-step>
             <el-step title="3提交审核" icon="none"></el-step>
           </el-steps>
           <!-- 头部step -->
-        <div class="step1" v-show="isShow == 1">
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="用户名：" prop="name" label-width="100px">
-                      <el-input v-model="tabForm.name" size="small"></el-input>
+        <div class="step1" v-if="isShow == 1">
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="用户名：" prop="name" >
+                      <el-input v-model="tabForm.name" size="small" class="lvwidth"></el-input>
+                  </el-form-item>
+                  <div class="tips1">字母、数字或者英文符号,最长14位</div>
+              </el-col>
+          </el-row>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="密码：" prop="password" >
+                      <el-input v-model="tabForm.password" size="small" class="lvwidth"></el-input>
+                  </el-form-item>
+                  <div class="tips1">密码必须包含数字、大小写字母、长度不低于8位</div>
+              </el-col>
+          </el-row>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="确认密码：" prop="password2" >
+                      <el-input v-model="tabForm.password2" size="small" class="lvwidth"></el-input>
+                  </el-form-item>
+                  <div class="tips1">请再次输入密码</div>
+              </el-col>
+          </el-row>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="手机号码：" prop="tel" >
+                      <el-input v-model="tabForm.tel" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="密码：" prop="password" label-width="100px">
-                      <el-input v-model="tabForm.password" size="small"></el-input>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="邮箱：" prop="email" >
+                      <el-input v-model="tabForm.email" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="确认密码：" prop="password2" label-width="100px">
-                      <el-input v-model="tabForm.password2" size="small"></el-input>
-                  </el-form-item>
-              </el-col>
-          </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="手机号码：" prop="tel" label-width="100px">
-                      <el-input v-model="tabForm.tel" size="small"></el-input>
-                  </el-form-item>
-              </el-col>
-          </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="邮箱：" prop="email" label-width="100px">
-                      <el-input v-model="tabForm.email" size="small"></el-input>
-                  </el-form-item>
-              </el-col>
-          </el-row>
-          <el-row type="flex" justify="center">
-            <el-col :span="6">
+          <el-row>
+              <el-col :span="18" :offset="6">
               <el-form-item >
                 <el-checkbox v-model="checked">同意食安物链隐私协议</el-checkbox>
               </el-form-item>
             </el-col>
           </el-row>
+
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item>
+                      <el-button type="primary" :disabled="!checked"  @click="submitForm('tabForm')">下一步</el-button>
+                      <!-- <el-button type="primary" @click="reback">返回首页</el-button> -->
+                      <!-- <el-button type="primary" @click="submit">注册</el-button> -->
+                  </el-form-item>
+              </el-col>
+          </el-row>
         </div>
           <!-- 账户信息end -->
-        <div class="step2" v-show="isShow == 2">
+        <div class="step2" v-if="isShow == 2">
         <!-- <div> -->
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="企业名称：" prop="qyName" label-width="100px">
-                      <el-input v-model="tabForm.qyName" size="small"></el-input>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="企业名称：" prop="qyName" >
+                      <el-input v-model="tabForm.qyName" size="small" class="lvwidth"></el-input>
+
+                  </el-form-item>
+                  <div class="tips1">字母、数字或者英文符号,最长14位</div>
+              </el-col>
+          </el-row>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="统一社会信用代码：" prop="qyNumber" >
+                      <el-input v-model="tabForm.qyNumber" size="small" class="lvwidth"></el-input>
+                  </el-form-item>
+                  <div class="tips1">请输入18位统一社会信用代码</div>
+              </el-col>
+          </el-row>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="注册地址：" prop="regAddress" >
+                      <el-input v-model="tabForm.regAddress" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="统一社会信用代码：" prop="qyNumber" label-width="140px">
-                      <el-input v-model="tabForm.qyNumber" size="small"></el-input>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="联络地址：" prop="telAddress" >
+                      <el-input v-model="tabForm.telAddress" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="注册地址：" prop="regAddress" label-width="100px">
-                      <el-input v-model="tabForm.regAddress" size="small"></el-input>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="法人代表：" prop="qyfr" >
+                      <el-input v-model="tabForm.qyfr" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="联络地址：" prop="telAddress" label-width="100px">
-                      <el-input v-model="tabForm.telAddress" size="small"></el-input>
-                  </el-form-item>
-              </el-col>
-          </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="法人代表：" prop="qyfr" label-width="100px">
-                      <el-input v-model="tabForm.qyfr" size="small"></el-input>
-                  </el-form-item>
-              </el-col>
-          </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="归属地区：" prop="gsAddress" label-width="100px">
+          
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="归属地区：" prop="gsAddress" >
                       <el-cascader
+                        class="lvwidth"
                         size="large"
                         :options="options"
                         v-model="selectedOptions"
                         @change="handleChange">
                       </el-cascader>
+
+                      <el-input v-model="tabForm.gsAddress" size="small" class="lvwidth" style="display: none;"></el-input>
+                  </el-form-item>
+                  <div class="tips1">省/市/县</div>
+              </el-col>
+          </el-row>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="生产许可证：" prop="prodLic" >
+                      <el-input v-model="tabForm.prodLic" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="生产许可证：" prop="prodLic" label-width="100px">
-                      <el-input v-model="tabForm.prodLic" size="small"></el-input>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="种养殖许可证：" prop="breedLic" >
+                      <el-input v-model="tabForm.breedLic" size="small" class="lvwidth"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="种养殖许可证：" prop="breedLic" label-width="110px">
-                      <el-input v-model="tabForm.breedLice" size="small"></el-input>
-                  </el-form-item>
-              </el-col>
+          <el-row>
+            <el-col :span="18" :offset="6">
+              <el-form-item label="工商营业执照：" prop="businessLicense">
+                <el-upload
+                  class="avatar-uploader"
+                  :headers="customHeaders"
+                  :action="uploadUrl"
+                  name="imageFile"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload">
+                  <div class="avatar" style="display:inline-block;">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <img v-else src="../../assets/img/default-up.png" style="margin:35px 51px;">
+                  </div>
+                  <div class="avatar-right" style="display:inline-block;margin-left:24px;text-align: left;">
+                    <div slot="tip" class="el-upload__tip txt">
+                      格式要求：<br>
+                      原件、扫描件或者加盖公章的复印件，内容真实有效，不得做任何修改。<br>
+                      支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。
+                    </div>
+                    <el-button size="small" type="primary">点击上传</el-button>
+                  </div>
+                </el-upload>
+                <el-input v-model="tabForm.businessLicense" size="small" class="lvwidth" style="display: none;"></el-input>
+              </el-form-item>
+            </el-col>
           </el-row>
-         <el-row type="flex" justify="center" label-width="260px">
-                  <el-form-item label="工商营业执照：" prop="">
-                    <el-upload
-                      class="avatar-uploader"
-                      :headers="customHeaders"
-                      :action="uploadUrl"
-                      name="imageFile"
-                      :show-file-list="false"
-                      :on-success="handleAvatarSuccess"
-                      :before-upload="beforeAvatarUpload">
-                      <div class="avatar" style="display:inline-block;">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                        <img v-else src="../../assets/img/default-up.png" style="margin:35px 51px;">
-                      </div>
-                      <div class="avatar-right" style="display:inline-block;margin-left:24px;text-align: left;">
-                        <div slot="tip" class="el-upload__tip txt">
-                          格式要求：<br>
-                          请上传产品图片，将显示为溯源产品题图。 <br>
-                          支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。
-                        </div>
-                        <el-button size="small" type="primary">点击上传</el-button>
-                      </div>
-                    </el-upload>
-                  </el-form-item>
-          </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="10">
-                  <el-form-item label="上链类型：" prop="upperType" label-width="100px">
-                      <el-checkbox-group v-model="checkList">
-                        <el-checkbox label="产业链"></el-checkbox>
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item label="上链类型：" prop="applyChain" >
+                      <el-checkbox-group v-model="tabForm.applyChain">
+                        <el-checkbox label="产地链"></el-checkbox>
                         <el-checkbox label="加工链"></el-checkbox>
                         <el-checkbox label="物流链"></el-checkbox>
                         <el-checkbox label="销售链"></el-checkbox>
                       </el-checkbox-group>
+                  <!-- </el-form-item>
+                  <el-form-item class="upperdv"> -->
+                    <div class="tips2">请根据业务情况,选择至少一条业务链加入</div>
                   </el-form-item>
-                  <el-form-item class="upperdv">
-                    <el-span>请根据业务情况,选择至少一条业务链加入</el-span>
+              </el-col>
+          </el-row>
+
+          <el-row>
+              <el-col :span="18" :offset="6">
+                  <el-form-item>
+                      <el-button type="success" @click="preClick">上一步</el-button>
+                      <el-button type="primary" @click="submitForm('tabForm')">下一步</el-button>
+                      <!-- <el-button type="primary" @click="reback">返回首页</el-button> -->
+                      <!-- <el-button type="primary" @click="submit">注册</el-button> -->
                   </el-form-item>
               </el-col>
           </el-row>
         </div>
           <!-- 企业信息end -->
         <!-- <div class="uhide"> -->
-        <div class="step3 " v-show="isShow == 3">  
+        <div class="step3 " v-if="isShow == 3">  
           <el-row type="flex" justify="center">
-              <el-col :span="3">
-                  <el-form-item >
+                  
                       <img class="subimg" src="../../assets/img/subtip.png"/>
-                  </el-form-item>
-              </el-col>
+                  
+             
           </el-row>
           <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item >
+              
+                  
                     <div class="subdv">你的企业信息已提交,请等待审核</div>
-                    <div class="subtip">审核时间为3-5个工作日，请谨记您的账号。 
-                      在审核完成后，您将可以使用该账号作为企业管理员进行登录。 
-                      如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</div>
-                  </el-form-item>
-              </el-col>
+                    
+               
           </el-row>
+          <el-row type="flex" justify="center">
+                    <div class="subtip">
+                      审核时间为3-5个工作日，请谨记您的账号。<br/> 
+                      在审核完成后，您将可以使用该账号作为企业管理员进行登录。<br/> 
+                      如果您有任何疑问，欢迎随时联系我们，我们会第一时间帮您解决。</div>
+               
+          </el-row>
+          <el-row type="flex" justify="center">
+               <div class="subend">
+                 <el-button type="primary" @click="reback">返回首页</el-button>
+               </div>
+          </el-row>
+
         </div>
           <!-- 提交审核end -->
-        <div class="step4" v-show="isShow == 4">  
-          <el-row type="flex" justify="center">
-              <el-col :span="3">
+        <div class="step4" v-if="isShow == 4">  
+          <el-row>
+              <el-col :span="18" :offset="6">
                   <el-form-item >
                       <img class="subimg" src="../../assets/img/subtip.png"/>
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
+          <el-row>
+              <el-col :span="18" :offset="6">
                   <el-form-item >
                     <div class="subdv">恭喜您，审核通过！</div>
                     <div class="subtip">返回首页，快去登录吧</div>
@@ -196,68 +246,332 @@
           </el-row>
         </div>
         <!-- 审核通过end -->
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item>
-                      <el-button type="primary" @click="next">下一步</el-button>
-                      <!-- <el-button type="primary" @click="reback">返回首页</el-button> -->
-                      <!-- <el-button type="primary" @click="submit">注册</el-button> -->
-                  </el-form-item>
-              </el-col>
-          </el-row>
+          
       </el-form>
-         
+    </div>
+    </el-container>     
   </div>
+  
 </template>
 
 <script>
 import Cookies from 'js-cookie'
 import { regionData } from 'element-china-area-data'
 import api from '@/feath/api.js'
-import {complaintUploadUrl} from '@/feath/server/http.js'
+import {complaintUploadUrl2} from '@/feath/server/http.js'
+import HeaderMenu from '../../common/header-menu-for-reg.vue'
 export default {
   data () {
+
+    var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.tabForm.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
+      var validateTel = (rule, value, callback) => {
+        if (!(/^1[3|5|7|8][0-9]\d{4,8}$/.test(value))) {
+          callback(new Error('请输入正确的电话号码!'));
+        } else {
+          callback();
+        }
+      };
+
+      var validateEmail = (rule, value, callback) => {
+        if (!(/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(value))) {
+          callback(new Error('请输入正确的邮箱!'));
+        } else {
+          callback();
+        }
+      };
+
+      var validateGSD = (rule, value, callback) => {
+        debugger;
+        if (value.length<1) {
+          callback(new Error('归属地区不能为空!'));
+        } else {
+          callback();
+        }
+      };
+    
     return {
       active: 0,
       checked:true,
-       checkList: ['产业链',],
-       isShow:1,
+       // checkList: ['产业链',],
+       isShow: 0,
        options: regionData,
        selectedOptions: [],
       imageUrl: '',
       imageUrl2: '',
-      uploadUrl: complaintUploadUrl,
+      uploadUrl: complaintUploadUrl2,
       customHeaders: {
         'identity-authentic-request-header': localStorage.getItem('access_token'),
       },
+
       tabForm: {
         name: '',
         password: '',
         password2: '',
         tel: '',
         email: '',
+
+        qyName: '',
+        qyNumber: '',
+        regAddress: '',
+        telAddress: '',
+        qyfr: '',
+        gsAddress: '',
+        prodLic: '',
+        breedLic: '',
+        businessLicense: '',
+        applyChain: ['产地链'],
+          
       },
+
+      rules: {
+        // name: [
+        //     { required: true, message: '请输入用户名', trigger: 'blur' },
+        //     { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
+        //   ],
+        //   password: [
+        //     { required: true, message: '请输入密码', trigger: 'blur' },
+        //     { min: 8, max: 24, message: '请按照提示输入密码', trigger: 'blur' },
+        //     // { validator: validatePass2, trigger: 'blur' },
+        //   ],
+        //   password2: [
+        //     { required: true, message: '请再次输入密码', trigger: 'blur' },
+        //     // { min: 8, max: 24, message: '请按照提示输入密码', trigger: 'blur' },
+        //     { validator: validatePass2, trigger: 'blur' },
+        //   ],
+        //   tel: [
+        //     { required: true, message: '请输入电话号码', trigger: 'blur' },
+        //     { min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'blur' },
+        //     { validator: validateTel, trigger: 'blur' },
+        //   ],
+        //   email: [
+        //     { required: true, message: '请输入邮箱', trigger: 'blur' },
+            
+        //     { validator: validateEmail, trigger: 'blur' },
+        //   ],
+        //   qyName: [
+        //     { required: true, message: '请填写企业名称', trigger: 'blur' },
+        //     // { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
+        //   ],
+        //   qyNumber: [
+        //     { required: true, message: '请输入社会统一信用代码', trigger: 'blur' },
+        //     { min: 18, max: 18, message: '请输入正确的社会统一信用代码', trigger: 'blur' },
+        //     // { validator: validatePass2, trigger: 'blur' },
+        //   ],
+        //   regAddress: [
+        //     { required: true, message: '注册地址不能为空', trigger: 'blur' },
+            
+        //     // { validator: validatePass2, trigger: 'blur' },
+        //   ],
+        //   telAddress: [
+        //     { required: true, message: '联络地址不能为空', trigger: 'blur' },
+            
+        //     // { validator: validatePass2, trigger: 'blur' },
+        //   ],
+        //   qyfr: [
+        //     { required: true, message: '法人代表不能为空', trigger: 'blur' },
+            
+        //     // { validator: validatePass2, trigger: 'blur' },
+        //   ],
+        //   gsAddress: [
+        //     { required: true, message: '归属地区不能为空', trigger: 'blur' },
+            
+        //     // { validator: validateGSD, trigger: 'blur' },
+        //   ],
+        //   prodLic: [
+        //     { required: true, message: '生产许可证不能为空', trigger: 'blur' },
+            
+        //     // { validator: validatePass2, trigger: 'blur' },
+        //   ],
+        //   breedLic: [
+        //     { required: true, message: '种养殖许可证不能为空', trigger: 'blur' },
+            
+        //     // { validator: validatePass2, trigger: 'blur' },
+        //   ],
+        //   businessLicense: [
+        //     { required: true, message: '请上传工商营业执照', trigger: 'blur' },
+        //     // { validator: validatePass2, trigger: 'blur' },
+        //   ],
+        //   applyChain: [
+        //     { required: true, message: '请至少选择一条业务链', trigger: 'change' }
+        //   ],
+      },
+      rules1: {
+          name: [
+            { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 8, max: 24, message: '请按照提示输入密码', trigger: 'blur' },
+            // { validator: validatePass2, trigger: 'blur' },
+          ],
+          password2: [
+            { required: true, message: '请再次输入密码', trigger: 'blur' },
+            // { min: 8, max: 24, message: '请按照提示输入密码', trigger: 'blur' },
+            { validator: validatePass2, trigger: 'blur' },
+          ],
+          tel: [
+            { required: true, message: '请输入电话号码', trigger: 'blur' },
+            { min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'blur' },
+            { validator: validateTel, trigger: 'blur' },
+          ],
+          email: [
+            { required: true, message: '请输入邮箱', trigger: 'blur' },
+            
+            { validator: validateEmail, trigger: 'blur' },
+          ],
+
+
+          // chain: [
+          //   { required: true, message: '请选择业务链', trigger: 'change' }
+          // ],
+      },
+
+      rules2: {
+          qyName: [
+            { required: true, message: '请填写企业名称', trigger: 'blur' },
+            // { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
+          ],
+          qyNumber: [
+            { required: true, message: '请输入社会统一信用代码', trigger: 'blur' },
+            { min: 18, max: 18, message: '请输入正确的社会统一信用代码', trigger: 'blur' },
+            // { validator: validatePass2, trigger: 'blur' },
+          ],
+          regAddress: [
+            { required: true, message: '注册地址不能为空', trigger: 'blur' },
+            
+            // { validator: validatePass2, trigger: 'blur' },
+          ],
+          telAddress: [
+            { required: true, message: '联络地址不能为空', trigger: 'blur' },
+            
+            // { validator: validatePass2, trigger: 'blur' },
+          ],
+          qyfr: [
+            { required: true, message: '法人代表不能为空', trigger: 'blur' },
+            
+            // { validator: validatePass2, trigger: 'blur' },
+          ],
+          gsAddress: [
+            { required: true, message: '归属地区不能为空', trigger: 'blur' },
+            
+            // { validator: validateGSD, trigger: 'blur' },
+          ],
+          prodLic: [
+            { required: true, message: '生产许可证不能为空', trigger: 'blur' },
+            
+            // { validator: validatePass2, trigger: 'blur' },
+          ],
+          breedLic: [
+            { required: true, message: '种养殖许可证不能为空', trigger: 'blur' },
+            
+            // { validator: validatePass2, trigger: 'blur' },
+          ],
+          businessLicense: [
+            { required: true, message: '请上传工商营业执照', trigger: 'blur' },
+            // { validator: validatePass2, trigger: 'blur' },
+          ],
+          applyChain: [
+            { required: true, message: '请至少选择一条业务链', trigger: 'change' }
+          ],
+
+          
+
+
+          // chain: [
+          //   { required: true, message: '请选择业务链', trigger: 'change' }
+          // ],
+      },
+      
+
       nameError: '',
       passWordError: '',
       passsave: false
     }
   },
+  components: {
+    HeaderMenu
+  },
+  mounted (){
+    this.rules = this.rules1;
+    this.isShow = 1;
+
+
+    // this.tabForm = {
+    //     name: 'yanglin002',
+    //     password: 'admin123',
+    //     password2: 'admin123',
+    //     tel: '15811599822',
+    //     email: '158991@qq.com',
+
+    //     qyName: '东北野人参产业有限公司',
+    //     qyNumber: '203930909029389892',
+    //     regAddress: '大连靠山屯',
+    //     telAddress: '大连广发',
+    //     qyfr: '尼古拉赵四哥',
+    //     gsAddress: '',
+    //     prodLic: '许可有效S3204034',
+    //     breedLic: 'NS300323042',
+    //     businessLicense: '',
+    //     applyChain: ['产地链'],
+          
+    //   }
+
+    // this.rules = this.rules2;
+    // this.isShow = 2;
+
+    // this.rules = {};
+    // this.isShow = 3;
+  },
   methods: {
-   next() {
-    if (this.active++ > 2) this.active = 0;
-     //step1 step2 step3 step4
-     this.isShow++;
-      
-   },
-   prev() {
-     --this.active;
-      if (this.active++ < 0) this.active = 0;
-   },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        // debugger
+        if (valid) {
+          // alert('submit!');
+          if(this.isShow===1){
+            this.rules = this.rules2;
+            this.isShow++;
+            this.active++;
+          }else{
+            this.submit();
+            // this.isShow++;
+          }
+          
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    preClick(){
+      this.rules = {};
+      if(this.isShow===3){
+        this.rules = this.rules2;
+
+      }
+      if(this.isShow===2){
+        this.rules = this.rules1;
+        
+      }
+      this.isShow--;
+      this.active--;
+    },
+   
     handleAvatarSuccess(res, file) {
         // debugger;
         if(res.code===0 && res.result){
           this.imageUrl = URL.createObjectURL(file.raw);
           this.imageUrl2 = res.result;
+          this.tabForm.businessLicense = res.result;
         }
       },
       beforeAvatarUpload(file) {
@@ -284,10 +598,11 @@ export default {
         let data = {
           userName: this.tabForm.name,
           password: this.tabForm.password,
-          repassword: this.tabForm.repassword,
+          repassword: this.tabForm.password2,
           telephone: this.tabForm.tel,
           email: this.tabForm.email,
 
+          name: this.tabForm.qyName,
           creditCode: this.tabForm.qyNumber,
           registerAddress: this.tabForm.regAddress,
           contactAddress: this.tabForm.telAddress,   
@@ -295,21 +610,27 @@ export default {
           attributionArea: this.tabForm.gsAddress,
           plantLicence: this.tabForm.prodLic,		
           productLicence: this.tabForm.breedLic,   
-          businessLicense: 'img/stepimg.png', 
-          applyChain: './img/stepimg.png'		
+          businessLicense: this.tabForm.businessLicense, 
+          applyChain: [],
+          chainIds:this.tabForm.applyChain  		
         }
-        if(this.imageUrl2){
-            data.businessLicense = this.imageUrl2;
-          }
+        // debugger;
+        data.chainIds = this.tabForm.applyChain.map((v) => {
+          return {"销售链":1,"物流链":2,"加工链":3,"产地链":4}[v];
+        })
+        data.applyChain = this.tabForm.applyChain.join('/');
+        data.attributionArea = this.selectedOptions.join(',');
+        // debugger;
+        console.log(JSON.stringify(data));
+        // return;
         api.register(data).then(res => {
+          debugger;
           if (res.code == 0) {
-            if (res.result.token) {
+            // if (res.result.token) {
               
-              let oUrl = '/'
-              this.$router.push({
-                path: oUrl
-              })
-            }
+              this.isShow++;
+              this.active++;
+            // }
           } else {
             this.$message.error(res.msg);
           }
@@ -317,14 +638,39 @@ export default {
         })
       },
   reback(){
-
+    this.$router.replace('/login')
   },
   handleChange (value) {
     console.log(value)
+    this.tabForm.gsAddress = value.join(',')
+    // debugger
   }
   }
 }
 </script>
 <style lang="less" scoped>
 @import '../../assets/css/reg.less';
+
+.lvwidth {
+  width: 302px;
+}
+.tips2{
+  height:20px;
+  font-size:14px;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(184,184,184,1);
+  line-height:20px;
+}
+.tips1{
+  height:20px;
+  font-size:14px;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(162,162,162,1);
+  line-height:20px;
+  margin-left: 150px;
+  margin-top: -20px;
+  margin-bottom: 2px;
+}
 </style>

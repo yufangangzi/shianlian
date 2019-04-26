@@ -9,9 +9,11 @@ axios.defaults.baseURL = domain
 const baseURL = process.env.BRANCH !== 'production' ? 'http://10.144.132.135:8888' : 'https://tiot.sinochem-tech.com/fastdfs'
 
 // 设置数据上链图片地址
-const complaintUploadUrl = domain + '/complaint/uploadImg'
+const complaintUploadUrl = domain + '/complaint/backUploadImg'
+const complaintUploadUrl2 = domain + '/complaint/uploadImg'
 export {
   complaintUploadUrl,
+  complaintUploadUrl2,
   baseURL
 }
 
