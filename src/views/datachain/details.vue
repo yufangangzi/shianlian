@@ -15,13 +15,14 @@
             <el-radio :label="4" disabled>物流链</el-radio>
           </el-radio-group> -->
           <el-row>
-            <el-button type="primary" plain>产地链</el-button>
-            <el-button type="info" plain disabled>加工链</el-button>
-            <el-button type="info" plain disabled>销售链</el-button>
-            <el-button type="info" plain disabled>物流链</el-button>
+            <el-button @click="btnFn(1)" :type="!belong1 ? 'primary' : 'info'" :plain="btnIndex!=1" :disabled="belong1">产地链</el-button>
+            <el-button @click="btnFn(2)"  :type="!belong2 ? 'primary' : 'info'" :plain="btnIndex!=2" :disabled="belong2">加工链</el-button>
+            <el-button @click="btnFn(3)"  :type="!belong3 ? 'primary' : 'info'" :plain="btnIndex!=3" :disabled="belong3">销售链</el-button>
+            <el-button @click="btnFn(4)"  :type="!belong4 ? 'primary' : 'info'" :plain="btnIndex!=4" :disabled="belong4">物流链</el-button>
           </el-row>
         </el-form-item>
 
+        <div v-show="btnIndex==1">
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="产品" name="first">
             <el-form-item label="产品ID" prop="productId" v-show="false">
@@ -111,6 +112,14 @@
           <el-button @click="$router.go(-1);">取消</el-button>
           <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
         </el-form-item>
+        </div>
+        <div v-show="btnIndex!=1">
+          <el-form-item>
+
+            <el-button @click="$router.go(-1);">返回</el-button>
+            
+          </el-form-item>
+        </div>
         
         
       </el-form>
@@ -179,6 +188,7 @@
             </el-form-item>
             <el-form-item label="产品图片" prop="">
               <el-upload
+                disabled
                 class="avatar-uploader"
                 :headers="customHeaders"
                 :action="uploadUrl"
@@ -243,6 +253,13 @@ import RefuseDialog from './refuse-dialog.vue'
   export default {
     data() {
       return {
+        chainList: '产地链',
+        btnIndex: 1,
+        belong1: true,
+        belong2: true,
+        belong3: true,
+        belong4: true,
+
         adoptVisible: false,
         refuseVisible: false,
         type: 2,
@@ -360,6 +377,30 @@ import RefuseDialog from './refuse-dialog.vue'
     },
     mounted: function () {
       // debugger;
+      if(localStorage.getItem('o_chainList')){
+        this.chainList = localStorage.getItem('o_chainList');
+        if(this.chainList.indexOf('产地链')>-1){
+          this.belong1 = false;
+        }
+        if(this.chainList.indexOf('加工链')>-1){
+          this.belong2 = false;
+          if(this.belong1){
+            this.btnIndex = 2;
+          }
+        }
+        if(this.chainList.indexOf('销售链')>-1){
+          this.belong3 = false;
+          if(this.belong1){
+            this.btnIndex = 3;
+          }
+        }
+        if(this.chainList.indexOf('物流链')>-1){
+          this.belong4 = false;
+          if(this.belong1){
+            this.btnIndex = 4;
+          }
+        }
+      }
       this.type = this.$route.query.type;
       if(this.$route.query.id){
         this.detailId = this.$route.query.id * 1;
@@ -369,6 +410,10 @@ import RefuseDialog from './refuse-dialog.vue'
       console.log('this.detailId', this.detailId);
     },
     methods: {
+      btnFn(i){
+        console.log(i);
+        this.btnIndex = i;
+      },
       getDetail () {
         const data = {
           id: this.detailId
@@ -423,8 +468,10 @@ import RefuseDialog from './refuse-dialog.vue'
 
             this.ruleForm = Object.assign({}, this.ruleForm, obj);
 
-            this.imageUrl = baseURL + result.imageurl;
-            this.imageUrl2 = result.imageurl;
+            if(result.imageurl){
+              this.imageUrl = baseURL + result.imageurl;
+              this.imageUrl2 = result.imageurl;
+            }
             
           }
         })
@@ -495,7 +542,7 @@ import RefuseDialog from './refuse-dialog.vue'
               "barCode": this.ruleForm.barCode,
               "category": this.ruleForm.productType,
               "code": "",
-              "imageurl":"sss.jpg",
+              "imageurl":"",
               "foodProductDetailDTOList": [
                 {
                   "logName": "地块",//（必填，固定值“地块”）
