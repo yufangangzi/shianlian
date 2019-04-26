@@ -162,7 +162,7 @@
 import Cookies from 'js-cookie'
 import { regionData } from 'element-china-area-data'
 import api from '@/feath/api.js'
-import {complaintUploadUrl} from '@/feath/server/http.js'
+import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
   export default {
     data() {
       const qyNameFlag = (rule, value, callback) => {
