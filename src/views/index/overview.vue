@@ -67,7 +67,7 @@
           align="center"
           >
           <template slot-scope="scope">
-            <el-button type="text" size="small">提交审核</el-button>
+            <el-button type="text" size="small" disabled>提交审核</el-button>
           </template>
         </el-table-column>
       </el-table> 

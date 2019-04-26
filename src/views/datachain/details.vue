@@ -495,7 +495,7 @@ import RefuseDialog from './refuse-dialog.vue'
               "barCode": this.ruleForm.barCode,
               "category": this.ruleForm.productType,
               "code": "",
-              "imageurl":"sss.jpg",
+              "imageurl":"",
               "foodProductDetailDTOList": [
                 {
                   "logName": "地块",//（必填，固定值“地块”）
