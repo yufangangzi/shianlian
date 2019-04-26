@@ -162,7 +162,7 @@
 import Cookies from 'js-cookie'
 import { regionData } from 'element-china-area-data'
 import api from '@/feath/api.js'
-import {complaintUploadUrl} from '@/feath/server/http.js'
+import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
   export default {
     data() {
       const qyNameFlag = (rule, value, callback) => {
@@ -259,7 +259,7 @@ import {complaintUploadUrl} from '@/feath/server/http.js'
             this.tabForm.prodLic = res.result.plantLicence;
             this.tabForm.breedLic = res.result.productLicence;
             this.checkList = res.result.applyChain.split('/');
-            this.imageUrl = localStorage.getItem('domain') + '/' + res.result.businessLicense;
+            this.imageUrl = baseURL + res.result.businessLicense;
           }
         })
       },
