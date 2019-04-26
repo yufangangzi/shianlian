@@ -128,22 +128,36 @@ export default {
             
             if (roleName == '操作员') {
               oUrl = '/'
-              api.getOrgStatus({
-                "organId": organId
+              api.chiansGet({
+                "id": organId
               }).then(res => {
-                if (res.code == 0) {
-                  if(!res.result){
-                    oUrl = '/overview'
-                  }else{
-                    oUrl = '/unaudited'
-                    //企业未审核通过
-                    localStorage.setItem('food_roleName','运营者')
-                  }
-
-                  _this.$router.push({
-                    path: oUrl
+                
+                try{
+                  const chainList = res.result.map((v) => {
+                    return {'1':"销售链",'2':"物流链",'3':"加工链",'4':"产地链"}[v.chainId]
                   })
+                  localStorage.setItem('o_chainList',JSON.stringify(chainList));
+                }catch(e){
+                  localStorage.setItem('o_chainList',JSON.stringify([]));
                 }
+                // debugger
+                api.getOrgStatus({
+                  "organId": organId
+                }).then(res => {
+                  if (res.code == 0) {
+                    if(!res.result){
+                      oUrl = '/overview'
+                    }else{
+                      oUrl = '/unaudited'
+                      //企业未审核通过
+                      localStorage.setItem('food_roleName','运营者')
+                    }
+
+                    _this.$router.push({
+                      path: oUrl
+                    })
+                  }
+                });
               });
             }else{
               oUrl = '/';

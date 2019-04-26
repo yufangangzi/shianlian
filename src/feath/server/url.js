@@ -22,5 +22,6 @@ export default {
   getOrgDetail: domain + '/organization/detail',
   orgPass: domain + '/organization/pass',
   orgRefuse: domain + '/organization/refuse',
+  chiansGet: domain + '/organization/chains',
   getStatisticsChain: domain + '/statisticalReportBack/getStatisticsChain'
 }
