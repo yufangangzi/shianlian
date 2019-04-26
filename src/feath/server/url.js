@@ -15,4 +15,6 @@ export default {
   login: domain + '/userBack/login',
   orgStatus: domain + '/organization/status',
   register: domain + '/organization/register',
+  reregister: domain + '/organization/reregister',
+  
 }

@@ -115,27 +115,30 @@
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="工商营业执照：" prop="busineLic" label-width="110px">
-                   <el-upload
-                      class="upload-demo"
-                      action="https://jsonplaceholder.typicode.com/posts/"
-                      :on-preview="handlePreview"
-                      :on-remove="handleRemove"
-                      :before-remove="beforeRemove"
-                      multiple
-                      :limit="3"
-                      :on-exceed="handleExceed"
-                      :file-list="fileList">
-                      <el-button size="small" type="primary">点击上传</el-button>
-                      <!-- <div slot="tip" class="el-upload__tip">请上传最新的营业执照。
-                          格式要求：原件照片、扫描件或者加盖公章的复印件，
+         <el-row type="flex" justify="center" label-width="260px">
+                  <el-form-item label="工商营业执照：" prop="">
+                    <el-upload
+                      class="avatar-uploader"
+                      :headers="customHeaders"
+                      :action="uploadUrl"
+                      name="imageFile"
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload">
+                      <div class="avatar" style="display:inline-block;">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img v-else src="../../assets/img/default-up.png" style="margin:35px 51px;">
+                      </div>
+                      <div class="avatar-right" style="display:inline-block;margin-left:24px;text-align: left;">
+                        <div slot="tip" class="el-upload__tip txt">
+                          格式要求：<br>
+                          请上传产品图片，将显示为溯源产品题图。 <br>
                           支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。
-                      </div> -->
-                    </el-upload>    
+                        </div>
+                        <el-button size="small" type="primary">点击上传</el-button>
+                      </div>
+                    </el-upload>
                   </el-form-item>
-              </el-col>
           </el-row>
           <el-row type="flex" justify="center">
               <el-col :span="10">
@@ -211,6 +214,7 @@
 import Cookies from 'js-cookie'
 import { regionData } from 'element-china-area-data'
 import api from '@/feath/api.js'
+import {complaintUploadUrl} from '@/feath/server/http.js'
 export default {
   data () {
     return {
@@ -220,6 +224,12 @@ export default {
        isShow:1,
        options: regionData,
        selectedOptions: [],
+      imageUrl: '',
+      imageUrl2: '',
+      uploadUrl: complaintUploadUrl,
+      customHeaders: {
+        'identity-authentic-request-header': localStorage.getItem('access_token'),
+      },
       tabForm: {
         name: '',
         password: '',
@@ -243,6 +253,33 @@ export default {
      --this.active;
       if (this.active++ < 0) this.active = 0;
    },
+    handleAvatarSuccess(res, file) {
+        // debugger;
+        if(res.code===0 && res.result){
+          this.imageUrl = URL.createObjectURL(file.raw);
+          this.imageUrl2 = res.result;
+        }
+      },
+      beforeAvatarUpload(file) {
+        const imgFormat = {
+          'image/jpeg': true,
+          'image/jpg': true,
+          'image/png': true,
+          'image/gif': true,
+          'image/bmp': true,
+          'image/gif': true,
+        }
+        const isJPG = imgFormat[file.type] ? true: false;
+        const isLt2M = file.size / 1024 / 1024 < 5;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 5MB!');
+        }
+        return isJPG && isLt2M;
+      },
    submit () {
         let data = {
           userName: this.tabForm.name,
@@ -258,9 +295,12 @@ export default {
           attributionArea: this.tabForm.gsAddress,
           plantLicence: this.tabForm.prodLic,		
           productLicence: this.tabForm.breedLic,   
-          businessLicense: this.tabForm.busineLic,  
+          businessLicense: 'img/stepimg.png', 
           applyChain: './img/stepimg.png'		
         }
+        if(this.imageUrl2){
+            data.businessLicense = this.imageUrl2;
+          }
         api.register(data).then(res => {
           if (res.code == 0) {
             if (res.result.token) {

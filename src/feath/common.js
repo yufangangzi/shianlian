@@ -45,6 +45,9 @@ export default {
   },
   register (params) {
     return post(url.register, params)
+  },
+  reregister (params) {
+    return post(url.reregister, params)
   }
 
 }

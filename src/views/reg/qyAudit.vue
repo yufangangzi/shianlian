@@ -74,25 +74,42 @@
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row type="flex" justify="center">
-              <el-col :span="6">
-                  <el-form-item label="工商营业执照：" prop="busineLic" label-width="130px">
-                   <!-- <el-upload>
-                      <el-button size="small" type="primary">点击上传</el-button>
-                    </el-upload>     -->
+          <el-row type="flex" justify="center" label-width="260px">
+                  <el-form-item label="工商营业执照：" prop="">
+                    <el-upload
+                      class="avatar-uploader"
+                      :headers="customHeaders"
+                      :action="uploadUrl"
+                      name="imageFile"
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload">
+                      <div class="avatar" style="display:inline-block;">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img v-else src="../../assets/img/default-up.png" style="margin:35px 51px;">
+                      </div>
+                      <!-- <i class="el-icon-plus avatar-uploader-icon"></i> -->
+                      <div class="avatar-right" style="display:inline-block;margin-left:24px;text-align: left;">
+                        <div slot="tip" class="el-upload__tip txt">
+                          格式要求：<br>
+                          请上传产品图片，将显示为溯源产品题图。 <br>
+                          支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。
+                        </div>
+                        <el-button size="small" type="primary">点击上传</el-button>
+                      </div>
+                    </el-upload>
                   </el-form-item>
-              </el-col>
-          </el-row>
+          </el-row>           
           <el-row type="flex" justify="center">
               <el-col :span="10">
                   <el-form-item label="上链类型：" prop="upperType">
                       <el-checkbox-group v-model="checkList">
                         <el-checkbox v-for="i in checks" :label="i.name" :key="i.id" @change="handleCheckedChange(i)">{{i.name}}</el-checkbox>
-                        <!-- <el-checkbox v-for="(item,index) in checks" :value="item" :key="index" @change="handleCheckedChange(i)">{{ item }}</el-checkbox> -->
                       </el-checkbox-group>
+                      <el-span>请根据业务情况,选择至少一条业务链加入</el-span>
                   </el-form-item>
                   <el-form-item class="upperdv">
-                    <el-span>请根据业务情况,选择至少一条业务链加入</el-span>
+                    
                   </el-form-item>
               </el-col>
           </el-row>
@@ -154,6 +171,7 @@
 import Cookies from 'js-cookie'
 import { regionData } from 'element-china-area-data'
 import api from '@/feath/api.js'
+import {complaintUploadUrl} from '@/feath/server/http.js'
   export default {
     data() {
       const qyNameFlag = (rule, value, callback) => {
@@ -186,6 +204,12 @@ import api from '@/feath/api.js'
         options: regionData,
         selectedOptions: [],
         checkList: [],
+        imageUrl: '',
+        imageUrl2: '',
+        uploadUrl: complaintUploadUrl,
+        customHeaders: {
+          'identity-authentic-request-header': localStorage.getItem('access_token'),
+        },
         checks:[
           {id:'1',name:'产业链'},
           {id:'2',name:'加工链'},
@@ -226,6 +250,33 @@ import api from '@/feath/api.js'
       cancel(){
         
       },
+      handleAvatarSuccess(res, file) {
+        // debugger;
+        if(res.code===0 && res.result){
+          this.imageUrl = URL.createObjectURL(file.raw);
+          this.imageUrl2 = res.result;
+        }
+      },
+      beforeAvatarUpload(file) {
+        const imgFormat = {
+          'image/jpeg': true,
+          'image/jpg': true,
+          'image/png': true,
+          'image/gif': true,
+          'image/bmp': true,
+          'image/gif': true,
+        }
+        const isJPG = imgFormat[file.type] ? true: false;
+        const isLt2M = file.size / 1024 / 1024 < 5;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 5MB!');
+        }
+        return isJPG && isLt2M;
+      },
       submit () {
        
         let data = {
@@ -234,15 +285,18 @@ import api from '@/feath/api.js'
           registerAddress: this.tabForm.regAddress,
           contactAddress: this.tabForm.telAddress,   
           corporate: this.tabForm.qyfr,	
-          attributionArea: this.tabForm.gsAddress,
+          attributionArea: this.tabForm.gsAddress.join(),
           plantLicence: this.tabForm.prodLic,		
           productLicence: this.tabForm.breedLic,   
-          // businessLicense: this.tabForm.busineLic,  
           businessLicense: 'img/stepimg.png',  
           applyChain:this.tabForm.applyChain,
           chainIds: this.tabForm.chainIds,	
         }
-        api.register(data).then(res => {
+        if(this.imageUrl2){
+            data.businessLicense = this.imageUrl2;
+          }
+          console.log(data)
+        api.reregister(data).then(res => {
           if (res.code == 0) {
             if (res.result.token) {
               let oUrl = '/'
@@ -307,5 +361,40 @@ import api from '@/feath/api.js'
   margin-right: 4px;
   background: rgba(0, 135, 237, 1);
 }
-
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    display: block;
+    width:160px;
+    height:120px;
+    background:rgba(247,247,247,1);
+    border:1px solid rgba(215,215,215,1);
+  }
+  .avatar-right{
+    vertical-align: top;
+  }
+  .avatar-right .txt{
+    width:358px;
+    height:60px;
+    font-weight:400;
+    color:rgba(137,137,137,1);
+    line-height:20px;
+    text-align: left;
+  }
 </style>
