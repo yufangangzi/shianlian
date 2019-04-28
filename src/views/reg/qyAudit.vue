@@ -183,10 +183,11 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
             return callback(new Error('请输入18位统一社会信用编码'));
           }
         var devn = /^[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}$/;
+        
         if (!devn.test(value)) {
           callback(new Error('不是有效的统一社会信用编码！'));
         }else{
-          callback();
+          this.checkCode(callback);
         }
     };
     return {
@@ -242,7 +243,8 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
     },
     mounted () {
       this.id = Number(this.$route.query.id);
-      this.orgDetail()
+      this.orgDetail();
+      
     },
     methods: {
       orgDetail () {
@@ -264,12 +266,28 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
             this.imageUrl = baseURL + res.result.businessLicense;
             this.tempUrl = res.result.businessLicense;
           }
+         
         })
       },
       cancel(){
         let oUrl = '/unaudited';
         this.$router.push({
           path: oUrl
+        })
+      },
+      checkCode(callback){
+        let data = {
+          creditCode: this.tabForm.qyNumber,
+        }
+         api.checkCode(data).then(res => {
+          if (res.code == 0) {
+             if(this.tabForm.qyNumber == res.result.creditCode){
+              callback(new Error('该社会统一信用代码已被注册'));
+             }
+          } else {
+            this.$message.error(res.msg);
+          }
+        
         })
       },
       handleAvatarSuccess(res, file) {
