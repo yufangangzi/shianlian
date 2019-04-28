@@ -489,8 +489,8 @@ export default {
         email: '158991@qq.com',
 
         qyName: '北京安捷乐',
-        // qyNumber: '92330783MA29QJ0F5X',
-        qyNumber: '',
+        qyNumber: '92330783MA29QJ0F5X',
+        // qyNumber: '',
         regAddress: '大连靠山屯',
         telAddress: '大连广发',
         qyfr: '尼古拉赵四哥',
@@ -634,14 +634,15 @@ export default {
           creditCode: this.tabForm.qyNumber,
         }
          api.checkCode(data).then(res => {
-          if (res.code == 0) {
-             callback();
+          if (res.code == 4) {
+            callback(new Error('该社会统一信用代码已被注册'));
           } else {
-            if(res.result){
-              if(this.tabForm.qyNumber == res.result.creditCode){
-               callback(new Error('该社会统一信用代码已被注册'));
-              }
-            }
+            callback();
+            // if(res.result){
+              // if(this.tabForm.qyNumber == res.result.creditCode){
+              //  callback(new Error('该社会统一信用代码已被注册'));
+              // }
+            // }
           }
         
         })
