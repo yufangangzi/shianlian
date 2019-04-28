@@ -363,7 +363,7 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
         })
       },
       sureOk(){
-        let oUrl = '/';
+        let oUrl = '/unaudited'
         this.$router.push({
           path: oUrl
         })
