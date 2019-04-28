@@ -189,10 +189,10 @@ export default {
         this.nameError = '请输入登陆账号'
         return false
       }
-      // if (!reg.test(this.loginform.name)) {
-      //   this.nameError = '请输入6-18位英文字母，数字组合'
-      //   return false
-      // }
+      if (!reg.test(this.loginform.name)) {
+        this.nameError = '请输入6-18位英文字母，数字组合'
+        return false
+      }
       this.nameError = ''
       return true
     },

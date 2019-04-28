@@ -92,7 +92,7 @@
                       <el-input v-model="tabForm.qyName" size="small" class="lvwidth"></el-input>
 
                   </el-form-item>
-                  <div class="tips1">字母、数字或者英文符号,最长14位</div>
+                  <div class="tips1">请输入6-18位英文字母，数字组合</div>
               </el-col>
           </el-row>
           <el-row>
@@ -268,6 +268,18 @@ import {complaintUploadUrl2} from '@/feath/server/http.js'
 import HeaderMenu from '../../common/header-menu-for-reg.vue'
 export default {
   data () {
+    var nameBlur = (rule, value, callback) =>{
+      if (value === '') {
+          return callback(new Error('请输入用户名'));
+        }
+      var devn = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/
+      if (!devn.test(value)) {
+        callback(new Error('请输入6-18位英文字母，数字组合'));
+      }else{
+        // callback();
+        this.checkName(callback);
+      }
+    };
      var passWordBlur = (rule, value, callback) =>{
       if (value === '') {
           return callback(new Error('请输入注册密码'));
@@ -368,7 +380,8 @@ export default {
       rules1: {
           name: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
+            // { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
+            { validator: nameBlur, trigger: 'blur' },
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
@@ -468,24 +481,25 @@ export default {
     this.rules = this.rules1;
     this.isShow = 1;
 
-    // this.tabForm = {
-    //     name: 'chang1',
-    //     password: 'admin123',
-    //     password2: 'admin123',
-    //     tel: '15811599822',
-    //     email: '158991@qq.com',
+    this.tabForm = {
+        name: 'chang123',
+        password: 'admin123',
+        password2: 'admin123',
+        tel: '15811599822',
+        email: '158991@qq.com',
 
-    //     qyName: '北京安捷乐',
-    //     qyNumber: '92330783MA29QJ0F5X',
-    //     regAddress: '大连靠山屯',
-    //     telAddress: '大连广发',
-    //     qyfr: '尼古拉赵四哥',
-    //     gsAddress: '',
-    //     prodLic: '许可有效S3204034',
-    //     breedLic: 'NS300323042',
-    //     businessLicense: '',
-    //     applyChain: ['产地链'],
-    //   }
+        qyName: '北京安捷乐',
+        // qyNumber: '92330783MA29QJ0F5X',
+        qyNumber: '',
+        regAddress: '大连靠山屯',
+        telAddress: '大连广发',
+        qyfr: '尼古拉赵四哥',
+        gsAddress: '',
+        prodLic: '许可有效S3204034',
+        breedLic: 'NS300323042',
+        businessLicense: '',
+        applyChain: ['产地链'],
+      }
 
     // this.rules = this.rules2;
     // this.isShow = 2;
@@ -599,19 +613,35 @@ export default {
         
         })
       },
+      checkName(callback){
+        let data = {
+          userName:this.tabForm.name
+        }
+         api.checkCode(data).then(res => {
+          if (res.code == 4) {
+              callback(new Error('该用户已存在'));             
+          } else {
+            callback(); 
+            // if(this.tabForm.name == res.result.userName){
+              //  callback(new Error('该用户已存在'));
+              // }
+          }
+        
+        })
+      },
       checkCode(callback){
         let data = {
           creditCode: this.tabForm.qyNumber,
         }
          api.checkCode(data).then(res => {
           if (res.code == 0) {
-             if(res.result){
+             callback();
+          } else {
+            if(res.result){
               if(this.tabForm.qyNumber == res.result.creditCode){
                callback(new Error('该社会统一信用代码已被注册'));
               }
             }
-          } else {
-            this.$message.error(res.msg);
           }
         
         })
