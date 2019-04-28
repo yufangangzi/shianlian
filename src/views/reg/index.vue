@@ -529,24 +529,24 @@ export default {
     this.rules = this.rules1;
     this.isShow = 1;
 
-    this.tabForm = {
-        name: 'chang1',
-        password: 'admin123',
-        password2: 'admin123',
-        tel: '15811599822',
-        email: '158991@qq.com',
+    // this.tabForm = {
+    //     name: 'chang1',
+    //     password: 'admin123',
+    //     password2: 'admin123',
+    //     tel: '15811599822',
+    //     email: '158991@qq.com',
 
-        qyName: '北京安捷乐',
-        qyNumber: '92330783MA29QJ0F5X',
-        regAddress: '大连靠山屯',
-        telAddress: '大连广发',
-        qyfr: '尼古拉赵四哥',
-        gsAddress: '',
-        prodLic: '许可有效S3204034',
-        breedLic: 'NS300323042',
-        businessLicense: '',
-        applyChain: ['产地链'],
-      }
+    //     qyName: '北京安捷乐',
+    //     qyNumber: '92330783MA29QJ0F5X',
+    //     regAddress: '大连靠山屯',
+    //     telAddress: '大连广发',
+    //     qyfr: '尼古拉赵四哥',
+    //     gsAddress: '',
+    //     prodLic: '许可有效S3204034',
+    //     breedLic: 'NS300323042',
+    //     businessLicense: '',
+    //     applyChain: ['产地链'],
+    //   }
 
     // this.rules = this.rules2;
     // this.isShow = 2;
@@ -666,9 +666,11 @@ export default {
         }
          api.checkCode(data).then(res => {
           if (res.code == 0) {
-             if(this.tabForm.qyNumber == res.result.creditCode){
+             if(res.result){
+              if(this.tabForm.qyNumber == res.result.creditCode){
                callback(new Error('该社会统一信用代码已被注册'));
-             }
+              }
+            }
           } else {
             this.$message.error(res.msg);
           }
