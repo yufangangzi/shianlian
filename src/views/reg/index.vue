@@ -6,7 +6,7 @@
         <header-menu></header-menu>
       </el-header>
       <div class="layot">
-      <el-form ref="tabForm" :model="tabForm" :rules="rules" label-width="150px"  :inline-message="true">
+      <el-form ref="tabForm" :model.sync="tabForm" :rules.sync="rules" label-width="150px"  :inline-message="true" :key="isShow">
           <div class="stepBox">
             <span class="step1" :class="{'stepActive':isShow == 1}">
               1.账户信息
@@ -337,7 +337,6 @@ export default {
         tel: '',
         email: '',
 
-
         qyName: '',
         qyNumber: '',
         regAddress: '',
@@ -501,7 +500,7 @@ export default {
             // { validator: validatePass2, trigger: 'blur' },
           ],
           applyChain: [
-            { required: true, message: '请至少选择一条业务链', trigger: 'change' }
+            { required: true, message: '请至少选择一条业务链', trigger: 'blur' }
           ],
 
           

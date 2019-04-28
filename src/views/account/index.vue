@@ -30,21 +30,23 @@
     </div>
     <div class="table-box">
       <el-table
+        border
         :data="tableData"
         header-row-class-name="biao-head"
         :header-cell-style="biaostyle"
         :cell-style="cellStyle"
         
         style="width: 100%">
-        <el-table-column
+        <!-- <el-table-column
           type="index"
           align="center"
           >
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           prop="id"
           label="用户ID"
           align="center"
+          width="120"
           >
         </el-table-column>
         <el-table-column
@@ -56,16 +58,19 @@
         <el-table-column
           prop="roleName"
           align="center"
+          width="120"
           label="角色名称">
         </el-table-column>
         <el-table-column
           prop="statusKey"
           align="center"
+          width="80"
           label="状态">
         </el-table-column>
         <el-table-column
           label="操作"
           align="center"
+          width="220"
           >
           <template slot-scope="scope">
             <el-button @click="editUser(scope.row)"  type="text" size="small" style="color:#0087ED;font-size:14px">编辑</el-button>
