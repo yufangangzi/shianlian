@@ -39,6 +39,9 @@ export default {
   getVerify (params) {
     return get(url.getVerify, params)
   },
+  checkCode (params) {
+    return post(url.checkCode, params)
+  },
   login (params) {
     return post(url.login, params)
   },
