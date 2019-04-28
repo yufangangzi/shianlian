@@ -159,7 +159,7 @@ export default {
       tableData: [{
         name: localStorage.getItem('u_organName'),
         appid:'18519226670',
-        lian:'产地/加工/物流/销售',
+        lian: '产地/加工/物流/销售',
         keyapi:'6FnB8gKicOtHwLbKvt7eQkK',
         keysecret:'12324'
       }],
@@ -187,7 +187,17 @@ export default {
       openeye: require('../../assets/img/1.png'), //图片地址
     }
   },
+  mounted (){
+    try{
+      if(localStorage.getItem('o_chainList')){
+        this.tableData[0].lian = JSON.parse(localStorage.getItem('o_chainList')).join('/');
+      }
+    }catch(e){
+
+    }
+  },
   created () {
+
   },
   methods: {
     onCopy () {
