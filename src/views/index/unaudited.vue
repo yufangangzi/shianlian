@@ -158,7 +158,7 @@ export default {
             })
           } else {
             // 企业审核通过跳转页面
-            localStorage.setItem('food_roleName','操作者')
+            localStorage.setItem('food_roleName','操作员')
             this.$router.replace({
               path: './overview'
             })
