@@ -36,21 +36,11 @@
     },
     mounted() {
       this.pathfull = this.$route.path;
-      // 在此处更改左侧显隐
-      // console.log(this.asideList);
-      // this.asideList[1].disabled = true;
-
-      // 从登录接口取出的权限 超管 企业 企业2：代表审核未通过的
-      // const levelName = '超管';
-      // const levelName = '企业';
-      // 从登录接口取出的权限 管理员 操作员 运营者：代表审核未通过的
-      const levelName = localStorage.getItem('food_roleName');
-      // const levelName = '企业';
-      // const levelName = '企业2';
-      this.asideList = this.asideList.map((v) => {
-        v.show = v.meta.belongList.indexOf(levelName)>-1;
-        return v;
-      })
+      const _this = this;
+      // 企业审核通过后刷新menu菜单
+      setTimeout(()=>{
+        this.menus()
+      },1000)
     },
     methods: {
       select (key) {
@@ -64,6 +54,23 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      menus () {
+        // 在此处更改左侧显隐
+        // console.log(this.asideList);
+        // this.asideList[1].disabled = true;
+
+        // 从登录接口取出的权限 超管 企业 企业2：代表审核未通过的
+        // const levelName = '超管';
+        // const levelName = '企业';
+        // 从登录接口取出的权限 管理员 操作员 运营者：代表审核未通过的
+        const levelName = localStorage.getItem('food_roleName');
+        // const levelName = '企业';
+        // const levelName = '企业2';
+        this.asideList = this.asideList.map((v) => {
+          v.show = v.meta.belongList.indexOf(levelName)>-1;
+          return v;
+        })
       }
     }
   }
