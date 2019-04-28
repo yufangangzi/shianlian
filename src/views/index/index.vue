@@ -45,7 +45,10 @@
           align="center"
           >
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="$router.push('/enterpriseAudit?id=' + scope.row.id)">审核</el-button>
+            <span class="examine">
+              <el-button type="text" size="small" @click="$router.push('/enterpriseAudit?id=' + scope.row.id)">审核</el-button>
+              <span class="redDot" v-if="scope.row.resultNum > 0"></span>
+            </span>
           </template>
         </el-table-column>
       </el-table> 
@@ -239,7 +242,8 @@ export default {
               enterprise: item.orgNum,
               transaction: item.tradeNum,
               block: 0,
-              id: item.chainId
+              id: item.chainId,
+              resultNum: item.resultNum
             }
           })
           this.chainData.reverse();
@@ -372,7 +376,18 @@ export default {
     margin-right: 4px;
     background:rgba(0,135,237,1);
   }
-
+  .examine{
+    position: relative;
+  }
+  .redDot{
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #FF0000;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+  }
 </style>
 
 
