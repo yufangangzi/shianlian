@@ -148,7 +148,7 @@ export default {
     },
     getOrgList () {
       let data = {
-        "orderBy": "create_time",
+        "orderBy": "apply_time desc",
         "id": this.id,
         "pageNum": this.currentPageNum,
         "pageSize": this.totalPageSize,
