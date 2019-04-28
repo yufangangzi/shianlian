@@ -93,6 +93,7 @@
   </div>
 </template>
 <script>
+import Cookies from 'js-cookie'
 import api from '@/feath/api.js'
 export default {
   data() {
@@ -130,9 +131,10 @@ export default {
     }
   },
   created () {
+    this.getStatusList()
   },
   mounted () {
-    this.getStatusList()
+    
   },
   methods: {
     approvalDetails () {
@@ -143,16 +145,25 @@ export default {
         "organId": localStorage.getItem('u_organId')
       }).then(res => {
         if (res.code == 0) {
-          this.beAuditedData.push({
-            name: res.result.organName,
-            status: res.result.approvalStatus,
-            details: res.result.approvalDetail,
-            organId: res.result.organId,
-            id: res.result.id
-          })
-          this.approvalData.push({
-            content: res.result.approvalDetail
-          })
+          if (res.result) {
+            this.beAuditedData.push({
+              name: res.result.organName,
+              status: res.result.approvalStatus,
+              details: res.result.approvalDetail,
+              organId: res.result.organId,
+              id: res.result.id
+            })
+            this.approvalData.push({
+              content: res.result.approvalDetail
+            })
+          } else {
+            // 企业审核通过跳转页面
+            localStorage.setItem('food_roleName','操作员')
+            this.$router.replace({
+              path: './overview'
+            })
+          }
+         
         }
       });
     }
