@@ -43,17 +43,17 @@
         :cell-style="cellStyle"
         
         style="width: 100%">
-        <el-table-column
+        <!-- <el-table-column
           type="index"
           align="center"
           width="80"
           >
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           prop="tradingId"
           label="交易ID"
           align="center"
-          width="280"
+          
           >
         </el-table-column>
         <el-table-column
@@ -80,11 +80,12 @@
         <el-table-column
           label="操作"
           align="center"
+          width="200"
           >
           <template slot-scope="scope">
-            <el-button v-if="scope.row.chainStatus==0" @click="editChain(scope.row)"  type="text" size="small" style="color:#0087ED;font-size:14px">编辑</el-button>
-            <el-button v-if="scope.row.chainStatus==0" @click="upChain(scope.row)" type="text" size="small" style="color:#0087ED;font-size:14px">上链</el-button>
-            <el-button v-if="scope.row.chainStatus==0" disabled type="text" size="small" style="font-size:14px">下载溯源码</el-button>
+            <el-button v-if="scope.row.chainStatus==0 || scope.row.chainStatus==3" @click="editChain(scope.row)"  type="text" size="small" style="color:#0087ED;font-size:14px">编辑</el-button>
+            <el-button v-if="scope.row.chainStatus==0 || scope.row.chainStatus==3" @click="upChain(scope.row)" type="text" size="small" style="color:#0087ED;font-size:14px">上链</el-button>
+            <el-button v-if="scope.row.chainStatus==0 || scope.row.chainStatus==3" disabled type="text" size="small" style="font-size:14px">下载溯源码</el-button>
             <el-button v-if="scope.row.chainStatus==1" @click="viewChain(scope.row)"  type="text" size="small" style="color:#0087ED;font-size:14px">查看</el-button>
             <el-button v-if="scope.row.chainStatus==1" disabled type="text" size="small" style="font-size:14px">上链</el-button>
             <el-button v-if="scope.row.chainStatus==1" @click="downQR(scope.row)" type="text" size="small" style="color:#0087ED;font-size:14px">下载溯源码</el-button>
@@ -379,17 +380,31 @@ export default {
       
     },
     upChain (row) {
-      
-      
+      let index = 0;
+      this.tableData.forEach((it, i) => {
+        if(it.id === row.id){
+          index = i;
+          // debugger;
+        }
+      })
+      this.tableData[index].chainStatus = 2;
+      this.tableData[index].chainStatusText = '上链中';
       const data = {
         id: row.id,
       }
       api.dataChainOn(data).then(res => {
         if (res.code === 0) {
-          this.$message({
-            message: '操作成功',
-            type: 'success'
-          });
+          if(res.result===1){
+            this.$message({
+              message: '上链成功',
+              type: 'success'
+            });
+          }else{
+            this.$message({
+              message: '上链失败',
+              type: 'error'
+            });
+          }
         } else {
           this.$message({
             message: '操作失败',
