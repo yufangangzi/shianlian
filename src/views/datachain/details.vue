@@ -17,8 +17,8 @@
           <el-row>
             <el-button @click="btnFn(1)" :type="!belong1 ? 'primary' : 'info'" :plain="btnIndex!=1" :disabled="belong1">产地链</el-button>
             <el-button @click="btnFn(2)"  :type="!belong2 ? 'primary' : 'info'" :plain="btnIndex!=2" :disabled="belong2">加工链</el-button>
-            <el-button @click="btnFn(3)"  :type="!belong3 ? 'primary' : 'info'" :plain="btnIndex!=3" :disabled="belong3">销售链</el-button>
             <el-button @click="btnFn(4)"  :type="!belong4 ? 'primary' : 'info'" :plain="btnIndex!=4" :disabled="belong4">物流链</el-button>
+            <el-button @click="btnFn(3)"  :type="!belong3 ? 'primary' : 'info'" :plain="btnIndex!=3" :disabled="belong3">销售链</el-button>
           </el-row>
         </el-form-item>
 
