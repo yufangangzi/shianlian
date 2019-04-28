@@ -268,7 +268,17 @@ import {complaintUploadUrl2} from '@/feath/server/http.js'
 import HeaderMenu from '../../common/header-menu-for-reg.vue'
 export default {
   data () {
-
+     var passWordBlur = (rule, value, callback) =>{
+      if (value === '') {
+          return callback(new Error('请输入注册密码'));
+        }
+      var devn = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/;
+      if (!devn.test(value)) {
+        callback(new Error('请输入6-18位英文字母，数字组合'));
+      }else{
+        callback();
+      }
+    };
     var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
@@ -349,82 +359,11 @@ export default {
         breedLic: '',
         businessLicense: '',
         applyChain: ['产地链'],
-
-
           
       },
 
       rules: {
-        // name: [
-        //     { required: true, message: '请输入用户名', trigger: 'blur' },
-        //     { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
-        //   ],
-        //   password: [
-        //     { required: true, message: '请输入密码', trigger: 'blur' },
-        //     { min: 8, max: 24, message: '请按照提示输入密码', trigger: 'blur' },
-        //     // { validator: validatePass2, trigger: 'blur' },
-        //   ],
-        //   password2: [
-        //     { required: true, message: '请再次输入密码', trigger: 'blur' },
-        //     // { min: 8, max: 24, message: '请按照提示输入密码', trigger: 'blur' },
-        //     { validator: validatePass2, trigger: 'blur' },
-        //   ],
-        //   tel: [
-        //     { required: true, message: '请输入电话号码', trigger: 'blur' },
-        //     { min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'blur' },
-        //     { validator: validateTel, trigger: 'blur' },
-        //   ],
-        //   email: [
-        //     { required: true, message: '请输入邮箱', trigger: 'blur' },
-            
-        //     { validator: validateEmail, trigger: 'blur' },
-        //   ],
-        //   qyName: [
-        //     { required: true, message: '请填写企业名称', trigger: 'blur' },
-        //     // { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
-        //   ],
-        //   qyNumber: [
-        //     { required: true, message: '请输入社会统一信用代码', trigger: 'blur' },
-        //     { min: 18, max: 18, message: '请输入正确的社会统一信用代码', trigger: 'blur' },
-        //     // { validator: validatePass2, trigger: 'blur' },
-        //   ],
-        //   regAddress: [
-        //     { required: true, message: '注册地址不能为空', trigger: 'blur' },
-            
-        //     // { validator: validatePass2, trigger: 'blur' },
-        //   ],
-        //   telAddress: [
-        //     { required: true, message: '联络地址不能为空', trigger: 'blur' },
-            
-        //     // { validator: validatePass2, trigger: 'blur' },
-        //   ],
-        //   qyfr: [
-        //     { required: true, message: '法人代表不能为空', trigger: 'blur' },
-            
-        //     // { validator: validatePass2, trigger: 'blur' },
-        //   ],
-        //   gsAddress: [
-        //     { required: true, message: '归属地区不能为空', trigger: 'blur' },
-            
-        //     // { validator: validateGSD, trigger: 'blur' },
-        //   ],
-        //   prodLic: [
-        //     { required: true, message: '生产许可证不能为空', trigger: 'blur' },
-            
-        //     // { validator: validatePass2, trigger: 'blur' },
-        //   ],
-        //   breedLic: [
-        //     { required: true, message: '种养殖许可证不能为空', trigger: 'blur' },
-            
-        //     // { validator: validatePass2, trigger: 'blur' },
-        //   ],
-        //   businessLicense: [
-        //     { required: true, message: '请上传工商营业执照', trigger: 'blur' },
-        //     // { validator: validatePass2, trigger: 'blur' },
-        //   ],
-        //   applyChain: [
-        //     { required: true, message: '请至少选择一条业务链', trigger: 'change' }
-        //   ],
+        
       },
       rules1: {
           name: [
@@ -433,8 +372,8 @@ export default {
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 8, max: 24, message: '请按照提示输入密码', trigger: 'blur' },
-            // { validator: validatePass2, trigger: 'blur' },
+            // { min: 8, max: 24, message: '请按照提示输入密码', trigger: 'blur' },
+            { validator: passWordBlur, trigger: 'blur' },
           ],
           password2: [
             { required: true, message: '请再次输入密码', trigger: 'blur' },

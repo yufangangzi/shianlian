@@ -202,10 +202,10 @@ export default {
         this.passWordError = '请输入登陆密码'
         return false
       }
-      // if (!reg.test(this.loginform.password)) {
-      //   this.passWordError = '请输入6-18位英文字母，数字组合'
-      //   return false
-      // }
+      if (!reg.test(this.loginform.password)) {
+        this.passWordError = '请输入6-18位英文字母，数字组合'
+        return false
+      }
       this.passWordError = ''
       return true
     },
