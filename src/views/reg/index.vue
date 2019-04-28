@@ -32,7 +32,7 @@
                   <el-form-item label="用户名：" prop="name" >
                       <el-input v-model="tabForm.name" size="small" class="lvwidth"></el-input>
                   </el-form-item>
-                  <div class="tips1">字母、数字或者英文符号,最长14位</div>
+                  <div class="tips1">6-18位英文字母，数字组合</div>
               </el-col>
           </el-row>
           <el-row>
@@ -40,7 +40,7 @@
                   <el-form-item label="密码：" prop="password" >
                       <el-input v-model="tabForm.password" size="small" class="lvwidth" type="password"></el-input>
                   </el-form-item>
-                  <div class="tips1">密码必须包含数字、大小写字母、长度不低于8位</div>
+                  <div class="tips1">6-18位英文字母，数字组合</div>
               </el-col>
           </el-row>
           <el-row>
@@ -638,7 +638,6 @@ export default {
               //  callback(new Error('该用户已存在'));
               // }
           }
-        
         })
       },
       checkCode(callback){
@@ -656,7 +655,6 @@ export default {
               // }
             // }
           }
-        
         })
       },
   reback(){
