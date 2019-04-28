@@ -447,7 +447,7 @@ import RefuseDialog from './refuse-dialog.vue'
             // debugger;
             if(result.foodProductDetailVOList && Array.isArray(result.foodProductDetailVOList) && result.foodProductDetailVOList.length===1){
               const logRemark = result.foodProductDetailVOList[0].logRemark;
-              logRemark.split('\n').forEach((it, i) =>{
+              logRemark.split('\\n').forEach((it, i) =>{
                 const v = it.split('：')[1]
                 if(i===0){
                   obj.productPlace = v;
@@ -546,7 +546,7 @@ import RefuseDialog from './refuse-dialog.vue'
               "foodProductDetailDTOList": [
                 {
                   "logName": "地块",//（必填，固定值“地块”）
-                  "logRemark": "归属产地单位：基施高钾水溶肥、螯合锌微肥\n主要农资生产商：国灵集团",
+                  "logRemark": "归属产地单位：基施高钾水溶肥、螯合锌微肥\\n主要农资生产商：国灵集团",
                   "macId": 11//（必填，固定值 11）
                 }
               ],
@@ -554,7 +554,7 @@ import RefuseDialog from './refuse-dialog.vue'
               "title": this.ruleForm.title,//（必填）
               "usuallyName": this.ruleForm.circulationName
             };
-            data.foodProductDetailDTOList[0].logRemark = dikuai.map((v) => v[0] + '：' +v[1]).join('\n');
+            data.foodProductDetailDTOList[0].logRemark = dikuai.map((v) => v[0] + '：' +v[1]).join('\\n');
 
             if(this.imageUrl2){
               data.imageurl = this.imageUrl2;

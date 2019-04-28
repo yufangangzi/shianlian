@@ -111,8 +111,8 @@ export default {
           if (res.result.token) {
             const roleMap = {
               '超级管理员': '管理员',
-              '操作员': '管理员',//--此系统无效
-              '运营者': '管理员',//--此系统无效角色
+              '操作员': '操作员',//--此系统无效
+              '运营者': '操作员',//--此系统无效角色
               '管理员': '操作员',
             }
             let roleName = roleMap[res.result.user.roleName]
