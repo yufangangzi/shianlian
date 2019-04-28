@@ -85,7 +85,7 @@
           <p>2.复印件未加盖企业公章</p> -->
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="rejectVisible = false">确 定</el-button>
         </span>
       </div>
     </el-dialog>
