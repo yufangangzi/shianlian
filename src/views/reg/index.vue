@@ -92,7 +92,7 @@
                       <el-input v-model="tabForm.qyName" size="small" class="lvwidth"></el-input>
 
                   </el-form-item>
-                  <div class="tips1">请输入6-18位英文字母，数字组合</div>
+                  <div class="tips1">请严格按照营业执照填写</div>
               </el-col>
           </el-row>
           <el-row>
@@ -280,6 +280,17 @@ export default {
         this.checkName(callback);
       }
     };
+     var qyNameBlur = (rule, value, callback) =>{
+      if (value === '') {
+          return callback(new Error('请输入企业名称'));
+        }
+      var devn = /^[\u4e00-\u9fa5A-Za-z]{2,20}$/;
+      if (!devn.test(value)) {
+        callback(new Error('请严格按照营业执照填写'));
+      }else{
+        callback();
+      }
+    };
      var passWordBlur = (rule, value, callback) =>{
       if (value === '') {
           return callback(new Error('请输入注册密码'));
@@ -414,6 +425,7 @@ export default {
           qyName: [
             { required: true, message: '请填写企业名称', trigger: 'blur' },
             // { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
+            { validator: qyNameBlur, trigger: 'blur' },
           ],
           qyNumber: [
             { required: true, message: '请输入18位统一社会信用代码', trigger: 'blur' },

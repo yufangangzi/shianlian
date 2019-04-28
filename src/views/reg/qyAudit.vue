@@ -274,21 +274,16 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
           path: oUrl
         })
       },
-      checkCode(callback){
+       checkCode(callback){
         let data = {
           creditCode: this.tabForm.qyNumber,
         }
          api.checkCode(data).then(res => {
-          if (res.code == 0) {
-            if(res.result){
-              if(this.tabForm.qyNumber == res.result.creditCode){
-               callback(new Error('该社会统一信用代码已被注册'));
-              }
-            }
+          if (res.code == 4) {
+            callback(new Error('该社会统一信用代码已被注册'));
           } else {
-            this.$message.error(res.msg);
+            callback();
           }
-        
         })
       },
       handleAvatarSuccess(res, file) {
