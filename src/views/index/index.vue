@@ -25,7 +25,7 @@
         </el-table-column>
         <el-table-column
           prop="enterprise"
-          label="企业数"
+          label="已上链企业数"
           align="center"
           >
         </el-table-column>
@@ -41,7 +41,7 @@
         </el-table-column>
         <el-table-column
           prop="examine"
-          label="企业审核"
+          label="新企业审核"
           align="center"
           >
           <template slot-scope="scope">
@@ -242,6 +242,7 @@ export default {
               id: item.chainId
             }
           })
+          this.chainData.reverse();
         }
       })
     }
