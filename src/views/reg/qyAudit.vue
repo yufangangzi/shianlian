@@ -362,7 +362,7 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
         
         })
       },
-      sureOK(){
+      sureOk(){
         let oUrl = '/';
         this.$router.push({
           path: oUrl
