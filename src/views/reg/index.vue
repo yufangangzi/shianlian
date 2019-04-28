@@ -302,7 +302,19 @@ export default {
           callback();
         }
       };
-    
+    // 请输入18位统一社会信用代码
+    const qycode = (rule, value, callback) => {
+      if (value === '') {
+            return callback(new Error('请输入18位统一社会信用代码'));
+          }
+        var devn = /^[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}$/;
+        this.checkCode(callback);
+        if (!devn.test(value)) {
+          callback(new Error('不是有效的统一社会信用代码！'));
+        }else{
+          callback();
+        }
+    };
     return {
       id:'',
       active: 0,
@@ -451,9 +463,8 @@ export default {
             // { min: 3, max: 14, message: '请填写正确的用户名', trigger: 'blur' }
           ],
           qyNumber: [
-            { required: true, message: '请输入社会统一信用代码', trigger: 'blur' },
-            { min: 18, max: 18, message: '请输入正确的社会统一信用代码', trigger: 'blur' },
-            // { validator: validatePass2, trigger: 'blur' },
+            { required: true, message: '请输入18位统一社会信用代码', trigger: 'blur' },
+            { validator: qycode, trigger: 'blur' },
           ],
           regAddress: [
             { required: true, message: '注册地址不能为空', trigger: 'blur' },
@@ -517,14 +528,14 @@ export default {
     this.rules = this.rules1;
     this.isShow = 1;
 
-    // this.tabForm = {
-    //     name: 'chang1',
-    //     password: 'admin123',
-    //     password2: 'admin123',
-    //     tel: '15811599822',
-    //     email: '158991@qq.com',
+    this.tabForm = {
+        name: 'chang1',
+        password: 'admin123',
+        password2: 'admin123',
+        tel: '15811599822',
+        email: '158991@qq.com',
 
-    //     qyName: '北京安捷乐',
+        qyName: '北京安捷乐',
     //     qyNumber: '92330783MA29QJ0F5X',
     //     regAddress: '大连靠山屯',
     //     telAddress: '大连广发',
@@ -534,7 +545,7 @@ export default {
     //     breedLic: 'NS300323042',
     //     businessLicense: '',
     //     applyChain: ['产地链'],
-    //   }
+      }
 
     // this.rules = this.rules2;
     // this.isShow = 2;
@@ -563,6 +574,7 @@ export default {
         }
       });
     },
+    
     preClick(){
       this.rules = {};
       if(this.isShow===3){
@@ -634,13 +646,28 @@ export default {
         console.log(JSON.stringify(data));
         // return;
         api.register(data).then(res => {
-          debugger;
+          // debugger;
           if (res.code == 0) {
             // if (res.result.token) {
               
               this.isShow++;
               this.active++;
             // }
+          } else {
+            this.$message.error(res.msg);
+          }
+        
+        })
+      },
+      checkCode(callback){
+        let data = {
+          creditCode: this.tabForm.qyNumber,
+        }
+         api.checkCode(data).then(res => {
+          if (res.code == 0) {
+             if(this.tabForm.qyNumber == res.result.creditCode){
+               callback(new Error('该社会统一信用代码已被注册'));
+             }
           } else {
             this.$message.error(res.msg);
           }
