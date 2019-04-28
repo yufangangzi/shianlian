@@ -308,11 +308,13 @@ export default {
             return callback(new Error('请输入18位统一社会信用代码'));
           }
         var devn = /^[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}$/;
-        this.checkCode(callback);
+        
         if (!devn.test(value)) {
           callback(new Error('不是有效的统一社会信用代码！'));
         }else{
-          callback();
+          // callback();
+          this.checkCode(callback);
+          
         }
     };
     return {
@@ -535,15 +537,15 @@ export default {
         email: '158991@qq.com',
 
         qyName: '北京安捷乐',
-    //     qyNumber: '92330783MA29QJ0F5X',
-    //     regAddress: '大连靠山屯',
-    //     telAddress: '大连广发',
-    //     qyfr: '尼古拉赵四哥',
-    //     gsAddress: '',
-    //     prodLic: '许可有效S3204034',
-    //     breedLic: 'NS300323042',
-    //     businessLicense: '',
-    //     applyChain: ['产地链'],
+        qyNumber: '92330783MA29QJ0F5X',
+        regAddress: '大连靠山屯',
+        telAddress: '大连广发',
+        qyfr: '尼古拉赵四哥',
+        gsAddress: '',
+        prodLic: '许可有效S3204034',
+        breedLic: 'NS300323042',
+        businessLicense: '',
+        applyChain: ['产地链'],
       }
 
     // this.rules = this.rules2;

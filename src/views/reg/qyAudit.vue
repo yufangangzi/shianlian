@@ -183,7 +183,6 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
             return callback(new Error('请输入18位统一社会信用编码'));
           }
         var devn = /^[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}$/;
-        
         if (!devn.test(value)) {
           callback(new Error('不是有效的统一社会信用编码！'));
         }else{
