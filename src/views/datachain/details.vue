@@ -422,7 +422,7 @@ import RefuseDialog from './refuse-dialog.vue'
           // debugger
           //模拟测试数据
           // res.code = 0
-          // res.result = {"id":44,"name":"大兴西瓜","code":"","traceCode":"44","category":"2","attribute":"1","legalPerson":"冯敏","address":"杭州市江干区九盛路9号A13幢4楼423室","enterprise":"杭州如涵控股股份有限公司","imageurl":"/group1/M00/00/07/CpCEWFzBbWqAbuZcAABShQcS1Pg768.jpg","openId":null,"chainStatus":1,"title":"大兴西瓜棒棒哒","tradingId":"d622ba7804f0f05339e868b7c9b986ee8f83a322f621c2f7d56f542c336a0198","organId":11,"usuallyName":"大兴西瓜大兴西瓜","academicName":"大兴西瓜S8","barCode":"SN0230233232","updateTime":1556183646000,"foodProductDetailVOList":null};
+          // res.result = {"id":44,"name":"大兴西瓜","code":"","traceCode":"44","category":"2","attribute":"1","legalPerson":"冯敏","address":"杭州市江干区九盛路9号A13幢4楼423室","enterprise":"杭州如涵控股股份有限公司","imageUrl":"/group1/M00/00/07/CpCEWFzBbWqAbuZcAABShQcS1Pg768.jpg","openId":null,"chainStatus":1,"title":"大兴西瓜棒棒哒","tradingId":"d622ba7804f0f05339e868b7c9b986ee8f83a322f621c2f7d56f542c336a0198","organId":11,"usuallyName":"大兴西瓜大兴西瓜","academicName":"大兴西瓜S8","barCode":"SN0230233232","updateTime":1556183646000,"foodProductDetailVOList":null};
           if (res.code ===0) {
             const result = res.result;
             const obj = {
@@ -468,9 +468,9 @@ import RefuseDialog from './refuse-dialog.vue'
 
             this.ruleForm = Object.assign({}, this.ruleForm, obj);
 
-            if(result.imageurl){
-              this.imageUrl = baseURL + result.imageurl;
-              this.imageUrl2 = result.imageurl;
+            if(result.imageUrl){
+              this.imageUrl = baseURL + result.imageUrl;
+              this.imageUrl2 = result.imageUrl;
             }
             
           }
@@ -549,7 +549,7 @@ import RefuseDialog from './refuse-dialog.vue'
               "barCode": this.ruleForm.barCode,
               "category": this.ruleForm.productType,
               "code": "",
-              "imageurl":"",
+              "imageUrl":"",
               "foodProductDetailDTOList": [
                 {
                   "logName": "地块",//（必填，固定值“地块”）
@@ -564,7 +564,7 @@ import RefuseDialog from './refuse-dialog.vue'
             data.foodProductDetailDTOList[0].logRemark = dikuai.map((v) => v[0] + '：' +v[1]).join('\\n');
 
             if(this.imageUrl2){
-              data.imageurl = this.imageUrl2;
+              data.imageUrl = this.imageUrl2;
             }
 
             let saveOp = api.dataChainSave;
