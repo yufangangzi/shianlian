@@ -178,6 +178,20 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
             callback();
         }
     };
+     const prodLicBlur = (rule, value, callback) => {
+        if (!(/^[^\u4e00-\u9fa5]+$/.test(value))) {
+          callback(new Error('请输入正确的生成许可证!'));
+        } else {
+          callback();
+        }
+      };
+      const breedLicBlur = (rule, value, callback) => {
+        if (!(/^[^\u4e00-\u9fa5]+$/.test(value))) {
+          callback(new Error('请输入正确的种养殖许可证!'));
+        } else {
+          callback();
+        }
+      };
     // 请输入18位统一社会信用代码
     const qycode = (rule, value, callback) => {
       if (value === '') {
@@ -231,8 +245,8 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
           telAddress: [{ required: true, message: '联络地址不能为空', trigger: 'blur' }],   
           qyfr: [{ required: true, message: '法人代表不能为空', trigger: 'blur' }],	
           gsAddress: [{ required: true, message: '归属地区不能为空', trigger: 'blur' }],
-          prodLic: [{ required: true, message: '生产许可证不能为空', trigger: 'blur' }],		
-          breedLic: [{ required: true, message: '种养值许可证不能为空', trigger: 'blur' }],   
+          prodLic: [{ required: true, validator: prodLicBlur, trigger: 'blur' }],		
+          breedLic: [{ required: true, validator: breedLicBlur, trigger: 'blur' }],   
           busineLic: [{ required: true, message: '工商营业执照图片地址不能为空', trigger: 'blur' }],
           upperType: [{ required: true, message: '上链类型不能为空', trigger: 'blur' }],
           businessLicense: [
