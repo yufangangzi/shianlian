@@ -276,38 +276,38 @@ import RefuseDialog from './refuse-dialog.vue'
 
         productTypeList: [
           {
-            value: '1',
+            value: '蔬菜',
             label: '蔬菜'
           }, 
           {
-            value: '2',
+            value: '水果',
             label: '水果'
           },
           {
-            value: '3',
+            value: '肉类',
             label: '肉类'
           },
           {
-            value: '4',
+            value: '禽类',
             label: '禽类'
           },
           {
-            value: '5',
+            value: '蛋类',
             label: '蛋类'
           },
 
         ],
         productPropList: [
           {
-            value: '1',
+            value: '种植',
             label: '种植'
           }, 
           {
-            value: '2',
+            value: '养殖',
             label: '养殖'
           },
           {
-            value: '3',
+            value: '加工',
             label: '加工'
           },
 
