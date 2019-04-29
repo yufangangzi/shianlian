@@ -154,6 +154,7 @@ export default {
         "pageSize": this.totalPageSize,
       }
       api.getOrgList(data).then(res => {
+        this.tableData = [];
         if (res.code == 0 && res.result.list.length !== 0) {
           this.tableData = res.result.list.map((item, index) => {
             return {
