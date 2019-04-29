@@ -37,6 +37,7 @@
     mounted() {
       this.pathfull = this.$route.path;
       const _this = this;
+      this.$bus.on('refresh-role', this.menus);
       // 企业审核通过后刷新menu菜单
       setTimeout(()=>{
         this.menus()
@@ -67,6 +68,7 @@
         const levelName = localStorage.getItem('food_roleName');
         // const levelName = '企业';
         // const levelName = '企业2';
+        // debugger
         this.asideList = this.asideList.map((v) => {
           v.show = v.meta.belongList.indexOf(levelName)>-1;
           return v;
