@@ -83,9 +83,9 @@
           width="200"
           >
           <template slot-scope="scope">
-            <el-button v-if="scope.row.chainStatus==0 || scope.row.chainStatus==3" @click="editChain(scope.row)"  type="text" size="small" style="color:#0087ED;font-size:14px">编辑</el-button>
-            <el-button v-if="scope.row.chainStatus==0 || scope.row.chainStatus==3" @click="upChain(scope.row)" type="text" size="small" style="color:#0087ED;font-size:14px">上链</el-button>
-            <el-button v-if="scope.row.chainStatus==0 || scope.row.chainStatus==3" disabled type="text" size="small" style="font-size:14px">下载溯源码</el-button>
+            <el-button v-if="scope.row.chainStatus==4 || scope.row.chainStatus==3" @click="editChain(scope.row)"  type="text" size="small" style="color:#0087ED;font-size:14px">编辑</el-button>
+            <el-button v-if="scope.row.chainStatus==4 || scope.row.chainStatus==3" @click="upChain(scope.row)" type="text" size="small" style="color:#0087ED;font-size:14px">上链</el-button>
+            <el-button v-if="scope.row.chainStatus==4 || scope.row.chainStatus==3" disabled type="text" size="small" style="font-size:14px">下载溯源码</el-button>
             <el-button v-if="scope.row.chainStatus==1" @click="viewChain(scope.row)"  type="text" size="small" style="color:#0087ED;font-size:14px">查看</el-button>
             <el-button v-if="scope.row.chainStatus==1" disabled type="text" size="small" style="font-size:14px">上链</el-button>
             <el-button v-if="scope.row.chainStatus==1" @click="downQR(scope.row)" type="text" size="small" style="color:#0087ED;font-size:14px">下载溯源码</el-button>
@@ -288,7 +288,7 @@ export default {
         if (res.code ===0) {
           res.result.list = res.result.list || [];
           res.result.list.forEach(item => {
-            if (item.chainStatus === 0) {
+            if (item.chainStatus === 4) {
               item.chainStatusText = '新建'
             } else if (item.chainStatus === 1) {
               item.chainStatusText = '已上链'

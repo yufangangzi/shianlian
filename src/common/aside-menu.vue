@@ -40,7 +40,7 @@
       // 企业审核通过后刷新menu菜单
       setTimeout(()=>{
         this.menus()
-      },1000)
+      },1)
     },
     methods: {
       select (key) {
