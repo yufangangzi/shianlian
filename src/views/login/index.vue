@@ -91,14 +91,11 @@ export default {
   methods: {
     logining () {
       const _this = this;
-      if (this.loginform.name == '') {
-        this.userNameBlur();
+      if (!this.userNameBlur()) {
         return false;
-      } else if (this.loginform.password == '') {
-        this.passWordBlur();
+      } else if (!this.passWordBlur()) {
         return false;
-      } else if (this.loginform.code == ''){
-        this.codeBlur();
+      } else if (!this.codeBlur()){
         return false;
       }
       let data = {
