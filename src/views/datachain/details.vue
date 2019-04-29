@@ -5,7 +5,7 @@
       <div class="top-bar">{{detailId=='' ? '新建': '编辑'}}数据</div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="180px" :label-position="labelPosition" :inline-message="true" class="demo-ruleForm">
         <el-form-item label="数据标题" prop="title">
-          <el-input v-model="ruleForm.title"></el-input>
+          <el-input v-model="ruleForm.title" ref="title" @focus="tfocus"></el-input>
         </el-form-item>
         <el-form-item label="业务链" prop="">
           <!-- <el-radio-group v-model="ruleForm.chain">
@@ -521,6 +521,9 @@ import RefuseDialog from './refuse-dialog.vue'
       refuseOk (data) {
         this.refuseVisible = false;
       },
+      tfocus(){
+
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           // debugger
@@ -596,6 +599,7 @@ import RefuseDialog from './refuse-dialog.vue'
               
             })
           } else {
+            this.$refs.title.focus();
             console.log('error submit!!');
             return false;
           }
