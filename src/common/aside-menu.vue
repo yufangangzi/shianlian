@@ -20,6 +20,7 @@
 </template>
 <script>
   import {aside} from '@/router/index.js'
+  import api from '@/feath/api.js'
   export default {
     data () {
       return {
@@ -39,11 +40,31 @@
       const _this = this;
       this.$bus.on('refresh-role', this.menus);
       // 企业审核通过后刷新menu菜单
-      setTimeout(()=>{
-        this.menus()
-      },1)
+      
+      if('运营者' == localStorage.getItem('food_roleName')){
+        this.getStatusList(_this.menus)
+      }else{
+        setTimeout(()=>{
+          this.menus()
+        },1);
+      }
     },
     methods: {
+      getStatusList (callback) {
+        api.getOrgStatus({
+          "organId": localStorage.getItem('u_organId')
+        }).then(res => {
+          if (res.code == 0) {
+            if (!res.result) {
+              // 企业审核通过跳转页面
+              localStorage.setItem('food_roleName','操作员')
+            }
+              
+            callback();
+           
+          }
+        });
+      },
       select (key) {
         this.$router.push({
           path: key
