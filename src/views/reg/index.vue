@@ -335,6 +335,21 @@ export default {
           callback();
         }
       };
+      var prodLicBlur = (rule, value, callback) => {
+        if (!(/^[^\u4e00-\u9fa5]+$/.test(value))) {
+          callback(new Error('请输入正确的生成许可证!'));
+        } else {
+          callback();
+        }
+      };
+       var breedLicBlur = (rule, value, callback) => {
+        if (!(/^[^\u4e00-\u9fa5]+$/.test(value))) {
+          callback(new Error('请输入正确的种养殖许可证!'));
+        } else {
+          callback();
+        }
+      };
+
     // 请输入18位统一社会信用代码
     const qycode = (rule, value, callback) => {
       if (value === '') {
@@ -453,13 +468,11 @@ export default {
           ],
           prodLic: [
             { required: true, message: '生产许可证不能为空', trigger: 'blur' },
-            
-            // { validator: validatePass2, trigger: 'blur' },
+            { validator: prodLicBlur, trigger: 'blur' },
           ],
           breedLic: [
             { required: true, message: '种养殖许可证不能为空', trigger: 'blur' },
-            
-            // { validator: validatePass2, trigger: 'blur' },
+            { validator: breedLicBlur, trigger: 'blur' },
           ],
           businessLicense: [
             { required: true, message: '请上传工商营业执照', trigger: 'blur' },
@@ -493,23 +506,23 @@ export default {
     this.rules = this.rules1;
     this.isShow = 1;
 
-    // this.tabForm = {
-    //     name: 'chang123',
-    //     password: 'admin123',
-    //     password2: 'admin123',
-    //     tel: '15811599822',
-    //     email: '158991@qq.com',
-    //     qyName: '北京安捷乐',
-    //     qyNumber: '92330783MA29QJ0F5X',
-    //     regAddress: '大连靠山屯',
-    //     telAddress: '大连广发',
-    //     qyfr: '尼古拉赵四哥',
-    //     gsAddress: '',
-    //     prodLic: '许可有效S3204034',
-    //     breedLic: 'NS300323042',
-    //     businessLicense: '',
-    //     applyChain: ['产地链'],
-    //   }
+    this.tabForm = {
+        name: 'chang123',
+        password: 'admin123',
+        password2: 'admin123',
+        tel: '15811599822',
+        email: '158991@qq.com',
+        qyName: '北京安捷乐',
+        qyNumber: '92330783MA29QJ0F5X',
+        regAddress: '大连靠山屯',
+        telAddress: '大连广发',
+        qyfr: '尼古拉赵四哥',
+        gsAddress: '',
+        prodLic: '许可有效S3204034',
+        breedLic: 'NS300323042',
+        businessLicense: '',
+        applyChain: ['产地链'],
+      }
 
     // this.rules = this.rules2;
     // this.isShow = 2;
