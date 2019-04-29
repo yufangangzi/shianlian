@@ -461,7 +461,9 @@ import RefuseDialog from './refuse-dialog.vue'
 
               })
 
-              this.foodProductDetail = result.foodProductDetailVOList[0].id;
+              if(result.foodProductDetailVOList[0].id){
+                this.foodProductDetail = result.foodProductDetailVOList[0].id;
+              }
             }
             // debugger;
 
