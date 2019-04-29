@@ -36,7 +36,7 @@
             <div class="loginForm loginCode">
               <div class="form-item" :class="{formItemError : codeError!==''}">
                 <i class="user-icon code-icon"></i>
-                <input class="username" @blur="codeBlur" v-model="loginform.code" placeholder="验证码计算结果" type="text">
+                <input class="username" @blur="codeBlur" v-model="loginform.code" placeholder="验证码计算结果" type="text" v-on:keyup.enter="logining">
                 <span class="error">{{codeError}}</span>
                 <img :src="identifyImg" class="codeImg regcs" @click="getCode"/>
                 <span class="changeImg regcs" @click="getCode">
