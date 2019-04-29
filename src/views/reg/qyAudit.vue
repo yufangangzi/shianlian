@@ -84,31 +84,32 @@
                   </el-form-item>
               </el-col>
           </el-row>
-          <el-row :span="18" :offset="6">
-                  <el-form-item label="工商营业执照：" prop="" label-width="460px">
-                    <el-upload
-                      class="avatar-uploader"
-                      :headers="customHeaders"
-                      :action="uploadUrl"
-                      name="imageFile"
-                      :show-file-list="false"
-                      :on-success="handleAvatarSuccess"
-                      :before-upload="beforeAvatarUpload">
-                      <div class="avatar" style="display:inline-block;">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                        <img v-else src="../../assets/img/default-up.png" style="margin:35px 51px;">
-                      </div>
-                      <!-- <i class="el-icon-plus avatar-uploader-icon"></i> -->
-                      <div class="avatar-right" style="display:inline-block;margin-left:24px;text-align: left;">
-                        <div slot="tip" class="el-upload__tip txt">
-                          格式要求：<br>
-                          请上传产品图片，将显示为溯源产品题图。 <br>
-                          支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。
-                        </div>
-                        <el-button size="small" type="primary">点击上传</el-button>
-                      </div>
-                    </el-upload>
-                  </el-form-item>
+          <el-row type="flex" justify="center">
+            <el-col :span="18" :offset="6">
+              <el-form-item label="工商营业执照：" prop="businessLicense" >
+                <el-upload
+                  class="avatar-uploader"
+                  :headers="customHeaders"
+                  :action="uploadUrl"
+                  name="imageFile"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload">
+                  <div class="avatar" style="display:inline-block;">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <img v-else src="../../assets/img/default-up.png" style="margin:35px 51px;">
+                  </div>
+                  <div class="avatar-right" style="display:inline-block;margin-left:24px;text-align: left;">
+                    <div slot="tip" class="el-upload__tip txt">
+                      格式要求：<br>
+                      请上传产品图片，将显示为溯源产品题图。 <br>
+                      支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。
+                    </div>
+                    <el-button size="small" type="primary">点击上传</el-button>
+                  </div>
+                </el-upload>
+              </el-form-item>
+              </el-col>
           </el-row>           
           <el-row type="flex" justify="center">
               <el-col :span="18" :offset="6">
@@ -234,6 +235,12 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
           breedLic: [{ required: true, message: '种养值许可证不能为空', trigger: 'blur' }],   
           busineLic: [{ required: true, message: '工商营业执照图片地址不能为空', trigger: 'blur' }],
           upperType: [{ required: true, message: '上链类型不能为空', trigger: 'blur' }],
+          businessLicense: [
+            { required: true, message: '请上传工商营业执照', trigger: 'blur' },
+          ],
+          upperType: [
+            { required: true, message: '请至少选择一条业务链', trigger: 'blur' }
+          ],
         },
       };
     },
