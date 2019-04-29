@@ -128,7 +128,7 @@
   <div class="details" v-else>
     <div class="gailan">数据上链/查看数据</div>
     <div class="detailBox">
-      <div class="top-bar">查看数据数据</div>
+      <div class="top-bar">查看数据</div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="180px" :label-position="labelPosition" :inline-message="true" class="demo-ruleForm">
         <el-form-item label="数据标题" prop="title">
           <el-input disabled v-model="ruleForm.title"></el-input>
