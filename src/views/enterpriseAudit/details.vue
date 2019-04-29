@@ -38,7 +38,7 @@
         </p>
         <p>
           <span class="detailLeft">上链类型：</span>
-          <span class="detailRt">产地链/销售链</span>
+          <span class="detailRt">{{detailData.applyChain}}</span>
         </p>
         <p>
           <span class="detailLeft">工商营业执照：</span>
