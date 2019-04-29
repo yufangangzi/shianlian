@@ -497,10 +497,10 @@ import RefuseDialog from './refuse-dialog.vue'
         const isLt2M = file.size / 1024 / 1024 < 5;
 
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          this.$message.error('上传图片只能是 JPG,PNG,BMP 格式!');
         }
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 5MB!');
+          this.$message.error('上传图片大小不能超过 5MB!');
         }
         return isJPG && isLt2M;
       },
@@ -529,12 +529,19 @@ import RefuseDialog from './refuse-dialog.vue'
             console.log(this.ruleForm);
             
             
-            let dikuai = [
-              ['归属产地单位', this.ruleForm.productPlace],
-              ['面积', this.ruleForm.area],
-              ['土壤特性', this.ruleForm.soilProp],
-              ['目前主要作物', this.ruleForm.mainCrops]
-            ];
+            let dikuai = [];
+            if(this.ruleForm.productPlace){
+              dikuai.push(['归属产地单位', this.ruleForm.productPlace]);
+            }
+            if(this.ruleForm.area){
+              dikuai.push(['面积', this.ruleForm.area]);
+            }
+            if(this.ruleForm.soilProp){
+              dikuai.push(['土壤特性', this.ruleForm.soilProp]);
+            }
+            if(this.ruleForm.mainCrops){
+              dikuai.push(['目前主要作物', this.ruleForm.mainCrops]);
+            }
             
             let data = {
               "academicName": this.ruleForm.scienceName,
