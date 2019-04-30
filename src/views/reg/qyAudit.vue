@@ -297,6 +297,7 @@ import {complaintUploadUrl, baseURL} from '@/feath/server/http.js'
       },
        checkCode(callback){
         let data = {
+          id: this.id,
           creditCode: this.tabForm.qyNumber,
         }
          api.checkCode(data).then(res => {

@@ -53,8 +53,16 @@
           prop="tradingId"
           label="交易ID"
           align="center"
-          
           >
+          <template slot-scope="scope">
+            <span>{{scope.row.tradingId}}</span>
+            <span class="copy"
+              v-if="scope.row.tradingId"
+              v-clipboard:copy="scope.row.tradingId"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+            ></span>
+          </template>
         </el-table-column>
         <el-table-column
           prop="title"
@@ -274,6 +282,18 @@ export default {
       //     }
       //   }
       // }
+    },
+    onCopy () {
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      });
+    },
+    onError () {
+      this.$message({
+        message: '复制失败',
+        type: 'error'
+      });
     },
     getList () {
       const data = {
